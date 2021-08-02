@@ -1,0 +1,28 @@
+.mrm-classify-widget {
+  display:flex;
+  flex-direction:row;
+  margin:0;
+  padding:0;
+
+  button {
+    flex: 1;
+    background-color:transparent;
+    border:none;
+    outline:none;
+    padding:10px;
+    font-size:16px;
+    font-family:PTSansNarrow;
+    color:#003051;
+    cursor:pointer;
+    border-right:1px solid #e5e5e5;
+  }
+
+  button:hover {
+    background-color:rgba(0,0,0,0.05);
+  }
+
+  button:last-child {
+    border:none;
+  }
+
+}

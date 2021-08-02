@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Annotorious from '@recogito/annotorious-openseadragon';
+import Annotorious from '@recogito/annotorious-openseadragon/src';
 import LegacyStorage from '@recogito/recogito-legacy-storage';
 import TiltedBox from '@recogito/annotorious-tilted-box';
-import CoordinatePanel from './components/CoordinatePanel';
-import ToolPanel from './components/ToolPanel';
+
+// GUI elements
+import CoordinatePanel from './ui/CoordinatePanel';
+import ToolPanel from './ui/ToolPanel';
+
+// Annotorious editor plugins
+import ClassifyWidget from './widgets/ClassifyWidget';
 
 const init = (width, height) => {
 
@@ -20,7 +25,14 @@ const init = (width, height) => {
   });
 
   // Initialize Annotorious
-  const anno = new Annotorious(viewer);  
+  const anno = new Annotorious(viewer, {
+    widgets: [
+      ClassifyWidget,
+      'COMMENT'
+      // 'TAG'
+    ]
+  });
+
   anno.setAuthInfo({
     id: window.config.me,
     displayName: window.config.me
