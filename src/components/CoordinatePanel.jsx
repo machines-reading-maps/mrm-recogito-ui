@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import './CoordinatePanel.scss';
+
 const CoordinatePanel = props => {
 
   const [ mouseXY, setMouseXY ] = useState();

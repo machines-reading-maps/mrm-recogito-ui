@@ -1,0 +1,19 @@
+.mrm-coordinate-panel {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  padding: 8px;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.4);
+  box-shadow: 0 0 8px rgb(0,0,0,0.35);
+  color: #fff;
+  font-size: 17px;
+
+  span {
+    display:inline-block;
+    margin:0 4px;
+  }
+
+}
