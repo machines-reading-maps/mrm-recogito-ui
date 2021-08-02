@@ -1,0 +1,48 @@
+.mrm-toolbar {  
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 0;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.5);
+  box-shadow: 0 0 8px rgb(0,0,0,0.35);
+  overflow:hidden;
+
+  button.a9s-toolbar-btn {
+    display:block;
+    margin:0;
+    border-radius:0;
+  }
+
+  button.a9s-toolbar-btn:hover,
+  button.a9s-toolbar-btn.active {
+    background-color: rgba(255,255,255,0.3);
+  }
+
+  .a9s-toolbar-btn svg rect,
+  .a9s-toolbar-btn svg path {
+    stroke-width:5px;
+    fill:none;
+    stroke:rgba(255,255,255,0.5);
+  }
+
+  .a9s-toolbar-btn svg circle {
+    stroke-width:4px;
+    fill:#000;
+    stroke:#fff;
+  }
+
+  .a9s-toolbar-btn.active svg rect,
+  .a9s-toolbar-btn.active svg path {
+    stroke:rgba(255,255,255,0.5);
+  }
+
+  .a9s-toolbar-btn.active svg circle {
+    stroke-width:4px;
+    fill:#000;
+    stroke:#fff;
+  }
+
+}

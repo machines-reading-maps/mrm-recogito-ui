@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon';
 import LegacyStorage from '@recogito/recogito-legacy-storage';
 import CoordinatePanel from './components/CoordinatePanel';
+import ToolPanel from './components/ToolPanel';
 
 const init = (width, height) => {
 
@@ -45,8 +46,6 @@ const App = props => {
 
         const { viewer, anno } = init(width, height);
 
-
-
         setViewer(viewer);
         setAnno(anno);
       });
@@ -55,6 +54,7 @@ const App = props => {
   return (
     <div>
       { viewer && <CoordinatePanel viewer={viewer} /> }
+      { anno && <ToolPanel anno={anno} /> }
     </div>
   );
 
