@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon';
 import LegacyStorage from '@recogito/recogito-legacy-storage';
+import TiltedBox from '@recogito/annotorious-tilted-box';
 import CoordinatePanel from './components/CoordinatePanel';
 import ToolPanel from './components/ToolPanel';
 
 const init = (width, height) => {
 
+  // Initialize OpenSeadragon viewer
   const viewer = OpenSeadragon({
     id:'image-pane',
     prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/",
@@ -17,12 +19,17 @@ const init = (width, height) => {
     }]
   });
 
+  // Initialize Annotorious
   const anno = new Annotorious(viewer);  
   anno.setAuthInfo({
     id: window.config.me,
     displayName: window.config.me
   });
 
+  // Add Tilted Box drawing tool plugin
+  new TiltedBox(anno);
+
+  // Add LegacyStorage plugin
   new LegacyStorage(anno, window.config);
 
   return { viewer, anno };
