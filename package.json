@@ -35,8 +35,8 @@
   "dependencies": {
     "@recogito/annotorious-openseadragon": "^2.5.2",
     "@recogito/annotorious-tilted-box": "^0.1.2",
-    "@recogito/annotorious-toolbar": "^0.1.1",
-    "@recogito/recogito-legacy-storage": "^0.1.0",
+    "@recogito/annotorious-toolbar": "^0.1.2",
+    "@recogito/recogito-legacy-storage": "^0.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
   }
