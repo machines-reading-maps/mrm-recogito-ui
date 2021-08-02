@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recogito | LOC_98687206-10.jpg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@recogito/annotorious-openseadragon@latest/dist/annotorious.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/document/annotation/image/index.css"/>
+    <script src="/webjars/jquery/1.12.0/jquery.min.js" ></script>
+    <script>
+      window.config = {
+        me: 'rainer',
+        features: ['webmaps','annotorious','mrm'],
+        documentId: 'u7iyermrio1tph',
+        documentOwner: 'rainer',
+        partId: 'b7e08a88-6645-42c7-addf-81f81fea1f1b',
+        partSequenceNo: 1,
+        contentType: 'IMAGE_UPLOAD',
+        isPublic: false,
+        writeAccess: true,
+        isAdmin: true,
+        clones: [],       
+        authorities: {
+          gazetteers: {}
+        },
+        vocabulary: []
+      }
+    </script>
+    <style>
+      body {
+        display:flex;
+        flex-direction:column;
+      }
+
+      .r6o-editor textarea:focus {
+        box-shadow:none;
+      }
+
+      #image-pane {
+        flex:1;
+        position:relative !important;
+        top:auto;
+        right:auto;
+        bottom:auto;
+        left:auto;
+        margin-left:210px;
+      }
+    </style>
+  </head>
+  <body>
+    
+  <div class="header-iconbar">
+    <ul>
+      <li class="tooltip bottom active">
+        <a href="/document/u7iyermrio1tph/part/1/edit">
+          <span class="icon">&#xe86f;</span>
+          <span class="hint">Document view</span>
+        </a>
+      </li>
+
+      <li class="tooltip narrow bottom">
+        <a href="/document/u7iyermrio1tph/map">
+          <span class="icon">&#xe846;</span>
+          <span class="hint">Map view</span>
+        </a>
+      </li>
+
+      <li class="tooltip bottom">
+        <a href="/document/u7iyermrio1tph/stats">
+          <span class="icon">&#xe8ae;</span>
+          <span class="hint">Annotation statistics</span>
+        </a>
+      </li>
+
+      <li class="tooltip bottom">
+        <a href="/document/u7iyermrio1tph/downloads">
+          <span class="icon">&#xe875;</span>
+          <span class="hint">Download options</span>
+        </a>
+      </li>
+    
+      <li class="tooltip bottom">
+        <a href="/document/u7iyermrio1tph/settings">
+          <span class="icon">&#xe8c9;</span>
+          <span class="hint">Document settings</span>
+        </a>
+      </li>
+
+      <div class="logged-in">
+        Angemeldet als
+        <a class="to-index" href="/rainer">
+          
+        </a>
+      </div>
+
+      <script>
+        jQuery(document).ready(function() {
+          var storedSorting = localStorage.getItem('r2.my.location'),
+              upgrade = function(s) {
+                var upgradeableLinks = jQuery('.to-index');
+                upgradeableLinks.each(function(_, l) {
+                  l.href = l.href + '?sortby=' + s.sortby + '&order=' + s.order;
+                  if (s.p) l.href = l.href + '&p=' + s.p;
+                  if (s.size) l.href = l.href + '&size=' + s.size;
+                });
+              };
+          if (storedSorting) upgrade(JSON.parse(storedSorting));
+        });
+      </script>
+    </ul>
+    <div class="save-msg"></div>
+  </div>
+
+  <script>
+    (function() { if('ontouchstart' in window || navigator.MaxTouchPoints > 0) jQuery('.hint').addClass('hint-disabled').removeClass('hint'); })();
+  </script>
+
+  <div class="header-infobox">
+    <h1>
+      LOC_98687206-10.jpg
+    </h1>
+    <h2 class="date"></h2>
+    <p class="source"></p>
+    <p class="quick-stats">
+      <span class="icon comment">&#xf0e5;</span>
+      <span class="annotations">0</span> Annotations
+      &nbsp; &centerdot; &nbsp;
+      <span class="icon">&#xf0c0;</span>
+      <span class="contributors">No Other Contributors</span>
+      
+      
+    </p>
+  </div> <!-- .header-infobox -->
+
+  <div id="image-pane"></div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a class="to-index" href="/rainer">
+        <h1>rainer</h1>
+        <h2>Joined on 10 Dez 2020</h2>
+      </a>
+    </div>
+
+    <ul class="menu">
+      <li class="active">
+        <a href="#" onclick="return false;">
+          <img class="b-lazy"
+                data-src="/document/u7iyermrio1tph/part/1/thumb.jpg"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAABCAQAAADzhm3tAAAADUlEQVR42mNkGAUUAQACggACpDKLkQAAAABJRU5ErkJggg==">
+          <span class="label">LOC_98687206-10.jpg</span>
+        </a>
+      </li>      
+    </ul>
+  </div> <!-- .sidebar -->
+
+  <script src="https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/openseadragon.min.js"></script>
+  <script src="/webjars/blazy/1.8.0/blazy.min.js" ></script>
+  <script src="/webjars/_requirejs" ></script><script src="/webjars/requirejs/2.3.3/require.min.js" data-main="/assets/javascripts/document/annotation/beta/annotorious/app.js"></script>
+  </body>
+</html>
