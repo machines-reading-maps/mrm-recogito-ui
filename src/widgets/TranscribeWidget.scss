@@ -1,0 +1,22 @@
+.mrm-transcribe-widget {
+  background-color:#ecf0f1;
+  position:relative;
+  border-bottom-color:#dadada;
+
+  input {
+    letter-spacing:1px;
+    background-color:transparent;
+    padding:10px;
+    box-sizing:border-box;
+    width:100%;
+    font-family:PTSansNarrow;
+    font-size:16px;
+    display:block;
+  }
+
+  input::-webkit-input-placeholder { color:#c2c2c2; }
+  input::-moz-placeholder { color:#c2c2c2; }
+  input:-moz-placeholder { color:#c2c2c2; }
+  input:-ms-input-placeholder { color:#c2c2c2; }
+
+}

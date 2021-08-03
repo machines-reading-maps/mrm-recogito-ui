@@ -9,6 +9,7 @@ import ToolPanel from './ui/ToolPanel';
 
 // Annotorious editor plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
+import TranscribeWidget from './widgets/TranscribeWidget';
 
 import './App.scss';
 
@@ -30,6 +31,7 @@ const init = (width, height) => {
   const anno = new Annotorious(viewer, {
     widgets: [
       ClassifyWidget,
+      TranscribeWidget,
       'COMMENT'
       // 'TAG'
     ],

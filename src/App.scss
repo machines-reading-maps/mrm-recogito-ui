@@ -5,6 +5,12 @@ body {
 
 .r6o-editor {
   font-family:PTSansNarrow !important;
+
+  .r6o-widget textarea {
+    font-family:PTSansNarrow !important;
+    font-size:16px;
+  }
+
 }
 
 .r6o-editor textarea:focus {
