@@ -11,7 +11,11 @@ const ClassifyWidget = props => {
     props.annotation?.bodies.find(b => b.purpose === 'classifying')?.value;
 
   const onClick = value => () =>
-    props.onUpsertBody({ value, purpose: 'classifying' });
+    props.onUpsertBody({ 
+      type: 'TextualBody',
+      value, 
+      purpose: 'classifying' 
+    });
 
   return (
     <div className="r6o-widget mrm-classify-widget">
