@@ -41,8 +41,6 @@ const init = (width, height) => {
     formatter: ClassifyFormatter
   });
 
-  anno.on('createAnnotation', a => console.log(a));
-
   anno.setAuthInfo({
     id: window.config.me,
     displayName: window.config.me
