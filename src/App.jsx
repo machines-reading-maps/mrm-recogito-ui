@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon/src';
 
-// Annotorious plugins
+// Off-the-shelf(-ish) Annotorious plugins
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
 import LegacyStorage from '@recogito/recogito-legacy-storage';
 
+// Custom MRM extensions and plugins
+import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
+import TranscribeWidget from './widgets/TranscribeWidget';
+import LinkingPlugin from './linking/LinkingPlugin';
+import LinkingWidget from './linking/LinkingWidget';
+
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
-
-// Annotorious editor plugins
-import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
-import TranscribeWidget from './widgets/TranscribeWidget';
 
 import './App.scss';
 
@@ -52,6 +54,9 @@ const init = (width, height) => {
 
   // Add LegacyStorage plugin
   new LegacyStorage(anno, window.config);
+
+  // Add linking plugin
+  new LinkingPlugin(anno);
 
   return { viewer, anno };
 };
