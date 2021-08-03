@@ -5,18 +5,27 @@
   padding:0;
 
   button {
-    flex: 1;
+    flex:1;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    font-size:18px;
     background-color:transparent;
     border:none;
     outline:none;
     padding:10px;
-    font-size:16px;
     font-family:PTSansNarrow;
     color:#003051;
     cursor:pointer;
     border-width:1px;
     border-style:solid;
     border-color:transparent #e5e5e5 transparent transparent;
+
+    span {
+      font-size:16px;
+      display:block;
+      padding-left:8px;
+    }
   }
 
   button:hover {

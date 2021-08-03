@@ -1,4 +1,5 @@
 import React from 'react';
+import { BiHomeAlt, BiMessageSquareDetail, BiTargetLock } from 'react-icons/bi';
 
 import './ClassifyWidget.scss';
 
@@ -22,19 +23,19 @@ const ClassifyWidget = props => {
       <button
         className={current === 'ENTITY' ? 'entity selected' : 'entity'}
         onClick={onClick('ENTITY')}> 
-        Entity
+        <BiHomeAlt /> <span>Entity</span>
       </button>
       
       <button 
         className={current === 'LABEL' ? 'label selected' : 'label'}
         onClick={onClick('LABEL')}>
-        Label
+        <BiMessageSquareDetail /> <span>Label</span>
       </button>
       
       <button 
         className={current === 'SYMBOL' ? 'symbol selected' : 'symbol'}
         onClick={onClick('SYMBOL')}>
-        Symbol
+        <BiTargetLock /> <span>Symbol</span>
       </button>
     </div>
   )
