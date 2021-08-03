@@ -21,25 +21,23 @@
     background-color: rgba(255,255,255,0.3);
   }
 
-  .a9s-toolbar-btn svg rect,
-  .a9s-toolbar-btn svg path {
+  .a9s-toolbar-btn svg * {
     stroke-width:5px;
     fill:none;
     stroke:rgba(255,255,255,0.5);
   }
 
-  .a9s-toolbar-btn svg circle {
+  .a9s-toolbar-btn .handles circle {
     stroke-width:4px;
     fill:#000;
     stroke:#fff;
   }
 
-  .a9s-toolbar-btn.active svg rect,
-  .a9s-toolbar-btn.active svg path {
+  .a9s-toolbar-btn.active svg * {
     stroke:rgba(255,255,255,0.5);
   }
 
-  .a9s-toolbar-btn.active svg circle {
+  .a9s-toolbar-btn.active .handles circle {
     stroke-width:4px;
     fill:#000;
     stroke:#fff;
