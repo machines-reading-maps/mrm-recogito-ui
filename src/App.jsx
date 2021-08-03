@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon/src';
-import LegacyStorage from '@recogito/recogito-legacy-storage';
+
+// Annotorious plugins
+import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
+import LegacyStorage from '@recogito/recogito-legacy-storage';
 
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
@@ -45,7 +48,8 @@ const init = (width, height) => {
     displayName: window.config.me
   });
 
-  // Add Tilted Box drawing tool plugin
+  // Add extra drawing tools
+  new SelectorPack(anno);
   new TiltedBox(anno);
 
   // Add LegacyStorage plugin
