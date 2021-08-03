@@ -14,15 +14,35 @@
     font-family:PTSansNarrow;
     color:#003051;
     cursor:pointer;
-    border-right:1px solid #e5e5e5;
+    border-width:1px;
+    border-style:solid;
+    border-color:transparent #e5e5e5 transparent transparent;
   }
 
   button:hover {
-    background-color:rgba(0,0,0,0.05);
+    background-color:#ecf0f1;
   }
 
   button:last-child {
-    border:none;
+    border-color:transparent;
+  }
+
+  button.entity.selected {
+    background-color:#fdeee0;
+    box-shadow:inset 0 0 24px #ff7800;
+    border-color:#eda25f;
+  }
+
+  button.label.selected {
+    background-color:#e6eaff;
+    box-shadow:inset 0 0 24px #8099ff;
+    border-color:#748efb;
+  }
+
+  button.symbol.selected {
+    background-color:#c3ffb0;
+    box-shadow:inset 0 0 24px #2ab900;
+    border-color:#28ad01;
   }
 
 }

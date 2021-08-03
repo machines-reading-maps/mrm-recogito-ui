@@ -8,7 +8,9 @@ import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
 
 // Annotorious editor plugins
-import ClassifyWidget from './widgets/ClassifyWidget';
+import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
+
+import './App.scss';
 
 const init = (width, height) => {
 
@@ -30,8 +32,11 @@ const init = (width, height) => {
       ClassifyWidget,
       'COMMENT'
       // 'TAG'
-    ]
+    ],
+    formatter: ClassifyFormatter
   });
+
+  anno.on('createAnnotation', a => console.log(a));
 
   anno.setAuthInfo({
     id: window.config.me,
