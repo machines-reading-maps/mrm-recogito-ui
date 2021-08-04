@@ -19,7 +19,7 @@ const ClassifyWidget = props => {
     });
 
   return (
-    <div className="r6o-widget mrm-classify-widget">
+    <div className="r6o-widget mrm-classify-widget r6o-nodrag">
       <button
         className={current === 'ENTITY' ? 'entity selected' : 'entity'}
         onClick={onClick('ENTITY')}> 
