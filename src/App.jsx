@@ -37,8 +37,9 @@ const init = (width, height) => {
     widgets: [
       ClassifyWidget,
       TranscribeWidget,
-      'COMMENT'
+      'COMMENT',
       // 'TAG'
+      LinkingWidget
     ],
     formatter: ClassifyFormatter
   });

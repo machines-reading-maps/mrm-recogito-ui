@@ -42,7 +42,7 @@ const LinkingPlugin = anno => {
         const updatedSecond = addLinkBody(annotation, currentSelected.id);
 
         // Update the annotation layer
-        anno.addAnnotation(updatedFirst);
+        anno.updateSelected(updatedFirst);
         anno.addAnnotation(updatedSecond);
 
         // Fire update events
