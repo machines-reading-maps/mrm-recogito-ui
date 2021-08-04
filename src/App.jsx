@@ -9,8 +9,7 @@ import LegacyStorage from '@recogito/recogito-legacy-storage';
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
 import TranscribeWidget from './widgets/TranscribeWidget';
-import LinkingPlugin from './linking/LinkingPlugin';
-import LinkingWidget from './linking/LinkingWidget';
+import GroupPlugin from './linking/GroupPlugin';
 
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
@@ -37,9 +36,8 @@ const init = (width, height) => {
     widgets: [
       ClassifyWidget,
       TranscribeWidget,
-      'COMMENT',
+      'COMMENT'
       // 'TAG'
-      LinkingWidget
     ],
     formatter: ClassifyFormatter
   });
