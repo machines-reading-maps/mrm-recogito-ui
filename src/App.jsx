@@ -9,7 +9,7 @@ import LegacyStorage from '@recogito/recogito-legacy-storage';
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
 import TranscribeWidget from './widgets/TranscribeWidget';
-import GroupPlugin from './linking/GroupPlugin';
+import GroupPlugin from './group/GroupPlugin';
 
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
@@ -47,6 +47,15 @@ const init = (width, height) => {
     displayName: window.config.me
   });
 
+  anno.on('createAnnotation', a => {
+    console.log('created', a);
+  });
+
+  anno.on('updateAnnotation', a => {
+    console.log('updated', a);
+  })
+
+
   // Add extra drawing tools
   new SelectorPack(anno);
   new TiltedBox(anno);
@@ -55,7 +64,7 @@ const init = (width, height) => {
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  new LinkingPlugin(anno);
+  new GroupPlugin(anno);
 
   return { viewer, anno };
 };
