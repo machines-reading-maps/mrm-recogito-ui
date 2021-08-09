@@ -53,6 +53,8 @@ const LinkingPlugin = (anno, viewer) => {
 
   let currentGroup = [];
 
+  let queuedUpdates = [];
+
   const onOSDChanged = () => groupLayer.redraw();
 
   if (viewer) {
@@ -136,6 +138,8 @@ const LinkingPlugin = (anno, viewer) => {
           anno.once('createAnnotation', onOk);
           anno.once('updateAnnotation', onOk);      
         } else {
+          console.log('creating new group');
+
           // No annotation is in a group - create new
           currentGroupId = nanoid();
           currentGroup = [ selectedShape, shape ];
@@ -151,9 +155,6 @@ const LinkingPlugin = (anno, viewer) => {
             anno.addAnnotation(updatedClicked);
             anno._emitter.emit('updateAnnotation', updatedClicked);
           };
-
-          anno.once('createAnnotation', onOk);
-          anno.once('updateAnnotation', onOk);
         }
 
         // Draw the group now...
