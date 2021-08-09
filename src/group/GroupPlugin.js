@@ -1,4 +1,7 @@
 import { nanoid } from 'nanoid';
+import GroupLayer from './GroupLayer';
+
+import './GroupPlugin.scss';
 
 /** Shorthand +*/
 const toArray = arg => Array.isArray(arg) ? arg : [ arg ];
@@ -19,9 +22,22 @@ const setGroupId = (annotation, groupId) => (
   }
 );
 
-const LinkingPlugin = anno => {
+const LinkingPlugin = (anno, viewer) => {
+
+  const svg = anno._element.querySelector('svg');
+
+  const groupLayer = new GroupLayer(svg);
 
   let isCtrlDown = false;
+
+  const onOSDChanged = () => groupLayer.redraw();
+
+  if (viewer) {
+    viewer.addHandler('animation', onOSDChanged);
+    viewer.addHandler('rotate', onOSDChanged);
+    viewer.addHandler('resize', onOSDChanged);
+    viewer.addHandler('flip', onOSDChanged);
+  }
 
   document.addEventListener('keydown', evt => {
     if (evt.which === 17) { // CTRL
@@ -37,15 +53,22 @@ const LinkingPlugin = anno => {
     }
   });
 
+  anno.on('cancelSelected', () => groupLayer.clear());
+  anno.on('createAnnotation', () => groupLayer.clear());
+  anno.on('updateAnnotation', () => groupLayer.clear());
+  anno.on('deleteAnnotation', () => groupLayer.clear());
+
   /**
    * TODO handle GROUP REMOVAL!
    */
 
-  anno.on('clickAnnotation', annotation => {
+  anno.on('clickAnnotation', (annotation, shape) => {
     if (isCtrlDown) {
       // Multi-select!
       const currentSelected = anno.getSelected(); // if any
       if (currentSelected) {
+        const selectedShape = svg.querySelector(`.a9s-annotation.selected`);
+
         // Group ID stored in the current selection (if any)
         const selectedGroupId = getGroupId(currentSelected);
 
@@ -58,7 +81,10 @@ const LinkingPlugin = anno => {
           // be re-associated
           const updatedClicked = setGroupId(annotation, selectedGroupId);
 
-          // If user hits ok, persist the change to the clicked annotation
+          // Draw the group now...
+          groupLayer.drawGroup([ shape, selectedShape ]);
+
+          // ...but persist only if the user hits ok
           const onOk = () => {
             anno.addAnnotation(updatedClicked);
             anno._emitter.emit('updateAnnotation', updatedClicked);

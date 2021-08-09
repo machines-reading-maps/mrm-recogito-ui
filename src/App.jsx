@@ -64,7 +64,7 @@ const init = (width, height) => {
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  new GroupPlugin(anno);
+  new GroupPlugin(anno, viewer);
 
   return { viewer, anno };
 };
