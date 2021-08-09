@@ -38,9 +38,9 @@ const getGroupBounds = (shapes, svg) => {
   };
 }
 
-export default class GroupLayer {
+export default class GroupBorder {
 
-  constructor(svg) {
+  constructor(shapes, svg) {
     this.svg = svg;
 
     this.g = document.createElementNS(SVG_NAMESPACE, 'g');
@@ -50,13 +50,16 @@ export default class GroupLayer {
     this.rect = null;
 
     // Current group, if any (so we can redraw when needed)
-    this.shapes = [];
+    this.shapes = shapes || [];
 
     this.svg.insertBefore(this.g, svg.firstChild);
+
+    if (shapes.length > 1)
+      this.draw();
   }
 
   // Draw a group around the given SVG shapes
-  drawGroup(shapes) {
+  draw(shapes) {
     if (shapes)
       this.shapes = shapes;
 
@@ -78,16 +81,7 @@ export default class GroupLayer {
   }
 
   redraw() {
-    this.drawGroup();
-  }
-
-  clear() {
-    if (this.rect) {
-      this.g.removeChild(this.rect);
-      this.rect = null;
-    }
-
-    this.shapes = [];
+    this.draw();
   }
 
   destroy() {

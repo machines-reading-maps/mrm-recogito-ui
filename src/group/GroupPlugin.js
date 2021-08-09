@@ -1,171 +1,157 @@
 import { nanoid } from 'nanoid';
-import GroupLayer from './GroupLayer';
+
+import AnnotationGroup from './AnnotationGroup';
+import { clearGroupId, getGroupId, setGroupId } from './Utils';
 
 import './GroupPlugin.scss';
 
-/** Shorthand +*/
-const toArray = arg => Array.isArray(arg) ? arg : [ arg ];
+export default class GroupPlugin {
 
-/** Returns the group ID stored in this annotation, if any **/
-const getGroupId = annotation =>
-  toArray(annotation.body).find(b => b.purpose === 'grouping')?.value;
+  constructor(anno, viewer) {
+    this.anno = anno;
 
-/** Immutably sets the groupId in the given annotation **/
-const setGroupId = (annotation, groupId) => (
-  {
-    ...annotation,
-    body: [
-      // Remove existing groupig bodies first, if any
-      ...toArray(annotation.body).filter(b => b.purpose != 'grouping'),
-      { type: 'TextualBody', purpose: 'grouping', value: groupId }
-    ]
-  }
-);
+    this.svg = anno._element.querySelector('svg');
 
-/** Immutably removes the groupId body (if any) **/
-const clearGroupId = annotation => (
-  {
-    ...annotation,
-    body: [
-      ...toArray(annotation.body).filter(b => b.purpose != 'grouping')
-    ]
-  }
-);
+    this.isCtrlDown = false;
 
-/** 
- * TODO we can optimize this later, by adding the groupID as 
- * a data attribute, using a formatter. Depends on 
- * https://github.com/recogito/annotorious/issues/159
- */
-const getShapesForGroup = (id, svg) => 
-  Array.from(svg.querySelectorAll('.a9s-annotation'))
-    .filter(shape => getGroupId(shape.annotation) === id);
+    this.group = null;
 
-const LinkingPlugin = (anno, viewer) => {
+    if (viewer)
+      this._initOSD(viewer);
 
-  const svg = anno._element.querySelector('svg');
-
-  const groupLayer = new GroupLayer(svg);
-
-  let isCtrlDown = false;
-
-  let currentGroupId = null;
-
-  let currentGroup = [];
-
-  let queuedUpdates = [];
-
-  const onOSDChanged = () => groupLayer.redraw();
-
-  if (viewer) {
-    viewer.addHandler('animation', onOSDChanged);
-    viewer.addHandler('rotate', onOSDChanged);
-    viewer.addHandler('resize', onOSDChanged);
-    viewer.addHandler('flip', onOSDChanged);
+    this._addKeyListeners();
+    this._addAnnoListeners();
   }
 
-  document.addEventListener('keydown', evt => {
-    if (evt.which === 17) { // CTRL
-      isCtrlDown = true;
-      anno.disableSelect = true;
+  _initOSD(viewer) {
+    const onOSDChanged = () => this.group?.redraw();
+
+    if (this.viewer) {
+      viewer.addHandler('animation', onOSDChanged);
+      viewer.addHandler('rotate', onOSDChanged);
+      viewer.addHandler('resize', onOSDChanged);
+      viewer.addHandler('flip', onOSDChanged);
+    }  
+  }
+
+  _addKeyListeners() {
+    document.addEventListener('keydown', evt => {
+      if (evt.which === 17) { // CTRL
+        this.isCtrlDown = true;
+        this.anno.disableSelect = true;
+      }
+    });
+  
+    document.addEventListener('keyup', evt => {
+      if (evt.which === 17) { // CTRL
+        this.isCtrlDown = false;
+        this.anno.disableSelect = false;
+      }
+    });  
+  }
+
+  _addAnnoListeners() {
+    // Redraw when shapes are moved/resized
+    this.anno.on('changeSelectionTarget', () => this.group?.redraw());
+
+    const clearGroup = () => {
+      this.group?.destroy();
+      this.group = null;
     }
-  });
+  
+    // Just destroy the group on cancel or delete
+    this.anno.on('cancelSelected',   clearGroup);
+    this.anno.on('deleteAnnotation', clearGroup);
 
-  document.addEventListener('keyup', evt => {
-    if (evt.which === 17) { // CTRL
-      isCtrlDown = false;
-      anno.disableSelect = false;
-    }
-  });
+    const onSelect = annotation => {
+      // If the annotation is part of a group, show it.
+      const groupId = getGroupId(annotation);
+      if (groupId)
+        this.group = new AnnotationGroup(annotation, this.svg);
 
-  anno.on('changeSelectionTarget', () => groupLayer.redraw());
-
-  const clear = () => {
-    groupLayer.clear();
-    currentGroup = null;
-    currentGroupId = null;
-  }
-
-  // Could be simplified with https://github.com/recogito/annotorious/issues/160
-  anno.on('cancelSelected', clear);
-  anno.on('createAnnotation', clear);
-  anno.on('updateAnnotation', clear);
-  anno.on('deleteAnnotation', clear);
-
-  // A new selection - part of a group? Highlight!
-  anno.on('selectAnnotation', annotation => {
-    currentGroupId = getGroupId(annotation);
-    if (currentGroupId) {
-      currentGroup = getShapesForGroup(currentGroupId, svg);
-      groupLayer.drawGroup(currentGroup);
-    }
-  });
-
-  anno.on('clickAnnotation', (annotation, shape) => {
-    if (isCtrlDown) {
-      // Multi-select!
-      const currentSelected = anno.getSelected(); // if any
-
-      if (currentSelected) {
-        // There is already a selection - add or remove
-        const selectedShape = svg.querySelector(`.a9s-annotation.selected`);
-
-        // Group ID stored in the current selection (if any)
-        currentGroupId = getGroupId(currentSelected);
-
-        // Group ID stored in the CTRL-clicked annotation (if any)
-        const clickedGroupId = getGroupId(annotation);
-
-        if (currentGroupId) {
-          let updatedClicked;
-
-          if (currentGroupId === clickedGroupId) {
-            // If the clicked annotation is in the same group: remove
-            updatedClicked = clearGroupId(annotation);
-            currentGroup = currentGroup.filter(shape => shape.annotation.id != annotation.id);
-          } else {
-            // otherwise: add to this group
-            updatedClicked = setGroupId(annotation, currentGroupId);
-            currentGroup = [ ...currentGroup, shape ];
-          }
-
-          // ...but persist only if the user hits ok
-          const onOk = () => {
-            anno.addAnnotation(updatedClicked);
-            anno._emitter.emit('updateAnnotation', updatedClicked);
-          }
-
-          anno.once('createAnnotation', onOk);
-          anno.once('updateAnnotation', onOk);      
-        } else {
-          console.log('creating new group');
-
-          // No annotation is in a group - create new
-          currentGroupId = nanoid();
-          currentGroup = [ selectedShape, shape ];
-
-          const updatedSelected = setGroupId(currentSelected, currentGroupId);
-          const updatedClicked = setGroupId(annotation, currentGroupId);
-
-          // Update selection
-          anno.updateSelected(updatedSelected);
-
-          // If user hits ok, also persist the change to the clicked annotation
-          const onOk = () => {
-            anno.addAnnotation(updatedClicked);
-            anno._emitter.emit('updateAnnotation', updatedClicked);
-          };
-        }
-
-        // Draw the group now...
-        groupLayer.drawGroup(currentGroup);
+      const removeHandlers = () => {
+        this.anno.off('createAnnotation', onOk);
+        this.anno.off('updateAnnotation', onOk);
+      }
+  
+      // In any case, persist potential updates when user click OKs
+      const onOk = () => { 
+        this.handleOk();
+      };
+  
+      if (annotation.type === 'Selection') {
+        this.anno.once('createAnnotation', onOk);  
       } else {
-        // There was no current selection - this is the first selection of the pair
-        anno.selectAnnotation(annotation);
+        this.anno.once('updateAnnotation', onOk);
+      }
+
+      // Remove handlers on cancel and delete
+      this.anno.on('cancelSelected', removeHandlers);
+      this.anno.on('deleteAnnotation', removeHandlers);
+    };
+
+    this.anno.on('clickAnnotation', (annotation, shape) => {
+      if (this.isCtrlDown) {
+        // Multi-select!
+        const currentSelected = this.anno.getSelected(); // if any
+  
+        if (currentSelected) {
+          this.handleCtrlClick(shape);
+        } else {
+          // There was no current selection - this is the first selection of the pair
+          this.anno.selectAnnotation(annotation);
+          onSelect(annotation);
+        }
+      }
+    });
+
+    // On select, draw existing group, if anyand attach OK handlers
+    this.anno.on('selectAnnotation', onSelect);
+  
+  }
+
+  /** 
+   * Handles CTRL+click on an annotation while there is 
+   * already a selection
+   */
+  handleCtrlClick(shape) {
+    const selectedAnnotation = this.anno.getSelected();
+
+    const existingGroupId = getGroupId(selectedAnnotation);
+    if (!existingGroupId) {
+      // If the selection is not part of a group, create one
+      const updated = setGroupId(selectedAnnotation, nanoid());
+      this.anno.updateSelected(updated);
+
+      this.group?.destroy();
+      this.group = new AnnotationGroup(updated, this.svg);
+    }
+
+    this.group.toggle(shape);
+  }
+
+  /** 
+   * When the user hits OK, this method applies 
+   * changes to the annotations that were affected besides
+   * the current selection (i.e. those that were CTRL+clicked)
+   */
+  handleOk() {
+    if (this.group) {
+      for (let id in this.group.changes) {
+        const { before, after } = this.group.changes[id];
+        if (before != after) {
+          const annotationBefore = this.svg.querySelector(`.a9s-annotation[data-id="${id}"]`).annotation.underlying;
+
+          console.log('updating', annotationBefore);
+
+          const annotationAfter = after ? 
+            setGroupId(annotationBefore, after) : clearGroupId(annotationBefore);
+          
+          this.anno.addAnnotation(annotationAfter);
+          this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);        
+        }
       }
     }
-  });
+  }
 
 }
-
-export default LinkingPlugin;
