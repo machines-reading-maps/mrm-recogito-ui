@@ -22,6 +22,25 @@ const setGroupId = (annotation, groupId) => (
   }
 );
 
+/** Immutably removes the groupId body (if any) **/
+const clearGroupId = annotation => (
+  {
+    ...annotation,
+    body: [
+      ...toArray(annotation.body).filter(b => b.purpose != 'grouping')
+    ]
+  }
+);
+
+/** 
+ * TODO we can optimize this later, by adding the groupID as 
+ * a data attribute, using a formatter. Depends on 
+ * https://github.com/recogito/annotorious/issues/159
+ */
+const getShapesForGroup = (id, svg) => 
+  Array.from(svg.querySelectorAll('.a9s-annotation'))
+    .filter(shape => getGroupId(shape.annotation) === id);
+
 const LinkingPlugin = (anno, viewer) => {
 
   const svg = anno._element.querySelector('svg');
@@ -29,6 +48,10 @@ const LinkingPlugin = (anno, viewer) => {
   const groupLayer = new GroupLayer(svg);
 
   let isCtrlDown = false;
+
+  let currentGroupId = null;
+
+  let currentGroup = [];
 
   const onOSDChanged = () => groupLayer.redraw();
 
@@ -53,36 +76,56 @@ const LinkingPlugin = (anno, viewer) => {
     }
   });
 
-  anno.on('cancelSelected', () => groupLayer.clear());
-  anno.on('createAnnotation', () => groupLayer.clear());
-  anno.on('updateAnnotation', () => groupLayer.clear());
-  anno.on('deleteAnnotation', () => groupLayer.clear());
+  anno.on('changeSelectionTarget', () => groupLayer.redraw());
 
-  /**
-   * TODO handle GROUP REMOVAL!
-   */
+  const clear = () => {
+    groupLayer.clear();
+    currentGroup = null;
+    currentGroupId = null;
+  }
+
+  // Could be simplified with https://github.com/recogito/annotorious/issues/160
+  anno.on('cancelSelected', clear);
+  anno.on('createAnnotation', clear);
+  anno.on('updateAnnotation', clear);
+  anno.on('deleteAnnotation', clear);
+
+  // A new selection - part of a group? Highlight!
+  anno.on('selectAnnotation', annotation => {
+    currentGroupId = getGroupId(annotation);
+    if (currentGroupId) {
+      currentGroup = getShapesForGroup(currentGroupId, svg);
+      groupLayer.drawGroup(currentGroup);
+    }
+  });
 
   anno.on('clickAnnotation', (annotation, shape) => {
     if (isCtrlDown) {
       // Multi-select!
       const currentSelected = anno.getSelected(); // if any
+
       if (currentSelected) {
+        // There is already a selection - add or remove
         const selectedShape = svg.querySelector(`.a9s-annotation.selected`);
 
         // Group ID stored in the current selection (if any)
-        const selectedGroupId = getGroupId(currentSelected);
+        currentGroupId = getGroupId(currentSelected);
 
         // Group ID stored in the CTRL-clicked annotation (if any)
         const clickedGroupId = getGroupId(annotation);
 
-        if (selectedGroupId) {
-          // Selected group takes precedence! If the
-          // clicked annotation already has a group, it will
-          // be re-associated
-          const updatedClicked = setGroupId(annotation, selectedGroupId);
+        if (currentGroupId) {
+          let updatedClicked;
 
-          // Draw the group now...
-          groupLayer.drawGroup([ shape, selectedShape ]);
+          if (currentGroupId === clickedGroupId) {
+            // If the clicked annotation is in the same group: remove
+            updatedClicked = clearGroupId(annotation);
+            currentGroup = currentGroup.filter(shape => shape.annotation.id != annotation.id);
+          } else {
+            // otherwise: add to this group
+            updatedClicked = setGroupId(annotation, currentGroupId);
+            currentGroup = [ ...currentGroup, shape ];
+          }
 
           // ...but persist only if the user hits ok
           const onOk = () => {
@@ -91,20 +134,14 @@ const LinkingPlugin = (anno, viewer) => {
           }
 
           anno.once('createAnnotation', onOk);
-          anno.once('updateAnnotation', onOk);
-        } else if (clickedGroupId) {
-          // Selected annotation has no group, but CTRL-clicked one
-          // does -> associated selected annotation with the clicked one's
-          const updatedSelected = setGroupId(currentSelected, clickedGroupId);
-
-          // Update annotation...
-          anno.updateSelected(updatedSelected);          
+          anno.once('updateAnnotation', onOk);      
         } else {
           // No annotation is in a group - create new
-          const groupId = nanoid();
+          currentGroupId = nanoid();
+          currentGroup = [ selectedShape, shape ];
 
-          const updatedSelected = setGroupId(currentSelected, groupId);
-          const updatedClicked = setGroupId(annotation, groupId);
+          const updatedSelected = setGroupId(currentSelected, currentGroupId);
+          const updatedClicked = setGroupId(annotation, currentGroupId);
 
           // Update selection
           anno.updateSelected(updatedSelected);
@@ -118,6 +155,9 @@ const LinkingPlugin = (anno, viewer) => {
           anno.once('createAnnotation', onOk);
           anno.once('updateAnnotation', onOk);
         }
+
+        // Draw the group now...
+        groupLayer.drawGroup(currentGroup);
       } else {
         // There was no current selection - this is the first selection of the pair
         anno.selectAnnotation(annotation);
