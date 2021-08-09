@@ -6,8 +6,6 @@ export default class AnnotationGroup {
   constructor(selectedAnnotation, svg) {
     this.id = getGroupId(selectedAnnotation);
     this.shapes = getShapesForGroup(this.id, svg);
-
-    console.log(this.shapes);
     
     // For new groups, this.shapes will be empty, because
     // the group info is not stored in the DOM elemnet yet!

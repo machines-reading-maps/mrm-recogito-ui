@@ -26,7 +26,7 @@ export default class GroupPlugin {
   _initOSD(viewer) {
     const onOSDChanged = () => this.group?.redraw();
 
-    if (this.viewer) {
+    if (viewer) {
       viewer.addHandler('animation', onOSDChanged);
       viewer.addHandler('rotate', onOSDChanged);
       viewer.addHandler('resize', onOSDChanged);
