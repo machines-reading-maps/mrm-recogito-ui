@@ -77,6 +77,7 @@ export default class GroupPlugin {
       // In any case, persist potential updates when user click OKs
       const onOk = () => { 
         this.handleOk();
+        clearGroup();
       };
   
       if (annotation.type === 'Selection') {
@@ -100,14 +101,13 @@ export default class GroupPlugin {
         } else {
           // There was no current selection - this is the first selection of the pair
           this.anno.selectAnnotation(annotation);
-          onSelect(annotation);
+          setTimeout(() => onSelect(annotation), 10);
         }
       }
     });
 
     // On select, draw existing group, if anyand attach OK handlers
     this.anno.on('selectAnnotation', onSelect);
-  
   }
 
   /** 
