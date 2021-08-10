@@ -98,7 +98,8 @@ export default class GroupBorder {
   }
 
   destroy() {
-    this.svg.removeChild(this.g);
+    if (this.visible)
+      this.svg.removeChild(this.g);
 
     this.rect = null;
     this.g = null;

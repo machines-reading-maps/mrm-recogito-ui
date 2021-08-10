@@ -128,6 +128,16 @@ export default class GroupPlugin {
     }
 
     this.group.toggle(shape);
+
+    if (this.group.size === 1) {
+      console.log('Dropping group ID from selected');
+      const updated = clearGroupId(selectedAnnotation);
+      this.anno.updateSelected(updated);
+    } else if (getGroupId(selectedAnnotation) !== this.group.id) {
+      console.log('Re-adding group ID to selected');
+      const updated = setGroupId(selectedAnnotation, this.group.id);
+      this.anno.updateSelected(updated);
+    }
   }
 
   /** 
