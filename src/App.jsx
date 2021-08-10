@@ -33,6 +33,7 @@ const init = (width, height) => {
 
   // Initialize Annotorious
   const anno = new Annotorious(viewer, {
+    handleRadius:7,
     widgets: [
       ClassifyWidget,
       TranscribeWidget,

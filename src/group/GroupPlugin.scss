@@ -1,7 +1,52 @@
 .a9s-annotationlayer {
 
-  .a9s-annotation {
-    box-sizing:border-box;
+  .a9s-annotation.editable .a9s-inner:hover {
+    fill:rgba(255, 255, 255, 0.2);
+  }
+
+  .a9s-annotation.a9s-group-selected {
+
+    .a9s-inner {
+      stroke:#000;
+      stroke-width:2px;
+      stroke-dasharray:4;
+      animation:dash 0.8s linear infinite;
+    }
+
+    .a9s-outer {
+      stroke:#fff;
+      stroke-width:2px;
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset:8;
+      }
+    }
+
+    .a9s-handle {
+
+      .a9s-handle-inner {
+        fill:#000;
+        stroke:#fff;
+        stroke-width:2px;
+      }
+
+      .a9s-handle-outer {
+        stroke:#000;
+        stroke-width:6px;
+      }
+    
+    }
+
+    .a9s-handle:hover {
+
+      .a9s-handle-inner {
+        fill:#fff;
+      }
+
+    }
+
   }
 
 }
@@ -9,10 +54,8 @@
 .a9s-grouplayer {
 
   rect.a9s-group-border {
-    fill:rgba(255, 255, 255, 0.3);
-    stroke:#fff;
-    stroke-width:2px;
-    stroke-dasharray:4;
+    fill:rgba(255, 255, 255, 0.5);
+    stroke-width:0;
   }
 
 }

@@ -1,4 +1,5 @@
 import GroupBorder from './GroupBorder';
+import { addClass, hasClass, removeClass } from './SVG';
 import { getGroupId, getShapesForGroup } from './Utils';
 
 export default class AnnotationGroup {
@@ -6,6 +7,8 @@ export default class AnnotationGroup {
   constructor(selectedAnnotation, svg) {
     this.id = getGroupId(selectedAnnotation);
     this.shapes = getShapesForGroup(this.id, svg);
+
+    this.shapes.forEach(s => addClass(s, 'a9s-group-selected'));
     
     // For new groups, this.shapes will be empty, because
     // the group info is not stored in the DOM elemnet yet!
@@ -43,6 +46,8 @@ export default class AnnotationGroup {
   addToGroup(shape) {
     this.shapes = [ ...this.shapes, shape ];
 
+    addClass(shape, 'a9s-group-selected');
+
     this.changes[shape.annotation.id] = 
       { before: getGroupId(shape.annotation), after: this.id };
 
@@ -53,6 +58,8 @@ export default class AnnotationGroup {
     this.shapes = this.shapes.filter(s => 
       s.annotation.id != shape.annotation.id);
 
+    removeClass(shape, 'a9s-group-selected');
+    
     // Add to changes list
     this.changes[shape.annotation.id] = 
       { before: getGroupId(shape.annotation), after: null };

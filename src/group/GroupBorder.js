@@ -1,4 +1,4 @@
-const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+import { SVG_NAMESPACE } from './SVG';
 
 const getGroupBounds = (shapes, svg) => {
   const svgBounds = svg.getBoundingClientRect();
@@ -54,8 +54,7 @@ export default class GroupBorder {
 
     this.svg.insertBefore(this.g, svg.firstChild);
 
-    if (shapes.length > 1)
-      this.draw();
+    this.draw();
   }
 
   // Draw a group around the given SVG shapes
@@ -63,7 +62,7 @@ export default class GroupBorder {
     if (shapes)
       this.shapes = shapes;
 
-    if (this.shapes.length > 0) {
+    if (this.shapes.length > 1) {
       const { x, y, width, height } = getGroupBounds(this.shapes, this.svg);
 
       // Lazy create
