@@ -52,8 +52,6 @@ export default class GroupBorder {
     // Current group, if any (so we can redraw when needed)
     this.shapes = shapes || [];
 
-    this.svg.insertBefore(this.g, svg.firstChild);
-
     this.draw();
   }
 
@@ -63,6 +61,8 @@ export default class GroupBorder {
       this.shapes = shapes;
 
     if (this.shapes.length > 1) {
+      this.visible = true;
+
       const { x, y, width, height } = getGroupBounds(this.shapes, this.svg);
 
       // Lazy create
@@ -76,11 +76,25 @@ export default class GroupBorder {
       this.rect.setAttribute('y', y);
       this.rect.setAttribute('width', width);
       this.rect.setAttribute('height', height);
+    } else {
+      this.visible = false;
     }
   }
 
   redraw() {
     this.draw();
+  }
+
+  get visible() {
+    return this.g.parentNode;
+  }
+
+  set visible(visible) {
+    if (visible && !this.visible) {
+      this.svg.insertBefore(this.g, this.svg.firstChild);
+    } else if (!visible && this.visible) {
+      this.svg.removeChild(this.g);
+    }
   }
 
   destroy() {

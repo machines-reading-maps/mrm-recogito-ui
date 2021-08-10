@@ -137,6 +137,10 @@ export default class GroupPlugin {
    */
   handleOk() {
     if (this.group) {
+      if (this.group.size === 1) {
+        console.log('size 1');
+      }
+
       for (let id in this.group.changes) {
         const { before, after } = this.group.changes[id];
         if (before != after) {

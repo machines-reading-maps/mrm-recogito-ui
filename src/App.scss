@@ -27,44 +27,33 @@ body {
   margin-left:210px;
 }
 
-.a9s-annotation.ENTITY {
-  
-  .a9s-outer {
-    stroke-width:4px;
-    stroke:black;
+.a9s-annotationlayer {
+
+  .a9s-annotation {
+
+    .a9s-inner {
+      stroke: #de0808;
+      stroke-width: 2px;
+    }
+
+    .a9s-outer {
+      stroke-width:5px;
+      stroke:rgba(255, 255, 255, 0.5);
+      stroke-linejoin:round;
+    }
+
   }
 
-  .a9s-inner {
-    stroke-width:2px;
-    stroke:red;
+  .a9s-annotation.ENTITY .a9s-inner {
+    stroke: #c11212;
   }
 
-}
-
-.a9s-annotation.LABEL {
-
-  .a9s-outer {
-    stroke-width:4px;
-    stroke:black;
+  .a9s-annotation.LABEL .a9s-inner {
+    stroke:#3333b9;
   }
 
-  .a9s-inner {
-    stroke-width:2px;
-    stroke:blue;
-  }
-
-}
-
-.a9s-annotation.SYMBOL {
-
-  .a9s-outer {
-    stroke-width:4px;
-    stroke:black;
-  }
-
-  .a9s-inner {
-    stroke-width:2px;
-    stroke:green;
+  .a9s-annotation.SYMBOL .a9s-inner {
+    stroke:#137713;
   }
 
 }
