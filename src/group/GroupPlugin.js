@@ -108,6 +108,7 @@ export default class GroupPlugin {
 
     // On select, draw existing group, if anyand attach OK handlers
     this.anno.on('selectAnnotation', onSelect);
+    this.anno.on('createSelection', onSelect);
   }
 
   /** 
