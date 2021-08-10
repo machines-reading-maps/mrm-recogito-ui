@@ -117,24 +117,27 @@ export default class GroupPlugin {
   handleCtrlClick(shape) {
     const selectedAnnotation = this.anno.getSelected();
 
-    const existingGroupId = getGroupId(selectedAnnotation);
-    if (!existingGroupId) {
-      // If the selection is not part of a group, create one
-      const updated = setGroupId(selectedAnnotation, nanoid());
-      this.anno.updateSelected(updated);
+    // Ignore CTRL+click on selected annotation
+    if (shape.annotation.id !== selectedAnnotation.id) {
+      const existingGroupId = getGroupId(selectedAnnotation);
+      if (!existingGroupId) {
+        // If the selection is not part of a group, create one
+        const updated = setGroupId(selectedAnnotation, nanoid());
+        this.anno.updateSelected(updated);
 
-      this.group?.destroy();
-      this.group = new AnnotationGroup(updated, this.svg);
-    }
+        this.group?.destroy();
+        this.group = new AnnotationGroup(updated, this.svg);
+      }
 
-    this.group.toggle(shape);
+      this.group.toggle(shape);
 
-    if (this.group.size === 1) {
-      const updated = clearGroupId(selectedAnnotation);
-      this.anno.updateSelected(updated);
-    } else if (getGroupId(selectedAnnotation) !== this.group.id) {
-      const updated = setGroupId(selectedAnnotation, this.group.id);
-      this.anno.updateSelected(updated);
+      if (this.group.size === 1) {
+        const updated = clearGroupId(selectedAnnotation);
+        this.anno.updateSelected(updated);
+      } else if (getGroupId(selectedAnnotation) !== this.group.id) {
+        const updated = setGroupId(selectedAnnotation, this.group.id);
+        this.anno.updateSelected(updated);
+      }
     }
   }
 
@@ -145,16 +148,10 @@ export default class GroupPlugin {
    */
   handleOk() {
     if (this.group) {
-      if (this.group.size === 1) {
-        console.log('size 1');
-      }
-
       for (let id in this.group.changes) {
         const { before, after } = this.group.changes[id];
         if (before != after) {
           const annotationBefore = this.svg.querySelector(`.a9s-annotation[data-id="${id}"]`).annotation.underlying;
-
-          console.log('updating', annotationBefore);
 
           const annotationAfter = after ? 
             setGroupId(annotationBefore, after) : clearGroupId(annotationBefore);
