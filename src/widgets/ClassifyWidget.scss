@@ -36,22 +36,20 @@
     border-color:transparent;
   }
 
+  button.selected {
+    color:#fff;
+  }
+
   button.entity.selected {
-    background-color:#fdeee0;
-    box-shadow:inset 0 0 24px #ff7800;
-    border-color:#eda25f;
+    background-color:#d65353;
   }
 
   button.label.selected {
-    background-color:#e6eaff;
-    box-shadow:inset 0 0 24px #8099ff;
-    border-color:#748efb;
+    background-color:#5d5dff;
   }
 
   button.symbol.selected {
-    background-color:#c3ffb0;
-    box-shadow:inset 0 0 24px #2ab900;
-    border-color:#28ad01;
+    background-color:#009000;
   }
 
 }
