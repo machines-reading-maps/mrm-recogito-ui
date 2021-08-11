@@ -33,9 +33,9 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@recogito/annotorious-openseadragon": "^2.5.3",
+    "@recogito/annotorious-openseadragon": "^2.5.4",
     "@recogito/annotorious-selector-pack": "^0.1.2",
-    "@recogito/annotorious-tilted-box": "^0.1.2",
+    "@recogito/annotorious-tilted-box": "^0.2.0",
     "@recogito/annotorious-toolbar": "^1.0.1",
     "@recogito/recogito-legacy-storage": "^0.1.6",
     "nanoid": "^3.1.23",
