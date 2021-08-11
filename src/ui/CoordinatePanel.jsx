@@ -6,7 +6,7 @@ const CoordinatePanel = props => {
 
   const [ mouseXY, setMouseXY ] = useState();
 
-  const onMouseMove = precision => evt => {
+  const onImageMouseMove = precision => evt => {
     const viewportPoint = props.viewer.viewport.pointFromPixel(evt.position);
     const imagePoint = props.viewer.viewport.viewportToImageCoordinates(viewportPoint);
 
@@ -16,10 +16,25 @@ const CoordinatePanel = props => {
     setMouseXY({ x, y });
   }
 
+  const onMapMouseMove = precision => evt => {
+    const viewportPoint = props.viewer.viewport.pointFromPixel(evt.position);
+    const lonlat = props.map.viewportToGeoCoordinates(viewportPoint);
+
+    const x = lonlat[0].toFixed(precision);
+    const y = lonlat[1].toFixed(precision);
+
+    setMouseXY({ x, y });
+  }
+
   useEffect(() => {
+    // Display lon/lat in case it's a map, X/Y other
+    const onMouseMove = props.map ? 
+      onMapMouseMove(5) :
+      onImageMouseMove(1);
+
     const tracker = new OpenSeadragon.MouseTracker({
       element: props.viewer.container,
-      moveHandler: onMouseMove(1) 
+      moveHandler: onMouseMove 
     });
 
     tracker.setTracking(true);
@@ -29,8 +44,8 @@ const CoordinatePanel = props => {
 
   return (
     <div className="mrm-coordinate-panel">
-      <span>X: { mouseXY?.x || '-' }</span>
-      <span>Y: { mouseXY?.y || '-' }</span>
+      <span>{props.map ? 'Lon' : 'X'}: { mouseXY?.x || '-' }</span>
+      <span>{props.map ? 'Lat' : 'Y'}: { mouseXY?.y || '-' }</span>
     </div>
   )
 
