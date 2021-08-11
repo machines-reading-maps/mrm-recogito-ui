@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon/src';
 
+import { initViewer } from './TileSources';
+
 // Off-the-shelf(-ish) Annotorious plugins
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
@@ -17,27 +19,15 @@ import ToolPanel from './ui/ToolPanel';
 
 import './App.scss';
 
-const init = (width, height) => {
-
-  // Initialize OpenSeadragon viewer
-  const viewer = OpenSeadragon({
-    id:'image-pane',
-    prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/",
-    tileSources: [{
-      type: 'zoomifytileservice',
-      width: width,
-      height: height,
-      tilesUrl: '/document/' + config.documentId + '/part/' + config.partSequenceNo + '/tiles/'
-    }]
-  });
+const initAnnotorious = viewer => {
 
   // Initialize Annotorious
   const anno = new Annotorious(viewer, {
     widgets: [
       ClassifyWidget,
       TranscribeWidget,
-      'COMMENT'
-      // 'TAG'
+      'COMMENT',
+      'TAG'
     ],
     formatter: ClassifyFormatter
   });
@@ -46,15 +36,6 @@ const init = (width, height) => {
     id: window.config.me,
     displayName: window.config.me
   });
-
-  anno.on('createAnnotation', a => {
-    console.log('created', a);
-  });
-
-  anno.on('updateAnnotation', a => {
-    console.log('updated', a);
-  })
-
 
   // Add extra drawing tools
   new SelectorPack(anno);
@@ -66,35 +47,32 @@ const init = (width, height) => {
   // Add linking plugin
   new GroupPlugin(anno, viewer);
 
-  return { viewer, anno };
+  return anno;
 };
 
 const App = props => {
 
   const [ viewer, setViewer ] = useState();
 
+  const [ map, setMap ] = useState();
+
   const [ anno, setAnno ] = useState();
   
   // Load document metadata + init annotation layer when App mounts
   useEffect(() => {
-    fetch(`/document/${window.config.documentId}/part/${window.config.partSequenceNo}/manifest`)
-      .then(response => response.text())
-      .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-      .then(data => {
-        const props = data.firstChild;
-        const width = parseInt(props.getAttribute('WIDTH'));
-        const height = parseInt(props.getAttribute('HEIGHT'));
+    // Viewer initialization differs based on content type
+    initViewer(window.config).then(({ viewer, map }) => {
+      const anno = initAnnotorious(viewer);
 
-        const { viewer, anno } = init(width, height);
-
-        setViewer(viewer);
-        setAnno(anno);
-      });
+      setMap(map); // Only in case of WMTS
+      setViewer(viewer);
+      setAnno(anno);
+    });
   }, []);
 
   return (
     <div>
-      { viewer && <CoordinatePanel viewer={viewer} /> }
+      { viewer && <CoordinatePanel viewer={viewer} map={map} /> }
       { anno && <ToolPanel anno={anno} /> }
     </div>
   );
