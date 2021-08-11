@@ -45,10 +45,41 @@ body {
       stroke-width:5px;
       stroke:rgba(255, 255, 255, 0.5);
       stroke-linejoin:round;
+    }    
+  
+  }
+
+  .a9s-selection.tilted-box,
+  .a9s-annotation.tilted-box {
+
+    .a9s-tilted-box-baseline {
+
+      // Note: the !important flags can go after the next plugin release
+
+      .a9s-inner {
+        stroke:#fff;
+        stroke-width:3px !important;
+      }
+
+      .a9s-outer {
+        stroke:#000;
+        stroke-width:6px !important;
+      }
+    
+    }
+
+    .a9s-minor-handle {
+      stroke:#000 !important;
+      stroke-width:4px !important;
+    }
+
+    .a9s-minor-handle:hover {
+      fill:#fff !important;
     }
 
   }
 
+  .a9s-selection, 
   .a9s-annotation.selected {
  
     .a9s-handle {
