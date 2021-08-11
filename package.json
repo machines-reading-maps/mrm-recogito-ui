@@ -39,6 +39,7 @@
     "@recogito/annotorious-toolbar": "^1.0.1",
     "@recogito/recogito-legacy-storage": "^0.1.6",
     "nanoid": "^3.1.23",
+    "openseadragon-wmts": "^0.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-icons": "^4.2.0"

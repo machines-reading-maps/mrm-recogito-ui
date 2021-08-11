@@ -8,6 +8,7 @@
     <script src="/webjars/jquery/1.12.0/jquery.min.js" ></script>
     <script>
       /*
+      // Image upload sample
       window.config = {
         me: 'rainer',
         features: ['webmaps','annotorious','mrm'],
@@ -27,6 +28,8 @@
       }
       */
 
+      /*
+      // IIIF sample
       window.config = {
         me: 'rainer',
         features: ['webmaps', 'annotorious', 'mrm'],
@@ -35,6 +38,26 @@
         partId: '820d69fb-022f-4cf7-9367-47ffcf746061',
         partSequenceNo: 1,
         contentType: 'IMAGE_IIIF',
+        isPublic: false,
+        writeAccess: true,
+        isAdmin: true,
+        clones: [],
+        authorities: {
+          gazetteers: {}
+        },
+        vocabulary: []
+      }
+      */
+
+      // WMTS sample
+      window.config = {
+        me: 'rainer',
+        features: ['webmaps', 'annotorious', 'mrm'],
+        documentId: 'utktb2rga3fiyv',
+        documentOwner: 'rainer',
+        partId: 'e3dde484-aa85-4332-b76c-deb5753b676f',
+        partSequenceNo: 1,
+        contentType: 'MAP_WMTS',
         isPublic: false,
         writeAccess: true,
         isAdmin: true,
