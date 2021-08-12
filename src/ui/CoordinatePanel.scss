@@ -4,16 +4,21 @@
   left: 30px;
   padding: 8px;
   z-index: 999;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.5);
   border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.5);
   box-shadow: 0 0 8px rgb(0,0,0,0.35);
-  color: #fff;
+  color: #333;
   font-size: 17px;
+  transition:background-color 0.2s linear;
 
   span {
     display:inline-block;
     margin:0 4px;
   }
 
+}
+
+.mrm-coordinate-panel:hover {
+  background-color: rgba(255,255,255,1);
 }

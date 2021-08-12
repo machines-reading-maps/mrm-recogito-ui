@@ -4,11 +4,12 @@
   right: 30px;
   padding: 0;
   z-index: 999;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.5);
   border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.5);
   box-shadow: 0 0 8px rgb(0,0,0,0.35);
   overflow:hidden;
+  transition:background-color 0.2s linear;
 
   button.a9s-toolbar-btn {
     display:block;
@@ -16,31 +17,30 @@
     border-radius:0;
   }
 
-  button.a9s-toolbar-btn:hover,
+  button.a9s-toolbar-btn:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+
   button.a9s-toolbar-btn.active {
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
-  .a9s-toolbar-btn svg * {
-    stroke-width:5px;
-    fill:none;
-    stroke:rgba(255,255,255,0.5);
+  button.a9s-toolbar-btn.active {
+
+    * {
+      stroke: rgba(255,255,255,0.6);
+    }
+
+    .handles circle {
+      stroke-width:4px;
+      fill:#000;
+      stroke:#fff;
+    }
+  
   }
 
-  .a9s-toolbar-btn .handles circle {
-    stroke-width:4px;
-    fill:#000;
-    stroke:#fff;
-  }
+}
 
-  .a9s-toolbar-btn.active svg * {
-    stroke:rgba(255,255,255,0.5);
-  }
-
-  .a9s-toolbar-btn.active .handles circle {
-    stroke-width:4px;
-    fill:#000;
-    stroke:#fff;
-  }
-
+.mrm-toolbar:hover {
+  background-color: rgba(255,255,255,1);
 }

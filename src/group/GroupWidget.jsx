@@ -33,7 +33,7 @@ const GroupWidget = groupPlugin => props => {
   }
 
   return (
-    <div className="r6o-widget group-plugin">
+    <div className="r6o-widget group-plugin r6o-nodrag">
       <div className="group-status">
         <GrObjectUngroup /> 
         {groupSize > 1 ? 
