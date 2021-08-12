@@ -90,7 +90,7 @@ export default class GroupPlugin extends Emitter {
       }
   
       // In any case, persist potential updates when user click OKs
-      const onOk = () => { 
+      const onOk = selected => {
         this.handleOk();
         clearGroup();
       };
@@ -146,7 +146,6 @@ export default class GroupPlugin extends Emitter {
       }
 
       this.group.toggle(shape);
-
       this.emit('changeGroup', this.group.annotations);
 
       if (this.group.size === 1) {
