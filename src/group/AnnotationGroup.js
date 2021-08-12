@@ -28,6 +28,10 @@ export default class AnnotationGroup {
     return this.shapes.length;
   }
 
+  get annotations() {
+    return this.shapes.map(s => s.annotation.clone());
+  }
+
   /** 
    * Adds the given annotation to the group if it's not yet
    * part of it, removes otherwise.
@@ -72,6 +76,7 @@ export default class AnnotationGroup {
   }
 
   destroy() {
+    this.shapes.forEach(s => removeClass(s, 'a9s-group-selected'));
     this.border?.destroy();
   }
 

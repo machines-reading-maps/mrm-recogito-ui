@@ -1,13 +1,17 @@
 import { nanoid } from 'nanoid';
+import Emitter from 'tiny-emitter';
 
 import AnnotationGroup from './AnnotationGroup';
 import { clearGroupId, getGroupId, setGroupId } from './Utils';
+import GroupWidget from './widget/GroupWidget';
 
 import './GroupPlugin.scss';
 
-export default class GroupPlugin {
+export default class GroupPlugin extends Emitter {
 
   constructor(anno, viewer) {
+    super();
+    
     this.anno = anno;
 
     this.svg = anno._element.querySelector('svg');
@@ -21,6 +25,8 @@ export default class GroupPlugin {
 
     this._addKeyListeners();
     this._addAnnoListeners();
+
+    this.editorWidget = GroupWidget(this);
   }
 
   _initOSD(viewer) {
@@ -66,12 +72,17 @@ export default class GroupPlugin {
     const onSelect = annotation => {
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
-      if (groupId)
+      if (groupId) {
         this.group = new AnnotationGroup(annotation, this.svg);
+
+        this.emit('selectGroup', this.group.annotations);
+      }
 
       const removeHandlers = () => {
         this.anno.off('createAnnotation', onOk);
         this.anno.off('updateAnnotation', onOk);
+        this.anno.off('cancelSelected', onOk);
+        this.anno.off('deleteAnnotation', onOk);
       }
   
       // In any case, persist potential updates when user click OKs
@@ -87,8 +98,8 @@ export default class GroupPlugin {
       }
 
       // Remove handlers on cancel and delete
-      this.anno.on('cancelSelected', removeHandlers);
-      this.anno.on('deleteAnnotation', removeHandlers);
+      this.anno.once('cancelSelected', removeHandlers);
+      this.anno.once('deleteAnnotation', removeHandlers);
     };
 
     this.anno.on('clickAnnotation', (annotation, shape) => {
@@ -131,6 +142,8 @@ export default class GroupPlugin {
       }
 
       this.group.toggle(shape);
+
+      this.emit('changeGroup', this.group.annotations);
 
       if (this.group.size === 1) {
         const updated = clearGroupId(selectedAnnotation);

@@ -22,13 +22,7 @@ import './App.scss';
 const initAnnotorious = viewer => {
 
   // Initialize Annotorious
-  const anno = new Annotorious(viewer, {
-    widgets: [
-      ClassifyWidget,
-      TranscribeWidget,
-      'COMMENT',
-      'TAG'
-    ],
+  const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter
   });
 
@@ -45,7 +39,15 @@ const initAnnotorious = viewer => {
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  new GroupPlugin(anno, viewer);
+  const groups = new GroupPlugin(anno, viewer);
+
+  anno.setWidgets([
+    ClassifyWidget,
+    TranscribeWidget,
+    'COMMENT',
+    'TAG',
+    groups.editorWidget
+  ]);
 
   return anno;
 };
@@ -57,6 +59,8 @@ const App = props => {
   const [ map, setMap ] = useState();
 
   const [ anno, setAnno ] = useState();
+
+  const [ groups, setGroups ] = useState(); 
   
   // Load document metadata + init annotation layer when App mounts
   useEffect(() => {
