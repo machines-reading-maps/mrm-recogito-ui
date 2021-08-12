@@ -5,6 +5,8 @@ const GroupWidget = groupPlugin => props => {
 
   const [ groupSize, setGroupSize ] = useState();
 
+  const [ requireCtrlKey, setRequireCtrlKey ] = useState(true);
+
   useEffect(() => {
     setGroupSize(groupPlugin.group?.size || 0);
 
@@ -21,8 +23,9 @@ const GroupWidget = groupPlugin => props => {
     }
   }, []);
 
-  const onAddToGroup = () => {
-    
+  const onToggleAddToGroup = () => {
+    groupPlugin.requireCtrlKey = !requireCtrlKey;
+    setRequireCtrlKey(!requireCtrlKey);
   }
 
   const onClearGroup = () => {
@@ -40,8 +43,10 @@ const GroupWidget = groupPlugin => props => {
       </div>
 
       <div className="buttons">
-        <button onClick={onAddToGroup}>Add Annotations</button>
-        <button onClick={onClearGroup}>Clear Group</button>
+        <button onClick={onToggleAddToGroup}>
+         {requireCtrlKey ? 'Add or remove' : 'Done' }
+        </button>
+        <button onClick={onClearGroup}>Clear group</button>
       </div>
     </div>
   )

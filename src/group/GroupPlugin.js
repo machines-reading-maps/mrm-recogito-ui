@@ -3,9 +3,11 @@ import Emitter from 'tiny-emitter';
 
 import AnnotationGroup from './AnnotationGroup';
 import { clearGroupId, getGroupId, setGroupId } from './Utils';
-import GroupWidget from './widget/GroupWidget';
+import GroupWidget from './GroupWidget';
 
 import './GroupPlugin.scss';
+
+let isRequireCtrlKey = true;
 
 export default class GroupPlugin extends Emitter {
 
@@ -51,7 +53,7 @@ export default class GroupPlugin extends Emitter {
     document.addEventListener('keyup', evt => {
       if (evt.which === 17) { // CTRL
         this.isCtrlDown = false;
-        this.anno.disableSelect = false;
+        this.anno.disableSelect = !isRequireCtrlKey;
       }
     });  
   }
@@ -63,6 +65,8 @@ export default class GroupPlugin extends Emitter {
     const clearGroup = () => {
       this.group?.destroy();
       this.group = null;
+
+      this.requireCtrlKey = true;
     }
   
     // Just destroy the group on cancel or delete
@@ -103,7 +107,7 @@ export default class GroupPlugin extends Emitter {
     };
 
     this.anno.on('clickAnnotation', (annotation, shape) => {
-      if (this.isCtrlDown) {
+      if (this.isCtrlDown || !isRequireCtrlKey) {
         // Multi-select!
         const currentSelected = this.anno.getSelected(); // if any
   
@@ -171,7 +175,9 @@ export default class GroupPlugin extends Emitter {
             setGroupId(annotationBefore, after) : clearGroupId(annotationBefore);
           
           this.anno.addAnnotation(annotationAfter);
-          this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);        
+          this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
+          
+          this.requireCtrlKey = true;
         }
       }
     }
@@ -182,6 +188,15 @@ export default class GroupPlugin extends Emitter {
 
     const selected = this.anno.getSelected();
     this.anno.updateSelected(clearGroupId(selected));
+  }
+
+  get requireCtrlKey() {
+    return isRequireCtrlKey;
+  }
+
+  set requireCtrlKey(require) {
+    isRequireCtrlKey = require;
+    this.anno.disableSelect = !require || this.isCtrlDown;
   }
 
 }
