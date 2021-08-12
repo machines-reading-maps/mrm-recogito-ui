@@ -11,6 +11,17 @@ body {
     font-size:16px;
   }
 
+  .r6o-widget.r6o-tag .r6o-autocomplete input {
+    font-family:'PTSansNarrow';
+    font-size:16px;
+    padding-left:7px;
+    letter-spacing: 1px;
+  }
+
+  .r6o-footer {
+    cursor:move;
+  }
+
 }
 
 .r6o-editor textarea:focus {

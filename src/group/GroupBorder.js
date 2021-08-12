@@ -9,8 +9,10 @@ const getGroupBounds = (shapes, svg) => {
   let maxY = 0;
   
   shapes.forEach(s => {
+    const outer = s.querySelector('.a9s-outer');
+
     // Note that we can't use getBBox() because it doesn't take transforms into account
-    const shapeBounds = s.getBoundingClientRect();
+    const shapeBounds = outer.getBoundingClientRect();
 
     const x = shapeBounds.x - svgBounds.x;
     const y = shapeBounds.y - svgBounds.y;
@@ -31,10 +33,10 @@ const getGroupBounds = (shapes, svg) => {
   });
 
   return {
-    x: minX,
-    y: minY,
-    width: maxX - minX,
-    height: maxY - minY
+    x: minX - 1,
+    y: minY - 1,
+    width: maxX - minX + 2,
+    height: maxY - minY + 2
   };
 }
 
@@ -91,7 +93,7 @@ export default class GroupBorder {
 
   set visible(visible) {
     if (visible && !this.visible) {
-      this.svg.insertBefore(this.g, this.svg.firstChild);
+      this.svg.appendChild(this.g, this.svg.firstChild);
     } else if (!visible && this.visible) {
       this.svg.removeChild(this.g);
     }
