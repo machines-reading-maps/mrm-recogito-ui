@@ -42,3 +42,46 @@
   }
 
 }
+
+.r6o-editor .r6o-widget.group-plugin {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  padding:8px 10px;
+
+  .group-status {
+    font-size:20px;
+
+    label {
+      font-size:16px;
+    }
+
+    label.not-grouped {
+      color:#727272;
+    }
+
+    svg {
+      margin-right:6px;
+      vertical-align:middle;
+
+      path {
+        stroke:#727272;
+      }
+    
+    }
+  }
+
+  .buttons {
+
+    button {
+      background:none;
+      border:none;
+      outline:none;
+      color:#4f92d7;
+      cursor:pointer;
+      text-decoration:underline;
+    }
+
+  }
+
+}

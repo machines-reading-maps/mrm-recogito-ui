@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { GrObjectUngroup } from 'react-icons/gr';
 
 const GroupWidget = groupPlugin => props => {
 
@@ -20,9 +21,28 @@ const GroupWidget = groupPlugin => props => {
     }
   }, []);
 
+  const onAddToGroup = () => {
+    
+  }
+
+  const onClearGroup = () => {
+    groupPlugin.clearGroup();
+  }
+
   return (
     <div className="r6o-widget group-plugin">
-      Current size: {groupSize}
+      <div className="group-status">
+        <GrObjectUngroup /> 
+        {groupSize > 1 ? 
+          <label>{groupSize} annotations in group</label> :
+          <label className="not-grouped">Not grouped</label>
+        }
+      </div>
+
+      <div className="buttons">
+        <button onClick={onAddToGroup}>Add Annotations</button>
+        <button onClick={onClearGroup}>Clear Group</button>
+      </div>
     </div>
   )
 

@@ -177,4 +177,11 @@ export default class GroupPlugin extends Emitter {
     }
   }
 
+  clearGroup() {
+    this.group.clearGroup();
+
+    const selected = this.anno.getSelected();
+    this.anno.updateSelected(clearGroupId(selected));
+  }
+
 }

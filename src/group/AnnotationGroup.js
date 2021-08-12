@@ -71,6 +71,10 @@ export default class AnnotationGroup {
     this.border.draw(this.shapes);
   }
 
+  clearGroup() {
+    [...this.shapes].forEach(s => this.removeFromGroup(s));
+  }
+
   redraw() {
     this.border?.redraw();
   }
