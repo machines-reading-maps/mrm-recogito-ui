@@ -1,5 +1,5 @@
 import GroupBorder from './GroupBorder';
-import { addClass, hasClass, removeClass } from './SVG';
+import { addClass, removeClass } from './SVG';
 import { getGroupId, getShapesForGroup } from './Utils';
 
 export default class AnnotationGroup {

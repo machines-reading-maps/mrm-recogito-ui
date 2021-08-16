@@ -16,14 +16,18 @@ import GroupPlugin from './group/GroupPlugin';
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
+import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
 
 const initAnnotorious = viewer => {
 
   // Initialize Annotorious
+  const gigapixelMode = window.config.contentType === 'MAP_WMTS';
+
   const anno = new Annotorious(viewer, {    
-    formatter: ClassifyFormatter
+    formatter: ClassifyFormatter,
+    gigapixelMode
   });
 
   anno.setAuthInfo({
@@ -78,6 +82,7 @@ const App = props => {
     <div>
       { viewer && <CoordinatePanel viewer={viewer} map={map} /> }
       { anno && <ToolPanel anno={anno} /> }
+      { viewer && <MapKuratorControl viewer={viewer} map={map} /> }
     </div>
   );
 
