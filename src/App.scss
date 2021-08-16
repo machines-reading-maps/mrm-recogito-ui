@@ -15,7 +15,103 @@ body {
     font-family:'PTSansNarrow';
     font-size:16px;
     padding-left:7px;
-    letter-spacing: 1px;
+    letter-spacing: 1px;.a9s-annotationlayer {
+      outline:none;
+    
+      .a9s-annotation,
+      .a9s-selection {
+    
+        .a9s-inner {
+          stroke:#000;
+          stroke-width: 2px;
+        }
+    
+        .a9s-outer {
+          stroke-width:5px;
+          stroke:rgba(255, 255, 255, 0.5);
+          stroke-linejoin:round;
+        }    
+      
+      }
+    
+      .a9s-selection.tilted-box,
+      .a9s-annotation.tilted-box {
+    
+        .a9s-tilted-box-baseline {
+    
+          // Note: the !important flags can go after the next plugin release
+    
+          .a9s-inner {
+            stroke:#fff;
+            stroke-width:3px !important;
+          }
+    
+          .a9s-outer {
+            stroke:#000;
+            stroke-width:6px !important;
+          }
+        
+        }
+    
+        .a9s-minor-handle {
+          stroke:#000 !important;
+          stroke-width:4px !important;
+        }
+    
+        .a9s-minor-handle:hover {
+          fill:#fff !important;
+        }
+    
+      }
+    
+      .a9s-selection, 
+      .a9s-annotation.selected {
+     
+        .a9s-handle {
+    
+          .a9s-handle-inner {
+            fill:#000;
+            stroke:#fff;
+            stroke-width:2px;
+          }
+    
+          .a9s-handle-outer {
+            stroke:#000;
+            stroke-width:6px;
+          }
+        
+        }
+    
+        .a9s-handle:hover {
+    
+          .a9s-handle-inner {
+            fill:#fff;
+          }
+    
+        }
+    
+      }
+    
+      .a9s-annotation.ENTITY .a9s-inner,
+      .a9s-annotation.ENTITY.selected .a9s-inner {
+        stroke:#bf0707;
+      }
+    
+      .a9s-annotation.LABEL .a9s-inner,
+      .a9s-annotation.LABEL.selected .a9s-inner {
+        stroke:#3333b9;
+      }
+    
+      .a9s-annotation.SYMBOL .a9s-inner,
+      .a9s-annotation.SYMBOL.selected .a9s-inner {
+        stroke:#137713;
+      }
+    
+    }
+    
+    #image-pane .openseadragon-canvas {
+      outline:none;
+    }
   }
 
   .r6o-footer {
@@ -36,6 +132,15 @@ body {
   bottom:auto;
   left:auto;
   margin-left:210px;
+
+  svg {
+    // Don't ask me why - but Firefox this needs this,
+    // otherwise the canvas sometimes collapses to 0x0
+    // on updates.
+    min-width:10px;
+    min-height:10px;
+  }
+  
 }
 
 .r6o-editor .r6o-editor-inner {
