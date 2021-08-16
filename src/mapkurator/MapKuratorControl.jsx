@@ -7,16 +7,32 @@ import './MapKuratorControl.scss';
 
 const MapKuratorControl = props => {
 
-  /** Start selecting a region for mapKurator **/
   const onSelectRegion = () => {
-    console.log('start selection!');
-
     const selectionLayer = new SelectionLayer(props);
 
     selectionLayer.on('select', bbox => {
 
-      // TODO contact mapKurator service and wait for WebAnnotations
-      console.log('bbox', bbox);
+      const data = {
+        task_type: 'MAPKURATOR',
+        documents: [ props.config.documentId ],
+        minLon: bbox[0][0],
+        minLat: bbox[0][1],
+        maxLon: bbox[1][0],
+        maxLat: bbox[1][1]
+      }
+
+      fetch('/api/job', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
 
     });
   }

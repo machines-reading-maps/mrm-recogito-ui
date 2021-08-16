@@ -82,7 +82,7 @@ const App = props => {
     <div>
       { viewer && <CoordinatePanel viewer={viewer} map={map} /> }
       { anno && <ToolPanel anno={anno} /> }
-      { viewer && <MapKuratorControl viewer={viewer} map={map} /> }
+      { viewer && <MapKuratorControl config={window.config} viewer={viewer} map={map} /> }
     </div>
   );
 
