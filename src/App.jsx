@@ -27,7 +27,13 @@ const initAnnotorious = viewer => {
 
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
-    gigapixelMode
+    gigapixelMode,
+    widgets: [
+      ClassifyWidget,
+      TranscribeWidget,
+      'COMMENT',
+      'TAG'
+    ]
   });
 
   anno.setAuthInfo({
@@ -43,16 +49,8 @@ const initAnnotorious = viewer => {
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  const groups = new GroupPlugin(anno, viewer);
-
-  anno.setWidgets([
-    ClassifyWidget,
-    TranscribeWidget,
-    'COMMENT',
-    'TAG',
-    groups.editorWidget
-  ]);
-
+  new GroupPlugin(anno, viewer);
+  
   return anno;
 };
 

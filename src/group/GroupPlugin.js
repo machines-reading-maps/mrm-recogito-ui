@@ -28,7 +28,7 @@ export default class GroupPlugin extends Emitter {
     this._addKeyListeners();
     this._addAnnoListeners();
 
-    this.editorWidget = GroupWidget(this);
+    anno.widgets = [...anno.widgets, GroupWidget(this) ]; 
   }
 
   _initOSD(viewer) {
