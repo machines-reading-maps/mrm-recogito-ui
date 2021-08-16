@@ -33,7 +33,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@recogito/annotorious-openseadragon": "^2.5.4",
+    "@recogito/annotorious-openseadragon": "^2.5.5",
     "@recogito/annotorious-selector-pack": "^0.1.2",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.0.1",
