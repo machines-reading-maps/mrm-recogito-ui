@@ -20,10 +20,19 @@ import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
 
+const hasVocabulary = () =>
+  window.config.vocabulary?.length > 0;
+
+const getVocabulary = () =>
+  window.config.vocabulary.map(({ value, uri }) => 
+      uri ? { label: value, uri } : value);
+
 const initAnnotorious = viewer => {
 
   // Initialize Annotorious
   const gigapixelMode = window.config.contentType === 'MAP_WMTS';
+
+  const tagWidget = hasVocabulary() ? { widget: 'TAG', vocabulary: getVocabulary() } : 'TAG';
 
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
@@ -32,7 +41,7 @@ const initAnnotorious = viewer => {
       ClassifyWidget,
       TranscribeWidget,
       'COMMENT',
-      'TAG'
+      tagWidget
     ]
   });
 
