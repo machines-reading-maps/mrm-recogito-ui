@@ -2,6 +2,8 @@ import React from 'react';
 
 import PlaceCard from './PlaceCard';
 
+import './GazetteerTagWidget.scss';
+
 const GazetteerTagWidget = props => {
 
   const transcription = props.annotation && 
@@ -18,10 +20,6 @@ const GazetteerTagWidget = props => {
 
   return (
     <div className="r6o-widget r6o-g8r r6o-nodrag">
-      <div className="r6o-g8r-add-new">
-        <button onClick={onAddGeoTag}>Add GeoTag</button>
-      </div>
-
       {placeBodies.length > 0 && 
         <div className="r6o-g8r-cards">
           {placeBodies.map((body, idx) => 
@@ -29,6 +27,10 @@ const GazetteerTagWidget = props => {
           )}
         </div>
       }
+      
+      <div className="r6o-g8r-add-new">
+        <button onClick={onAddGeoTag}>Add GeoTag</button>
+      </div>
     </div>
   );
 

@@ -21,30 +21,33 @@ const ResolvedPlace = props => {
       {record && 
         <>
           <Minimap />
-          <div className="r6o-g8r-card-metadata">
-            <h3>{record.title}</h3>
-            <p className="uri">
-              <a href={record.uri} target="_blank">{formatURI(record.uri)}</a>
-            </p>
-            
-            {record.descriptions?.length > 0 && 
-              <p className="description">{record.descriptions[0].description}</p>
-            }
-            
-            <p className="names">{record.names.map(n => n.name).join(', ')}</p>
 
-            <p className="date"></p>
+          <div className="r6o-g8r-card-metadata-wrapper">
+            <div className="r6o-g8r-card-metadata">
+              <h3>{record.title}</h3>
+              <p className="uri">
+                <a href={record.uri} target="_blank">{formatURI(record.uri)}</a>
+              </p>
+              
+              {record.descriptions?.length > 0 && 
+                <p className="description">{record.descriptions[0].description}</p>
+              }
+              
+              <p className="names">{record.names.map(n => n.name).join(', ')}</p>
 
-            <div className="last-modified">
-              <a className="by"></a>
-              <span className="at"></span>
+              <p className="date"></p>
+
+              <div className="last-modified">
+                <a className="by"></a>
+                <span className="at"></span>
+              </div>
+              
+              {!readOnly && <div className="edit-buttons"></div> }
+              
+              <div className={readOnly ? 'unverified-warning readonly' : 'unverified-warning'}></div>
             </div>
-            
-            {!readOnly && <div className="edit-buttons"></div> }
-            
-            <div className={readOnly ? 'unverified-warning readonly' : 'unverified-warning'}></div>
           </div>
-          </>
+        </>
       }
     </div>
   )
