@@ -38,11 +38,14 @@
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
     "@recogito/recogito-legacy-storage": "^0.1.8",
+    "leaflet": "^1.7.1",
     "nanoid": "^3.1.23",
     "openseadragon-wmts": "^0.1.2",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
+    "react-leaflet": "^3.2.1",
+    "swr": "^1.0.1",
     "tiny-emitter": "^2.1.0"
   }
 }

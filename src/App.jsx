@@ -12,6 +12,7 @@ import LegacyStorage from '@recogito/recogito-legacy-storage';
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
 import TranscribeWidget from './widgets/TranscribeWidget';
 import GroupPlugin from './group/GroupPlugin';
+import GazetteerTagWidget from './gazetteer/GazetteerTagWidget';
 
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
@@ -39,6 +40,7 @@ const initAnnotorious = viewer => {
     gigapixelMode,
     widgets: [
       ClassifyWidget,
+      GazetteerTagWidget,
       TranscribeWidget,
       'COMMENT',
       tagWidget
