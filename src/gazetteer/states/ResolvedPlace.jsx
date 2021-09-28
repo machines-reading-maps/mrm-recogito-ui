@@ -2,6 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 
 import Minimap from './Minimap';
+import { yyyyMMddToYear } from '../Formatting';
 
 const fetcher = url => fetch(url).then(res => res.json());
 
@@ -20,7 +21,7 @@ const ResolvedPlace = props => {
     <div className="r6o-g8r-card resolved">
       {record && 
         <>
-          <Minimap />
+          <Minimap center={data.representative_point.slice().reverse()} />
 
           <div className="r6o-g8r-card-metadata-wrapper">
             <div className="r6o-g8r-card-metadata">
@@ -35,14 +36,23 @@ const ResolvedPlace = props => {
               
               <p className="names">{record.names.map(n => n.name).join(', ')}</p>
 
-              <p className="date"></p>
+              {record.temporal_bounds && 
+                <p className="date">
+                  {yyyyMMddToYear(record.temporal_bounds.from)} - {yyyyMMddToYear(record.temporal_bounds.to)}
+                </p>
+              }
 
               <div className="last-modified">
                 <a className="by"></a>
                 <span className="at"></span>
               </div>
               
-              {!readOnly && <div className="edit-buttons"></div> }
+              {!readOnly && 
+                <div className="edit-buttons">
+                  <button className="change btn tiny icon">&#xf040;</button>
+                  <button className="delete btn tiny icon">&#xf014;</button>
+                </div>
+              }
               
               <div className={readOnly ? 'unverified-warning readonly' : 'unverified-warning'}></div>
             </div>

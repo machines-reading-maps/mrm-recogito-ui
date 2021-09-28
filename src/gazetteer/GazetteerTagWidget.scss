@@ -23,11 +23,53 @@
 
       .r6o-g8r-card-metadata {
         pointer-events:auto;
-        padding:3px 15px;
+        height:100%;
+        padding:7px 15px 3px 15px;
         box-sizing:border-box;
         margin:0;
         background-color:rgba(245, 247, 247, 0.8);
         position:relative;
+
+        h3 {
+          margin:0;
+          padding:0;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow:hidden;
+          font-size:17px;
+          font-weight:normal;
+          line-height:21px;
+        }
+
+        p {
+          margin:0;
+          padding:0;
+          font-size:14px;
+          line-height:18px;
+          overflow:hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          color:#767676;
+        }
+
+        a {
+          color:#3f3f3f;
+        }
+
+        .edit-buttons {
+          position:absolute;
+          right:12px;
+          bottom:11px;
+          line-height:14px;
+          
+          button {
+            font-size:15px;
+            border:none;
+            padding:0 6px;
+          }
+
+        }
+
       }
 
     }

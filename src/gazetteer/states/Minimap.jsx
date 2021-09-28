@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 // Fix missing Leaflet marker images
@@ -12,16 +12,38 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'leaflet/marker-shadow.png'
 });
 
+const CENTER_POINT = L.point(82, 70);
+
 import 'leaflet/dist/leaflet.css';
+
+const MinimapContents = props => {
+
+  const map = useMap();
+
+  useEffect(() => {
+    map.panTo(map.containerPointToLatLng(CENTER_POINT), { animate: false});
+  }, []);
+
+  return (
+    <>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+      <Marker position={props.center} />
+    </>
+  )
+
+}
 
 const Minimap = props => {
 
   return (
-    <MapContainer className="minimap" center={[51.505, -0.09]} zoom={13}>
-      <TileLayer
-        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" />
-
-        <Marker position={[51.505, -0.09]} />
+    <MapContainer 
+      className="minimap" 
+      zoomControl={false}
+      center={props.center} 
+      zoom={4}>
+      <MinimapContents {...props} />
     </MapContainer>
   );
 
