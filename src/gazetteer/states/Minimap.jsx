@@ -29,7 +29,7 @@ const MinimapContents = props => {
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      <Marker position={props.center} />
+      {props.center && <Marker position={props.center} /> }
     </>
   )
 
@@ -37,12 +37,17 @@ const MinimapContents = props => {
 
 const Minimap = props => {
 
+  const center = props.center || [ 0, 0 ];
+
+  const zoom = props.center ? 4 : 1;
+
   return (
     <MapContainer 
       className="minimap" 
       zoomControl={false}
-      center={props.center} 
-      zoom={4}>
+      center={center} 
+      zoom={zoom}
+      attributionControl={false}>
       <MinimapContents {...props} />
     </MapContainer>
   );

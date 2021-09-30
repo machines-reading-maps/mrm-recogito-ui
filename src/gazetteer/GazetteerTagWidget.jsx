@@ -27,10 +27,7 @@ const GazetteerTagWidget = props => {
     // Hack for testing!
     props.onAppendBody({
       type: 'TextualBody', 
-      purpose: 'geotagging', 
-      value: 'http://pleiades.stoa.org/places/109126',
-      created: "2021-09-30T08:08:01.582Z",
-      creator: props.user
+      purpose: 'geotagging'
     });
 
   return (

@@ -24,7 +24,7 @@ const ResolvedPlace = props => {
         <>
           <Minimap center={data.representative_point.slice().reverse()} />
 
-          <div className="r6o-g8r-card-metadata-wrapper">
+          <div className="r6o-g8r-card-content-wrapper">
             <div className="r6o-g8r-card-metadata">
               <h3>{record.title}</h3>
               <p className="uri">
