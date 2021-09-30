@@ -13,12 +13,15 @@ for (let [ lang, dict ] of Object.entries(Messages)) {
 }
 
 const GazetteerTagWidget = props => {
-
+  
   const transcription = props.annotation && 
-    props.annotation.bodies.find(b => b.purpose === 'transcribing');
+    props.annotation.bodies.find(b => b.purpose === 'transcribing')?.value;
 
   const placeBodies = props.annotation ?
     props.annotation.bodies.filter(b => b.purpose === 'geotagging') : [];
+
+  const onConfirm = (body, uri) =>
+    props.onUpdateBody(body, { ...body, value: uri });
 
   const onDelete = body =>
     props.onRemoveBody(body);
@@ -40,6 +43,7 @@ const GazetteerTagWidget = props => {
               env={props.env}
               body={body} 
               transcription={transcription} 
+              onConfirm={uri => onConfirm(body, uri)}
               onDelete={onDelete} /> 
           )}
         </div>

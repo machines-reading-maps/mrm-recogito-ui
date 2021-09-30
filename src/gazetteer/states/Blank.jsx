@@ -1,5 +1,7 @@
 import React from 'react';
 
+import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
+
 import Minimap from './Minimap';
 
 const Blank = props => {
@@ -10,13 +12,13 @@ const Blank = props => {
 
       <div className="r6o-g8r-card-content-wrapper">
         <div className="r6o-g8r-card-content">
-          <h3 className="label">No automatic match</h3>
+          <h3 className="label">{i18n.t('No automatic match')}</h3>
 
           {!props.readOnly &&
             <div className="buttons">
               <button 
                 className="btn tiny change" 
-                title="Use advanced search to find a match">Search</button>
+                title="Use advanced search to find a match">{i18n.t('Search')}</button>
             
               <button 
                 className="btn tiny flag icon" 

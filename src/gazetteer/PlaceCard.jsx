@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Blank from './states/Blank';
 import ResolvedPlace from './states/ResolvedPlace';
-import TranscribedPlacename from './states/TranscribedPlacename';
 
 /**
  * The container place card. Inspects the body fetches gazetteer details
@@ -10,24 +9,43 @@ import TranscribedPlacename from './states/TranscribedPlacename';
  */
 const PlaceCard = props => {
 
-  let card;
+  const [ status, setStatus ] = useState('PENDING');
 
-  if (props.body?.value) {
-    // Resolve place
-    card = <ResolvedPlace {...props} />
-  } else if (props.transcription) {
-    // Not resolve - but we have a transcription at least
-    card = <TranscribedPlacename {...props} />
-  } else {
-    // Neither resolved, nor transcribed - just show the blank "Search" prompt
-    card = <Blank {...props} />
+  const [ place, setPlace ] = useState();
+
+  useEffect(() => {
+    if (props.body?.value) {
+      // Resolve place URI
+      fetch(`/api/place/${encodeURIComponent(props.body.value)}`)
+        .then(res => res.json())
+        .then(place => {
+          setPlace(place);
+          setStatus('RESOLVED');
+        })
+    } else if (props.transcription) {
+      // Fetch suggestion
+      fetch(`/api/place/search?q=${encodeURIComponent(props.transcription)}&size=1`)
+        .then(res => res.json())
+        .then(data => {
+          if (data?.total > 0) {
+            setPlace(data.items[0]);
+            setStatus('SUGGESTED');
+          } else {
+            setStatus('NO_SUGGESTION');
+          }
+        });
+    } else {
+      setStatus('BLANK');
+    }
+  }, []);
+
+  if (status === 'RESOLVED' || status === 'SUGGESTED') {
+    return <ResolvedPlace {...props} place={place} />;
+  } else if (status === 'BLANK' || status === 'NO_SUGGESTION') {
+    return <Blank {...props} />;
   }
-  
-  return (
-    <div className="r6o-g8r-place">
-      { card }
-    </div>
-  );
+
+  return null;
 
 }
 

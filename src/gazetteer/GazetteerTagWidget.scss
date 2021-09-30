@@ -23,7 +23,7 @@
 
   }
 
-  .r6o-g8r-place {
+  .r6o-g8r-card {
     position:relative;
     height:140px;
 
@@ -146,6 +146,34 @@
           vertical-align:text-bottom;
         }
 
+      }
+
+    }
+
+    .unverified-warning {
+      width:100%;
+      box-sizing:border-box;
+      position:absolute;
+      bottom:0;
+      left:0;
+      padding:2px 5px 0 15px;
+      font-size:15px;
+      background-color:rgba(240, 173, 78, 0.18);
+      border-top:1px solid #f0ad4e;
+      color:#ec971f;
+      line-height:25px;
+
+      button {
+        float:right;
+        background-color:#f0ad4e;
+        margin:1px 3px 0 0;
+        font-size: 15px;
+        border:none;
+        padding:0 6px;
+
+        svg {
+          vertical-align:middle;
+        }
       }
 
     }
