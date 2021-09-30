@@ -1,5 +1,7 @@
 import React from 'react';
 import useSWR from 'swr';
+import { BiPencil, BiTrash } from 'react-icons/bi';
+import { LocalTimeAgo } from '@recogito/annotorious-openseadragon/src/util/I18N';
 
 import Minimap from './Minimap';
 import { yyyyMMddToYear } from '../Formatting';
@@ -14,8 +16,7 @@ const ResolvedPlace = props => {
 
   const record = data && data.is_conflation_of.find(record => record.uri === props.body.value);
 
-  // Temporary hack
-  const formatURI = uri => uri;
+  const timestamp = props.body.modified || props.body.created;
 
   return (
     <div className="r6o-g8r-card resolved">
@@ -27,7 +28,7 @@ const ResolvedPlace = props => {
             <div className="r6o-g8r-card-metadata">
               <h3>{record.title}</h3>
               <p className="uri">
-                <a href={record.uri} target="_blank">{formatURI(record.uri)}</a>
+                <a href={record.uri} target="_blank">{record.uri}</a>
               </p>
               
               {record.descriptions?.length > 0 && 
@@ -43,14 +44,22 @@ const ResolvedPlace = props => {
               }
 
               <div className="last-modified">
-                <a className="by"></a>
-                <span className="at"></span>
+                <a className="by">{props.body.creator.name}</a>
+                <span className="at">
+                  <LocalTimeAgo 
+                    datetime={props.env.toClientTime(timestamp)} />
+                </span>
               </div>
               
               {!readOnly && 
                 <div className="edit-buttons">
-                  <button className="change btn tiny icon">&#xf040;</button>
-                  <button className="delete btn tiny icon">&#xf014;</button>
+                  <button className="change btn tiny icon">
+                    <BiPencil />
+                  </button>
+
+                  <button className="delete btn tiny icon" onClick={() => props.onDelete(props.body)}>
+                    <BiTrash />
+                  </button>
                 </div>
               }
               

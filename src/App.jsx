@@ -38,6 +38,7 @@ const initAnnotorious = viewer => {
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
     gigapixelMode,
+    locale: 'auto',
     widgets: [
       ClassifyWidget,
       GazetteerTagWidget,

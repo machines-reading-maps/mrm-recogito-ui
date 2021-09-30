@@ -1,8 +1,16 @@
 import React from 'react';
+import { FiGlobe } from 'react-icons/fi';
+import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
+import Messages from './Messages';
 import PlaceCard from './PlaceCard';
 
 import './GazetteerTagWidget.scss';
+
+// Register I18N labels
+for (let [ lang, dict ] of Object.entries(Messages)) {
+  i18n.registerMessages(lang, dict);
+}
 
 const GazetteerTagWidget = props => {
 
@@ -12,10 +20,17 @@ const GazetteerTagWidget = props => {
   const placeBodies = props.annotation ?
     props.annotation.bodies.filter(b => b.purpose === 'geotagging') : [];
 
+  const onDelete = body =>
+    props.onRemoveBody(body);
+
   const onAddGeoTag = () =>
+    // Hack for testing!
     props.onAppendBody({
-      // Hack for testing!
-      type: 'TextualBody', purpose: 'geotagging', value: 'http://pleiades.stoa.org/places/109126'
+      type: 'TextualBody', 
+      purpose: 'geotagging', 
+      value: 'http://pleiades.stoa.org/places/109126',
+      created: "2021-09-30T08:08:01.582Z",
+      creator: props.user
     });
 
   return (
@@ -23,13 +38,19 @@ const GazetteerTagWidget = props => {
       {placeBodies.length > 0 && 
         <div className="r6o-g8r-cards">
           {placeBodies.map((body, idx) => 
-            <PlaceCard key={idx} body={body} transcription={transcription} /> 
+            <PlaceCard 
+              key={idx} 
+              env={props.env}
+              body={body} 
+              transcription={transcription} 
+              onDelete={onDelete} /> 
           )}
         </div>
       }
       
       <div className="r6o-g8r-add-new">
-        <button onClick={onAddGeoTag}>Add GeoTag</button>
+        <FiGlobe />
+        <button onClick={onAddGeoTag}>{i18n.t('Add geo-tag')}</button>
       </div>
     </div>
   );

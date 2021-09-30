@@ -10,22 +10,22 @@ import TranscribedPlacename from './states/TranscribedPlacename';
  */
 const PlaceCard = props => {
 
-  let cardState;
+  let card;
 
   if (props.body?.value) {
     // Resolve place
-    cardState = <ResolvedPlace body={props.body} />
+    card = <ResolvedPlace {...props} />
   } else if (props.transcription) {
     // Not resolve - but we have a transcription at least
-    cardState = <TranscribedPlacename body={props.body} transcription={props.transcription} />
+    card = <TranscribedPlacename {...props} />
   } else {
     // Neither resolved, nor transcribed - just show the blank "Search" prompt
-    cardState = <Blank body={props.body} />
+    card = <Blank {...props} />
   }
   
   return (
     <div className="r6o-g8r-place">
-      { cardState }
+      { card }
     </div>
   );
 
