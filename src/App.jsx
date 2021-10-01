@@ -73,8 +73,6 @@ const App = props => {
   const [ map, setMap ] = useState();
 
   const [ anno, setAnno ] = useState();
-
-  const [ groups, setGroups ] = useState(); 
   
   // Load document metadata + init annotation layer when App mounts
   useEffect(() => {
