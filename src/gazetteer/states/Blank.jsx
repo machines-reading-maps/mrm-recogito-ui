@@ -18,15 +18,12 @@ const Blank = props => {
             <div className="buttons">
               <button 
                 className="btn tiny change" 
+                onClick={() => props.onChange()}
                 title="Use advanced search to find a match">{i18n.t('Search')}</button>
-            
-              <button 
-                className="btn tiny flag icon" 
-                title="Flag this place as unidentified">&#xf11d;</button>
 
               <button
-                onClick={() => props.onDelete(props.body)}
                 className="btn tiny delete icon"
+                onClick={() => props.onDelete(props.body)}
                 title="Not a place - remove">&#xf014;</button>
             </div>
           }

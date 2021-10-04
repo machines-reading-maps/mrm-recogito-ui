@@ -85,7 +85,10 @@ const ResolvedPlace = props => {
                             <BiTrash />
                         </button>
                         
-                        <button className="btn tiny unverified-change">
+                        <button 
+                          className="btn tiny unverified-change"
+                          onClick={() => props.onChange()}>
+
                           {i18n.t('Change')}
                         </button>
                         

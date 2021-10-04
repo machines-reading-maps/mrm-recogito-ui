@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiGlobe } from 'react-icons/fi';
 import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
 import Messages from './Messages';
 import PlaceCard from './PlaceCard';
+import GazetteerSearch from './search/GazetteerSearch';
 
 import './GazetteerTagWidget.scss';
 
@@ -14,6 +15,8 @@ for (let [ lang, dict ] of Object.entries(Messages)) {
 
 const GazetteerTagWidget = props => {
   
+  const [ isSearchOpen, setSearchOpen ] = useState(false);
+
   const transcription = props.annotation && 
     props.annotation.bodies.find(b => b.purpose === 'transcribing')?.value;
 
@@ -44,6 +47,7 @@ const GazetteerTagWidget = props => {
               body={body} 
               transcription={transcription} 
               onConfirm={uri => onConfirm(body, uri)}
+              onChange={() => setSearchOpen(true)}
               onDelete={onDelete} /> 
           )}
         </div>
@@ -53,6 +57,10 @@ const GazetteerTagWidget = props => {
         <FiGlobe />
         <button onClick={onAddGeoTag}>{i18n.t('Add geo-tag')}</button>
       </div>
+
+      {isSearchOpen &&
+        <GazetteerSearch />
+      }
     </div>
   );
 
