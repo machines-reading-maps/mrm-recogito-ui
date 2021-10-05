@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { VscChromeClose } from 'react-icons/vsc';
 import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
 import ResultMap from './ResultMap';
@@ -37,36 +38,49 @@ const GazetteerSearch = props => {
             type="text" 
             placeholder={i18n.t('Search for a place...')} 
             onKeyUp={onKeyUp} />
-
+            
           <button
             className="r6o-g8r-close"
-            onClick={props.onClose}>Close</button>
+            onClick={props.onClose}>
+            <VscChromeClose />
+          </button>
         </header>
         <main>
-          <aside className="r6o-g8r-search-results">
-            {result &&
-              <div className="r6o-g8r-search-results-totals">
-                <span className="total">{result.total} Total</span>
-                <span className="took">{result.took}ms</span>
-              </div>
-            }
-            {result &&
+          <aside>
+            <div className="r6o-g8r-search-results-totals">
+              {result &&
+                <>
+                  <span className="total">{result.total} Total</span>
+                  <span className="took">{result.took}ms</span>
+                </>
+              }
+            </div>
+            <div className="r6o-g8r-search-results-list">
               <ul>
-                {result.items.map(hit =>
+                {result && result.items.map(hit =>
                   <li key={hit.union_id}>
                     {hit.title}
                   </li>
                 )}
               </ul>
-            }
+            </div>
           </aside>
+
           <ResultMap result={result} />
         </main>
       </div>
     </div>,
-
     document.body
-  );
+  )
+
+  /*
+  {result &&
+    <div className="r6o-g8r-search-results-totals">
+      <span className="total">{result.total} Total</span>
+      <span className="took">{result.took}ms</span>
+    </div>
+  }
+  */
 
 }
 

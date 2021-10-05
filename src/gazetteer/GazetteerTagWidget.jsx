@@ -59,7 +59,7 @@ const GazetteerTagWidget = props => {
       </div>
 
       {isSearchOpen &&
-        <GazetteerSearch />
+        <GazetteerSearch onClose={() => setSearchOpen(false)}/>
       }
     </div>
   );

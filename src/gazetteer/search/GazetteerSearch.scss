@@ -1,59 +1,118 @@
 .r6o-g8r-search {
   position:absolute;
-  box-sizing:border-box;
-  display:flex;
-  justify-content:center;
   top:0;
-  left:0; 
+  left:0;
   width:100%;
   height:100%;
-  padding:8% 0;
   background-color:rgba(0, 0, 0, 0.6);
+  display:flex;
+  justify-content:center;
   z-index:99999;
 
   .r6o-g8r-search-modal {
+    position:absolute;
+    top:10%;
+    bottom:10%;
+    width:80%;
+    margin:0 auto;
     background-color:#fff;
-    max-width:1400px;
-    margin:0 8%;
-    flex:1;
     border-radius:3px;
     box-shadow:2px 2px 42px rgb(0, 0, 0, 0.4);
-    display:flex;
-    flex-direction:column;
-  }
-
-  header {
-    flex:0;
-  }
-
-  main {
-    flex:1;
-    position:relative;
-
-    aside {
-      width:320px;
-      height:100%;
-    }
-
-    .r6o-g8r-search-map-container {
+    overflow:hidden;
+    
+    header {
       position:absolute;
       top:0;
       left:0;
       width:100%;
-      height:100%;
-      box-sizing:border-box;
-      padding-left:320px;
+      height:42px;
+      border-bottom: 1px solid #e5e5e5;
 
-      .r6o-g8r-search-map {
-        position:relative;
-        width:100%;
+      input {
+        margin:5px;
+        border:1px solid #e5e5e5;
+        padding:4px 25px 4px 6px;
+        background-color:#ecf0f1;
+        border-radius:2px;
+        width:315px;
+      }
+
+      input:focus {
+        border-color:#4f92d7;
+        box-shadow:none;
+      }
+
+      button {
+        position:absolute;
+        right:10px;
+        top:8px;
+        font-size:24px;
+        margin:0;
+        padding:0;
+        cursor:pointer;
+        outline: none;
+        background: none;
+        border: none;
+
+        svg {
+          color:#9ca4b1;
+        }
+      }
+
+    }
+
+    main {
+      position:absolute;
+      top:43px;
+      left:0;
+      bottom:0;
+      width:100%;
+      display:flex;
+      flex-direction:row;
+
+      aside {
+        width:320px;
         height:100%;
+        position:relative;
 
-        .leaflet-map-pane {
+        .r6o-g8r-search-results-totals {
+          color: #9ca4b1;
+          padding:10px;
+          border-bottom:1px solid #e5e5e5;
+          height:46px;
+          box-sizing:border-box;
+          font-size:15px;
+        }
+
+        .r6o-g8r-search-results-list {
+          position:absolute;
+          width:100%;
+          top:47px;
+          bottom:0;
+          overflow-y:scroll;
+
+          ul {
+            list-style-type:none;
+            padding:0;
+            margin:0;
+          }
+
+          li {
+            padding:10px;
+          }
+
+        }
+
+      }
+
+      .r6o-g8r-search-map-container {
+        flex:1;
+        position:relative;
+
+        .leaflet-container {
           width:100%;
           height:100%;
         }
-
       }
 
     }
