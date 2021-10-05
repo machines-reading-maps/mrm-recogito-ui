@@ -37,7 +37,7 @@ const ResolvedPlace = props => {
                 <p className="description">{record.descriptions[0].description}</p>
               }
               
-              <p className="names">{record.names.map(n => n.name).join(', ')}</p>
+              <p className="names">{record.names && record.names.map(n => n.name).join(', ')}</p>
 
               {record.temporal_bounds && 
                 <p className="date">
@@ -48,7 +48,7 @@ const ResolvedPlace = props => {
               {!isSuggested && 
                 <>
                   <div className="last-modified">
-                    <a className="by">{props.body.creator.name}</a>
+                    <a className="by">{props.body.creator.name || props.body.creator.id}</a>
                     <span className="at">
                       <LocalTimeAgo 
                         datetime={props.env.toClientTime(timestamp)} />
