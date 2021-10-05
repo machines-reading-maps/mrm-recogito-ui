@@ -48,6 +48,10 @@ const PlaceMarker = props => {
       ref.current.openPopup();
   }, [ ref.current ]);
 
+  const onClose = () => {
+
+  }
+  
   return (
     <Marker 
       ref={ref}
@@ -55,6 +59,7 @@ const PlaceMarker = props => {
       <Popup className="r6o-g8r-map-popup">
         <div className="r6o-g8r-map-popup-header">
           <h4>{props.item.title}</h4>
+          <button onClick={onClose}>Close</button>
         </div>
         <div className="r6o-g8r-map-popup-choices">
           <table>
