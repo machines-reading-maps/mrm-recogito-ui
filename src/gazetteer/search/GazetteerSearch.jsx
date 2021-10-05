@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { VscChromeClose } from 'react-icons/vsc';
+import { FaList } from 'react-icons/fa';
 import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
 import ResultMap from './ResultMap';
@@ -47,12 +48,16 @@ const GazetteerSearch = props => {
         </header>
         <main>
           <aside>
-            <div className="r6o-g8r-search-results-totals">
-              {result &&
-                <>
-                  <span className="total">{result.total} Total</span>
-                  <span className="took">{result.took}ms</span>
-                </>
+            <div className="r6o-g8r-search-results-totals">  
+              <span className="total"> 
+                <FaList /> 
+                {result ? result.total : ''} Total
+              </span>
+
+              { result && 
+                <span className="took">
+                  Took {result.took}ms
+                </span>
               }
             </div>
             <div className="r6o-g8r-search-results-list">
@@ -72,15 +77,6 @@ const GazetteerSearch = props => {
     </div>,
     document.body
   )
-
-  /*
-  {result &&
-    <div className="r6o-g8r-search-results-totals">
-      <span className="total">{result.total} Total</span>
-      <span className="took">{result.took}ms</span>
-    </div>
-  }
-  */
 
 }
 

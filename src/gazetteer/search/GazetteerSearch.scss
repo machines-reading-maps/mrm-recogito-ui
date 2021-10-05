@@ -77,11 +77,23 @@
 
         .r6o-g8r-search-results-totals {
           color: #9ca4b1;
-          padding:10px;
+          padding:10px 20px 10px 10px;
           border-bottom:1px solid #e5e5e5;
           height:46px;
           box-sizing:border-box;
           font-size:15px;
+          display:flex;
+          flex-direction:row;
+          justify-content:space-between;
+
+          svg {
+            padding-right:5px;
+          }
+
+          span {
+            display:flex;
+            align-items:center;
+          }
         }
 
         .r6o-g8r-search-results-list {
