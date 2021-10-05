@@ -53,33 +53,35 @@ const PlaceMarker = props => {
       ref={ref}
       position={props.item.representative_point.slice().reverse()}>
       <Popup className="r6o-g8r-map-popup">
-        <header>
+        <div className="r6o-g8r-map-popup-header">
           <h4>{props.item.title}</h4>
-        </header>
-        <table>
-          <tbody>
-            {props.item.is_conflation_of.map(record =>
-              <tr 
-                key={record.uri}
-                onClick={() => props.onSelectRecord(record)}>
+        </div>
+        <div className="r6o-g8r-map-popup-choices">
+          <table>
+            <tbody>
+              {props.item.is_conflation_of.map(record =>
+                <tr 
+                  key={record.uri}
+                  onClick={() => props.onSelectRecord(record)}>
 
-                <td>
-                  <h5>{record.title}</h5>
-                  <p className="names">
-                    {record.names && 
-                      record.names.map(n => n.name).join(', ')
-                    }
-                  </p>
-                  <p className="description">
-                    {record.descriptions?.length > 0 &&
-                      record.descriptions[0].description
-                    }
-                  </p>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                  <td>
+                    <h5>{record.title}</h5>
+                    <p className="names">
+                      {record.names && 
+                        record.names.map(n => n.name).join(', ')
+                      }
+                    </p>
+                    <p className="description">
+                      {record.descriptions?.length > 0 &&
+                        record.descriptions[0].description
+                      }
+                    </p>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </Popup>
     </Marker>
   )
