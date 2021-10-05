@@ -99,9 +99,10 @@
         .r6o-g8r-search-results-list {
           position:absolute;
           width:100%;
-          top:47px;
+          top:46px;
           bottom:0;
           overflow-y:scroll;
+          box-shadow:inset 1px 4px 12px -6px rgb(0 0 0 / 25%);
 
           ul {
             list-style-type:none;
@@ -110,7 +111,36 @@
           }
 
           li {
+            border-bottom:1px solid #e5e5e5;
             padding:10px;
+            cursor:pointer;
+
+            h3 {
+              margin:0;
+              padding:0;
+              white-space:nowrap;
+              text-overflow:ellipsis;
+              overflow:hidden;
+              font-size:17px;
+              font-weight:normal;
+              line-height:21px;
+            }
+
+            p {
+              margin:0;
+              padding:0;
+              font-size:14px;
+              line-height:18px;
+              overflow:hidden;
+              white-space:nowrap;
+              text-overflow:ellipsis;
+              color:#767676;
+            }
+
+          }
+
+          li:hover {
+            background-color:rgba(0, 0, 0, 0.015);
           }
 
         }

@@ -57,7 +57,9 @@ const ResolvedPlace = props => {
                 
                   {!readOnly && 
                     <div className="edit-buttons">
-                      <button className="change btn tiny icon">
+                      <button
+                        className="change btn tiny icon"
+                        onClick={() => props.onChange(props.body)}>
                         <BiPencil />
                       </button>
 

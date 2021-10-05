@@ -18,7 +18,7 @@ const Blank = props => {
             <div className="buttons">
               <button 
                 className="btn tiny change" 
-                onClick={() => props.onChange()}
+                onClick={() => props.onChange(props.body)}
                 title="Use advanced search to find a match">{i18n.t('Search')}</button>
 
               <button

@@ -15,7 +15,7 @@ for (let [ lang, dict ] of Object.entries(Messages)) {
 
 const GazetteerTagWidget = props => {
   
-  const [ isSearchOpen, setSearchOpen ] = useState(false);
+  const [ bodyToChange, setBodyToChange ] = useState();
 
   const transcription = props.annotation && 
     props.annotation.bodies.find(b => b.purpose === 'transcribing')?.value;
@@ -30,11 +30,18 @@ const GazetteerTagWidget = props => {
     props.onRemoveBody(body);
 
   const onAddGeoTag = () =>
-    // Hack for testing!
     props.onAppendBody({
       type: 'TextualBody', 
       purpose: 'geotagging'
     });
+
+  // User picked a new gazetteer record for this body
+  const onChangeBody = (body, record) => {
+    props.onUpdateBody(body, {
+      ...body,
+      value: record.uri
+    }, () => setBodyToChange(null));
+  }
 
   return (
     <div className="r6o-widget r6o-g8r r6o-nodrag">
@@ -47,7 +54,7 @@ const GazetteerTagWidget = props => {
               body={body} 
               transcription={transcription} 
               onConfirm={uri => onConfirm(body, uri)}
-              onChange={() => setSearchOpen(true)}
+              onChange={() => setBodyToChange(body)}
               onDelete={onDelete} /> 
           )}
         </div>
@@ -58,8 +65,11 @@ const GazetteerTagWidget = props => {
         <button onClick={onAddGeoTag}>{i18n.t('Add geo-tag')}</button>
       </div>
 
-      {isSearchOpen &&
-        <GazetteerSearch onClose={() => setSearchOpen(false)}/>
+      {bodyToChange &&
+        <GazetteerSearch
+          quote={transcription}
+          onSelectRecord={record => onChangeBody(bodyToChange, record)}
+          onClose={() => setBodyToChange(null)}/>
       }
     </div>
   );

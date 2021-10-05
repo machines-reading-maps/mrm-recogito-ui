@@ -4,6 +4,7 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { FaList } from 'react-icons/fa';
 import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
+import ResultCard from './ResultCard';
 import ResultMap from './ResultMap';
 
 import './GazetteerSearch.scss';
@@ -12,9 +13,11 @@ import 'leaflet/dist/leaflet.css';
 
 const GazetteerSearch = props => {
   
-  const [ query, setQuery ] = useState('');
+  const [ query, setQuery ] = useState(props.quote || '');
 
   const [ result, setResult ] = useState();
+
+  const [ selected, setSelected ] = useState();
 
   useEffect(() => {
     setResult();
@@ -38,6 +41,7 @@ const GazetteerSearch = props => {
           <input
             type="text" 
             placeholder={i18n.t('Search for a place...')} 
+            defaultValue={props.quote || ''}
             onKeyUp={onKeyUp} />
             
           <button
@@ -63,15 +67,19 @@ const GazetteerSearch = props => {
             <div className="r6o-g8r-search-results-list">
               <ul>
                 {result && result.items.map(hit =>
-                  <li key={hit.union_id}>
-                    {hit.title}
-                  </li>
+                  <ResultCard 
+                    key={hit.union_id}
+                    record={hit} 
+                    onClick={() => setSelected(hit)} />
                 )}
               </ul>
             </div>
           </aside>
 
-          <ResultMap result={result} />
+          <ResultMap 
+            result={result} 
+            selected={selected} 
+            onSelectRecord={props.onSelectRecord} />
         </main>
       </div>
     </div>,

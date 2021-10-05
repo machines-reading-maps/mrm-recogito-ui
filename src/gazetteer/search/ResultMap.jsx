@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import React, { useEffect, useRef } from 'react';
+import { MapContainer, Marker, TileLayer, Popup, useMap } from 'react-leaflet';
 
 const getBounds = items => {
 
@@ -40,6 +39,53 @@ const getBounds = items => {
   ];
 }
 
+const PlaceMarker = props => {
+  
+  const ref = useRef();
+
+  useEffect(() => {
+    if (props.selected && ref.current)
+      ref.current.openPopup();
+  }, [ ref.current ]);
+
+  return (
+    <Marker 
+      ref={ref}
+      position={props.item.representative_point.slice().reverse()}>
+      <Popup className="r6o-g8r-map-popup">
+        <header>
+          <h4>{props.item.title}</h4>
+        </header>
+        <table>
+          <tbody>
+            {props.item.is_conflation_of.map(record =>
+              <tr 
+                key={record.uri}
+                onClick={() => props.onSelectRecord(record)}>
+
+                <td>
+                  <h5>{record.title}</h5>
+                  <p className="names">
+                    {record.names && 
+                      record.names.map(n => n.name).join(', ')
+                    }
+                  </p>
+                  <p className="description">
+                    {record.descriptions?.length > 0 &&
+                      record.descriptions[0].description
+                    }
+                  </p>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </Popup>
+    </Marker>
+  )
+
+}
+
 // Inner component, so we can use useMap hook.
 const ResultMapView = props => {
 
@@ -49,11 +95,12 @@ const ResultMapView = props => {
 
   const locatedItems = result ? result.items.filter(item => item.representative_point) : [];
 
-  const markers = locatedItems.map(item => 
-    <Marker 
+  const markers = locatedItems.map(item =>
+    <PlaceMarker 
       key={item.union_id}
-      position={item.representative_point.slice().reverse()} />
-  );
+      item={item} 
+      selected={item === props.selected}
+      onSelectRecord={props.onSelectRecord} />);
 
   useEffect(() => {
     if (result) {
