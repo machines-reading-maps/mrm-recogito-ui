@@ -7,9 +7,9 @@ import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'leaflet/marker-icon-2x.png',
-  iconUrl: 'leaflet/marker-icon.png',
-  shadowUrl: 'leaflet/marker-shadow.png'
+  iconRetinaUrl: '/images/leaflet/marker-icon-2x.png',
+  iconUrl: '/images/leaflet/marker-icon.png',
+  shadowUrl: '/images/leaflet/marker-shadow.png'
 });
 
 const CENTER_POINT = L.point(82, 70);
