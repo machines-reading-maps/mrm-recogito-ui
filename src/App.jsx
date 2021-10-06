@@ -28,7 +28,7 @@ const getVocabulary = () =>
   window.config.vocabulary.map(({ value, uri }) => 
       uri ? { label: value, uri } : value);
 
-const initAnnotorious = viewer => {
+const initAnnotorious = (viewer, gazetteers) => {
 
   // Initialize Annotorious
   const gigapixelMode = window.config.contentType === 'MAP_WMTS';
@@ -41,7 +41,7 @@ const initAnnotorious = viewer => {
     locale: 'auto',
     widgets: [
       ClassifyWidget,
-      GazetteerTagWidget,
+      { widget: GazetteerTagWidget, gazetteers },
       TranscribeWidget,
       'COMMENT',
       tagWidget
@@ -73,17 +73,22 @@ const App = props => {
   const [ map, setMap ] = useState();
 
   const [ anno, setAnno ] = useState();
-  
+
   // Load document metadata + init annotation layer when App mounts
   useEffect(() => {
-    // Viewer initialization differs based on content type
-    initViewer(window.config).then(({ viewer, map }) => {
-      const anno = initAnnotorious(viewer);
+    // Load user-configured gazetteer set + gazetteer display config data
+    fetch('/api/authorities/gazetteers')
+      .then(response => response.json())
+      .then(gazetteers => { 
+        // Viewer initialization differs based on content type
+        initViewer(window.config).then(({ viewer, map }) => {
+          const anno = initAnnotorious(viewer, gazetteers);
 
-      setMap(map); // Only in case of WMTS
-      setViewer(viewer);
-      setAnno(anno);
-    });
+          setMap(map); // Only in case of WMTS
+          setViewer(viewer);
+          setAnno(anno);
+        });
+      });
   }, []);
 
   return (

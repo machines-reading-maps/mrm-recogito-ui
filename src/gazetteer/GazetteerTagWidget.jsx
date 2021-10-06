@@ -14,7 +14,7 @@ for (let [ lang, dict ] of Object.entries(Messages)) {
 }
 
 const GazetteerTagWidget = props => {
-  
+
   const [ bodyToChange, setBodyToChange ] = useState();
 
   const transcription = props.annotation && 
@@ -67,6 +67,7 @@ const GazetteerTagWidget = props => {
 
       {bodyToChange &&
         <GazetteerSearch
+          gazetteers={props.gazetteers}
           quote={transcription}
           onSelectRecord={record => onChangeBody(bodyToChange, record)}
           onClose={() => setBodyToChange(null)}/>

@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { VscChromeClose } from 'react-icons/vsc';
 import { MapContainer, Marker, TileLayer, Popup, useMap } from 'react-leaflet';
 
+import { parsePlaceURI } from '../Formatting';
+
 const getBounds = items => {
 
   if (items.length === 0)
@@ -53,6 +55,12 @@ const PlaceMarker = props => {
     ref.current.closePopup();
     props.onDeselectPlace(props.item);
   }
+
+  const records = props.item.is_conflation_of.map(record => {
+    return parsePlaceURI(record.uri, props.gazetteers);
+  });
+
+  console.log(records);
   
   return (
     <Marker 
@@ -74,6 +82,11 @@ const PlaceMarker = props => {
                 <tr 
                   key={record.uri}
                   onClick={() => props.onSelectRecord(record)}>
+
+                  <td className="record-id">
+                    <span className="shortcode"></span>
+                    <span className="id"></span>
+                  </td>
 
                   <td>
                     <h5>{record.title}</h5>
@@ -110,6 +123,7 @@ const ResultMapView = props => {
 
   const markers = locatedItems.map(item =>
     <PlaceMarker 
+      gazetteers={props.gazetteers}
       key={item.union_id}
       item={item} 
       selected={item === props.selected}

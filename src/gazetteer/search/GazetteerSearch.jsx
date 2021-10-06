@@ -77,6 +77,7 @@ const GazetteerSearch = props => {
           </aside>
 
           <ResultMap 
+            gazetteers={props.gazetteers}
             result={result} 
             selected={selected} 
             onSelectRecord={props.onSelectRecord} 
