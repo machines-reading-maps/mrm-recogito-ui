@@ -46,10 +46,11 @@ const PlaceMarker = props => {
   useEffect(() => {
     if (props.selected && ref.current)
       ref.current.openPopup();
-  }, [ ref.current ]);
+  }, [ ref.current, props.selected ]);
 
   const onClose = () => {
-
+    ref.current.closePopup();
+    props.onDeselectPlace(props.item);
   }
   
   return (
@@ -107,7 +108,8 @@ const ResultMapView = props => {
       key={item.union_id}
       item={item} 
       selected={item === props.selected}
-      onSelectRecord={props.onSelectRecord} />);
+      onSelectRecord={props.onSelectRecord} 
+      onDeselectPlace={props.onDeselectPlace} />);
 
   useEffect(() => {
     if (result) {

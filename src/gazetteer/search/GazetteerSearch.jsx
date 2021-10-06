@@ -79,7 +79,8 @@ const GazetteerSearch = props => {
           <ResultMap 
             result={result} 
             selected={selected} 
-            onSelectRecord={props.onSelectRecord} />
+            onSelectRecord={props.onSelectRecord} 
+            onDeselectPlace={() => setSelected(null)} />
         </main>
       </div>
     </div>,
