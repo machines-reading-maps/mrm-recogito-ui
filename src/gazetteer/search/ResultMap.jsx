@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { VscChromeClose } from 'react-icons/vsc';
 import { MapContainer, Marker, TileLayer, Popup, useMap } from 'react-leaflet';
 
 const getBounds = items => {
@@ -60,7 +61,11 @@ const PlaceMarker = props => {
       <Popup className="r6o-g8r-map-popup">
         <div className="r6o-g8r-map-popup-header">
           <h4>{props.item.title}</h4>
-          <button onClick={onClose}>Close</button>
+          <button
+            className="r6o-g8r-close"
+            onClick={onClose}>
+            <VscChromeClose />
+          </button>
         </div>
         <div className="r6o-g8r-map-popup-choices">
           <table>
