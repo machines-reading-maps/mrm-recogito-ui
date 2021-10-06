@@ -38,7 +38,7 @@ export const parsePlaceURI = (uri, gazetteers) => {
 
   let pattern = null;
   const gazetteer = gazetteers.find(g => {
-    const matchingPattern = g.url_patterns.find(p => matchesPattern(uri, p));
+    const matchingPattern = g.url_patterns?.find(p => matchesPattern(uri, p));
     if (matchingPattern) {
       pattern = matchingPattern;
       return true;

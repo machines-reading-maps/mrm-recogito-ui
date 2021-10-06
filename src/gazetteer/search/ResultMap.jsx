@@ -56,11 +56,10 @@ const PlaceMarker = props => {
     props.onDeselectPlace(props.item);
   }
 
-  const records = props.item.is_conflation_of.map(record => {
-    return parsePlaceURI(record.uri, props.gazetteers);
-  });
-
-  console.log(records);
+  const records = props.item.is_conflation_of.map(record => ({
+    ...record,
+    ...parsePlaceURI(record.uri, props.gazetteers)
+  }));
   
   return (
     <Marker 
@@ -78,14 +77,16 @@ const PlaceMarker = props => {
         <div className="r6o-g8r-map-popup-choices">
           <table>
             <tbody>
-              {props.item.is_conflation_of.map(record =>
+              {records.map(record =>
                 <tr 
                   key={record.uri}
                   onClick={() => props.onSelectRecord(record)}>
 
-                  <td className="record-id">
-                    <span className="shortcode"></span>
-                    <span className="id"></span>
+                  <td
+                    className="record-id"
+                    style={{ backgroundColor: record.color }}>
+                    <span className="shortcode">{record.shortcode}</span>
+                    <span className="id">{record.id}</span>
                   </td>
 
                   <td>

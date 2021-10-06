@@ -68,6 +68,7 @@ const GazetteerSearch = props => {
               <ul>
                 {result && result.items.map(hit =>
                   <ResultCard 
+                    gazetteers={props.gazetteers}
                     key={hit.union_id}
                     record={hit} 
                     onClick={() => setSelected(hit)} />

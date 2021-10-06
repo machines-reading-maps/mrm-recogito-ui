@@ -140,6 +140,23 @@
               color:#767676;
             }
 
+            p.uris a.minilink {
+              display:inline-block;
+              background-color:#9ca4b1;
+              width:16px;
+              height:16px;
+              line-height:16px;
+              margin:0 3px 0 1px;
+              border-radius:50%;
+              color:#fff;
+              text-align:center;
+              font-family:OpenSans;
+              font-weight:bold;
+              font-size:11px;
+              text-decoration:none;
+              margin-bottom:1px;
+            }
+
           }
 
           li:hover {
@@ -219,6 +236,24 @@
                 td {
                   border-top:1px solid #e5e5e5;
                   padding:10px;
+                }
+
+                td.record-id {
+                  width:20%;
+                  color:#fff;
+                  text-align: center;
+
+                  span {
+                    display:block;
+                  }
+
+                  span.shortcode {
+                    font-size:15px;
+                  }
+
+                  span.id {
+                    font-size:17px;
+                  }
                 }
 
                 h5 {
