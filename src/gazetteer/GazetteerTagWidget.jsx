@@ -40,7 +40,9 @@ const GazetteerTagWidget = props => {
     props.onUpdateBody(body, {
       ...body,
       value: record.uri
-    }, () => setBodyToChange(null));
+    });
+    
+    setBodyToChange(null);
   }
 
   return (
