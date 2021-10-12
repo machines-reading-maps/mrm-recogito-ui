@@ -27,13 +27,10 @@
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.1.0",
     "sass": "^1.37.0",
-    "sass-loader": "^12.1.0",
-    "webpack": "^5.47.1",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "sass-loader": "^12.1.0"
   },
   "dependencies": {
-    "@recogito/annotorious-openseadragon": "^2.5.6",
+    "@recogito/annotorious-openseadragon": "^2.5.7",
     "@recogito/annotorious-selector-pack": "^0.3.1",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
@@ -46,6 +43,9 @@
     "react-icons": "^4.2.0",
     "react-leaflet": "^3.2.1",
     "swr": "^1.0.1",
-    "tiny-emitter": "^2.1.0"
+    "tiny-emitter": "^2.1.0",
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1"
   }
 }
