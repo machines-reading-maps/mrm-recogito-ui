@@ -37,7 +37,7 @@ const PlaceCard = props => {
     } else {
       setStatus('BLANK');
     }
-  }, []);
+  }, [ props.body ]);
 
   if (status === 'RESOLVED' || status === 'SUGGESTED') {
     return <ResolvedPlace {...props} place={place} />;
