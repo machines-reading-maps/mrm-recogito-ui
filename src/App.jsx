@@ -39,6 +39,7 @@ const initAnnotorious = (viewer, gazetteers) => {
     formatter: ClassifyFormatter,
     gigapixelMode,
     locale: 'auto',
+    allowEmpty: true,
     widgets: [
       ClassifyWidget,
       { widget: GazetteerTagWidget, gazetteers },
