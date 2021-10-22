@@ -30,14 +30,15 @@
     "sass-loader": "^12.1.0"
   },
   "dependencies": {
+    "@recogito/annotorious-map-annotation": "^0.1.1",
     "@recogito/annotorious-openseadragon": "^2.5.7",
     "@recogito/annotorious-selector-pack": "^0.3.1",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
-    "@recogito/recogito-legacy-storage": "^0.1.11",
+    "@recogito/recogito-legacy-storage": "^0.1.14",
     "leaflet": "^1.7.1",
     "nanoid": "^3.1.23",
-    "openseadragon-wmts": "^0.1.2",
+    "openseadragon-wmts": "^0.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",

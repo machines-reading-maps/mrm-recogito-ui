@@ -17,8 +17,8 @@ const CoordinatePanel = props => {
   }
 
   const onMapMouseMove = precision => evt => {
-    const viewportPoint = props.viewer.viewport.pointFromPixel(evt.position);
-    const lonlat = props.map.viewportToGeoCoordinates(viewportPoint);
+    const pt = props.viewer.viewport.pointFromPixel(evt.position);
+    const lonlat = props.map.viewportToLonLat([pt.x, pt.y]);
 
     const x = lonlat[0].toFixed(precision);
     const y = lonlat[1].toFixed(precision);

@@ -7,6 +7,7 @@ import { initViewer } from './TileSources';
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
 import LegacyStorage from '@recogito/recogito-legacy-storage';
+import MapAnnotation from '@recogito/annotorious-map-annotation';
 
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
@@ -27,17 +28,17 @@ const hasVocabulary = () =>
 const getVocabulary = () =>
   window.config.vocabulary.map(({ value, uri }) => 
       uri ? { label: value, uri } : value);
+      
+const IS_WMTS = window.config.contentType === 'MAP_WMTS';
 
-const initAnnotorious = (viewer, gazetteers) => {
+const initAnnotorious = (viewer, map, gazetteers) => {
 
   // Initialize Annotorious
-  const gigapixelMode = window.config.contentType === 'MAP_WMTS';
-
   const tagWidget = hasVocabulary() ? { widget: 'TAG', vocabulary: getVocabulary() } : 'TAG';
 
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
-    gigapixelMode,
+    gigapixelMode: IS_WMTS,
     locale: 'auto',
     allowEmpty: true,
     widgets: [
@@ -58,12 +59,17 @@ const initAnnotorious = (viewer, gazetteers) => {
   new SelectorPack(anno);
   new TiltedBox(anno);
 
+  // Add MapAnnotation plugin
+  if (IS_WMTS)
+    new MapAnnotation(anno, map);
+
   // Add LegacyStorage plugin
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  new GroupPlugin(anno, viewer);
-  
+  if (!IS_WMTS)
+    new GroupPlugin(anno, viewer);
+
   return anno;
 };
 
@@ -83,7 +89,7 @@ const App = props => {
       .then(gazetteers => { 
         // Viewer initialization differs based on content type
         initViewer(window.config).then(({ viewer, map }) => {
-          const anno = initAnnotorious(viewer, gazetteers);
+          const anno = initAnnotorious(viewer, map, gazetteers);
 
           setMap(map); // Only in case of WMTS
           setViewer(viewer);
