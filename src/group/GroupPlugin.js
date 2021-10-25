@@ -74,6 +74,8 @@ export default class GroupPlugin extends Emitter {
     this.anno.on('deleteAnnotation', clearGroup);
 
     const onSelect = annotation => {
+      console.log('onSelect!');
+
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
       if (groupId) {
@@ -107,7 +109,11 @@ export default class GroupPlugin extends Emitter {
     };
 
     this.anno.on('clickAnnotation', (annotation, shape) => {
+      console.log('foo');
+      
       if (this.isCtrlDown || !isRequireCtrlKey) {
+        console.log('CTRL click');
+
         // Multi-select!
         const currentSelected = this.anno.getSelected(); // if any
   
