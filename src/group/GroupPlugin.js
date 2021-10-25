@@ -74,8 +74,6 @@ export default class GroupPlugin extends Emitter {
     this.anno.on('deleteAnnotation', clearGroup);
 
     const onSelect = annotation => {
-      console.log('onSelect!');
-
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
       if (groupId) {
@@ -108,12 +106,8 @@ export default class GroupPlugin extends Emitter {
       this.anno.once('deleteAnnotation', removeHandlers);
     };
 
-    this.anno.on('clickAnnotation', (annotation, shape) => {
-      console.log('foo');
-      
+    this.anno.on('clickAnnotation', (annotation, shape) => {      
       if (this.isCtrlDown || !isRequireCtrlKey) {
-        console.log('CTRL click');
-
         // Multi-select!
         const currentSelected = this.anno.getSelected(); // if any
   
@@ -174,11 +168,11 @@ export default class GroupPlugin extends Emitter {
       for (let id in this.group.changes) {
         const { before, after } = this.group.changes[id];
         if (before != after) {
-          const annotationBefore = this.svg.querySelector(`.a9s-annotation[data-id="${id}"]`).annotation.underlying;
+          const annotationBefore = this.anno.getAnnotationById(id);
 
           const annotationAfter = after ? 
             setGroupId(annotationBefore, after) : clearGroupId(annotationBefore);
-          
+
           this.anno.addAnnotation(annotationAfter);
           this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
           
