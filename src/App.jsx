@@ -56,7 +56,11 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   });
 
   // Add extra drawing tools
-  new SelectorPack(anno);
+  // In case of WMTS, don't add circle!
+  const selectorPackConfig = IS_WMTS ? 
+    { tools: [ 'ellipse', 'freehand' ]} : null;
+
+  new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
 
   // Add MapAnnotation plugin
