@@ -63,8 +63,8 @@ export default class SelectionLayer extends Emitter {
       const viewportBottomRight = this.viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x2, y2));
 
       // ...and then to lon/lat
-      const lonLatTopLeft = this.map.viewportToGeoCoordinates(viewportTopLeft);
-      const lonLatBottomRight = this.map.viewportToGeoCoordinates(viewportBottomRight);
+      const lonLatTopLeft = this.map.viewportToLonLat(viewportTopLeft);
+      const lonLatBottomRight = this.map.viewportToLonLat(viewportBottomRight);
 
       this.emit('select', [ lonLatTopLeft, lonLatBottomRight ]);
 
