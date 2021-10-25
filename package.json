@@ -30,7 +30,7 @@
     "sass-loader": "^12.1.0"
   },
   "dependencies": {
-    "@recogito/annotorious-map-annotation": "^0.1.2",
+    "@recogito/annotorious-map-annotation": "^0.2.0",
     "@recogito/annotorious-openseadragon": "^2.5.8",
     "@recogito/annotorious-selector-pack": "^0.3.1",
     "@recogito/annotorious-tilted-box": "^0.2.1",
