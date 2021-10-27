@@ -6,7 +6,7 @@ import { initViewer } from './TileSources';
 // Off-the-shelf(-ish) Annotorious plugins
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
-import LegacyStorage from '@recogito/recogito-legacy-storage';
+import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage';
 import MapAnnotation from '@recogito/annotorious-map-annotation';
 
 // Custom MRM extensions and plugins
@@ -102,11 +102,13 @@ const App = props => {
   }, []);
 
   const onMapKuratorComplete = () => {
+    // mapKurator has completed - refresh all annotations
     fetch(`/api/document/${window.config.documentId}/part/${window.config.partSequenceNo}/annotations`)
       .then(response => response.json())
       .then(data => {
-        // TODO unfortunately, data is legacy annotations!
-        // anno.setAnnotations(data);
+        // API returns legacy format - crosswalk!
+        const annotations = data.map(fromLegacyAnnotation);
+        anno.setAnnotations(annotations);
       });
   }
 
