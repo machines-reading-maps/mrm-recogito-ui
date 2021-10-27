@@ -36,8 +36,24 @@
 
 }
 
+.mrm-mapkurator-control.started svg {
+  animation:rotation 1s;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+}
+
 .mrm-mapkurator-control:hover {
   background-color: rgba(255,255,255,1);
+}
+
+.mrm-mapkurator-control.failed,
+.mrm-mapkurator-control.failed:hover {
+  background-color: rgba(255,0,0,0.5);
+  border: 1px solid rgba(255,0,0,0.5);
+  
+  button {
+    color:#fff;
+  }
 }
 
 .mrm-mapkurator-selection-layer {
@@ -53,4 +69,13 @@
     fill:rgba(0, 0, 255, 0.15);
   }
 
+}
+
+@keyframes rotation {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(359deg);
+  }
 }

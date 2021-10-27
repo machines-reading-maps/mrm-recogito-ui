@@ -101,11 +101,31 @@ const App = props => {
       });
   }, []);
 
+  const onMapKuratorComplete = () => {
+    fetch(`/api/document/${window.config.documentId}/part/${window.config.partSequenceNo}/annotations`)
+      .then(response => response.json())
+      .then(data => {
+        // TODO unfortunately, data is legacy annotations!
+        // anno.setAnnotations(data);
+      });
+  }
+
   return (
     <div>
-      { viewer && <CoordinatePanel viewer={viewer} map={map} /> }
-      { anno && <ToolPanel anno={anno} /> }
-      { viewer && <MapKuratorControl config={window.config} viewer={viewer} map={map} /> }
+      { viewer && 
+        <CoordinatePanel 
+          viewer={viewer} 
+          map={map} /> }
+
+      { anno && 
+        <ToolPanel anno={anno} /> }
+
+      { viewer && 
+        <MapKuratorControl 
+          config={window.config} 
+          viewer={viewer} 
+          map={map} 
+          onProcessingComplete={onMapKuratorComplete} /> }
     </div>
   );
 

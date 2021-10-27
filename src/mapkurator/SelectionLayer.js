@@ -68,9 +68,16 @@ export default class SelectionLayer extends Emitter {
 
       this.emit('select', [lonLatTopLeft, lonLatBottomRight]);
 
-      this.svg.parentNode.removeChild(this.svg);
-      this.rect = null;
+      this.destroy();
     }
+  }
+
+  destroy = () => {
+    this.svg.removeEventListener('mousedown', this.onMouseDown);
+    this.svg.removeEventListener('mousemove', this.onMouseMove);
+    this.svg.removeEventListener('mouseup', this.onMouseUp);
+
+    this.svg.parentElement.removeChild(this.svg);
   }
 
 }
