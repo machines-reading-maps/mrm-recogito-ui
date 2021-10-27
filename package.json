@@ -38,7 +38,7 @@
     "@recogito/annotorious-selector-pack": "^0.3.2",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
-    "@recogito/recogito-legacy-storage": "^0.1.14",
+    "@recogito/recogito-legacy-storage": "^0.2.0",
     "leaflet": "^1.7.1",
     "nanoid": "^3.1.23",
     "openseadragon-wmts": "^0.3.2",
