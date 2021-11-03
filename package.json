@@ -33,8 +33,9 @@
     "webpack-dev-server": "^4.3.1"
   },
   "dependencies": {
-    "@recogito/annotorious-map-annotation": "github:recogito/annotorious-map-annotation",
-    "@recogito/annotorious-openseadragon": "github:recogito/annotorious-openseadragon",
+    "@recogito/annotorious-better-polygon": "^0.1.1",
+    "@recogito/annotorious-map-annotation": "^0.2.1",
+    "@recogito/annotorious-openseadragon": "^2.5.9",
     "@recogito/annotorious-selector-pack": "^0.3.2",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
