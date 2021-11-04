@@ -63,11 +63,14 @@ body {
   outline:none;
 
   .a9s-annotation,
-  .a9s-selection {
-
+  .a9s-selection,
+  .a9s-annotation.selected.improved-polygon,
+  .a9s-selection.improved-polygon {
+  
     .a9s-inner {
       stroke:#000;
-      stroke-width: 2px;
+      stroke-width:2px;
+      stroke-dasharray:none;
     }
 
     .a9s-outer {
@@ -122,7 +125,9 @@ body {
   }
 
   .a9s-selection, 
-  .a9s-annotation.selected {
+  .a9s-annotation.selected,
+  .a9s-annotation.selected.improved-polygon,
+  .a9s-selection.improved-polygon {
  
     .a9s-handle {
 
