@@ -42,6 +42,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
     gigapixelMode: IS_WMTS,
     locale: 'auto',
     allowEmpty: true,
+    drawOnSingleClick: true,
     widgets: [
       ClassifyWidget,
       { widget: GazetteerTagWidget, gazetteers },
@@ -61,9 +62,9 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   const selectorPackConfig = IS_WMTS ? 
     { tools: [ 'ellipse', 'freehand' ]} : null;
 
+  new BetterPolygon(anno);
   new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
-  new BetterPolygon(anno);
 
   // Add MapAnnotation plugin
   if (IS_WMTS)
@@ -124,7 +125,7 @@ const App = props => {
       { anno && 
         <ToolPanel anno={anno} /> }
 
-      { viewer && 
+      { (viewer && IS_WMTS) &&
         <MapKuratorControl 
           config={window.config} 
           viewer={viewer} 
