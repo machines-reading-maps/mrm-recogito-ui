@@ -66,7 +66,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
 
-  console.log('Tools', anno.listDrawingTools());
+  anno.on('selectAnnotation', a => console.log(a));
 
   // Add MapAnnotation plugin
   if (IS_WMTS)
