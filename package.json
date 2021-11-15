@@ -35,8 +35,8 @@
   "dependencies": {
     "@recogito/annotorious-better-polygon": "^0.1.5",
     "@recogito/annotorious-map-annotation": "^0.2.1",
-    "@recogito/annotorious-openseadragon": "^2.5.9",
-    "@recogito/annotorious-selector-pack": "^0.3.2",
+    "@recogito/annotorious-openseadragon": "^2.5.16",
+    "@recogito/annotorious-selector-pack": "^0.4.1",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
     "@recogito/recogito-legacy-storage": "^0.2.0",

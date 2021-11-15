@@ -60,11 +60,13 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   // Add extra drawing tools
   // In case of WMTS, don't add circle!
   const selectorPackConfig = IS_WMTS ? 
-    { tools: [ 'ellipse', 'freehand' ]} : null;
+    { tools: [ 'point', 'ellipse', 'freehand' ]} : null;
 
   new BetterPolygon(anno);
   new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
+
+  console.log('Tools', anno.listDrawingTools());
 
   // Add MapAnnotation plugin
   if (IS_WMTS)
