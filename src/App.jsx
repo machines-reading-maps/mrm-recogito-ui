@@ -9,12 +9,14 @@ import TiltedBox from '@recogito/annotorious-tilted-box';
 import BetterPolygon from '@recogito/annotorious-better-polygon';
 import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage';
 import MapAnnotation from '@recogito/annotorious-map-annotation';
+import BetterTag from '@recogito/widget-better-tag/src';
 
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
 import TranscribeWidget from './widgets/TranscribeWidget';
 import GroupPlugin from './group/GroupPlugin';
 import GazetteerTagWidget from './gazetteer/GazetteerTagWidget';
+import EntityAPIConnector from './widgets/EntityAPIConnector';
 
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
@@ -35,7 +37,7 @@ const IS_WMTS = window.config.contentType === 'MAP_WMTS';
 const initAnnotorious = (viewer, map, gazetteers) => {
 
   // Initialize Annotorious
-  const tagWidget = hasVocabulary() ? { widget: 'TAG', vocabulary: getVocabulary() } : 'TAG';
+  // const tagWidget = hasVocabulary() ? { widget: 'TAG', vocabulary: getVocabulary() } : 'TAG';
 
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
@@ -48,7 +50,8 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       { widget: GazetteerTagWidget, gazetteers },
       TranscribeWidget,
       'COMMENT',
-      tagWidget
+      // tagWidget
+      { widget: BetterTag, vocabulary: EntityAPIConnector }
     ]
   });
 
