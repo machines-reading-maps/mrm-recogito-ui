@@ -23,21 +23,12 @@ import ToolPanel from './ui/ToolPanel';
 import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
-
-const hasVocabulary = () =>
-  window.config.vocabulary?.length > 0;
-
-const getVocabulary = () =>
-  window.config.vocabulary.map(({ value, uri }) => 
-      uri ? { label: value, uri } : value);
       
 const IS_WMTS = window.config.contentType === 'MAP_WMTS';
 
 const initAnnotorious = (viewer, map, gazetteers) => {
 
   // Initialize Annotorious
-  // const tagWidget = hasVocabulary() ? { widget: 'TAG', vocabulary: getVocabulary() } : 'TAG';
-
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
     gigapixelMode: IS_WMTS,
