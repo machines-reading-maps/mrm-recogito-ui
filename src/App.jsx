@@ -9,7 +9,6 @@ import TiltedBox from '@recogito/annotorious-tilted-box';
 import BetterPolygon from '@recogito/annotorious-better-polygon';
 import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage';
 import MapAnnotation from '@recogito/annotorious-map-annotation';
-import BetterTag from '@recogito/widget-better-tag/src';
 
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
@@ -50,8 +49,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       { widget: GazetteerTagWidget, gazetteers },
       TranscribeWidget,
       'COMMENT',
-      // tagWidget
-      { widget: BetterTag, vocabulary: EntityAPIConnector }
+      { widget: 'TAG', vocabulary: EntityAPIConnector }
     ]
   });
 

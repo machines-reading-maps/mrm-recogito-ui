@@ -35,12 +35,11 @@
   "dependencies": {
     "@recogito/annotorious-better-polygon": "^0.1.5",
     "@recogito/annotorious-map-annotation": "^0.2.2",
-    "@recogito/annotorious-openseadragon": "^2.5.16",
+    "@recogito/annotorious-openseadragon": "^2.6.0",
     "@recogito/annotorious-selector-pack": "^0.4.1",
     "@recogito/annotorious-tilted-box": "^0.2.1",
     "@recogito/annotorious-toolbar": "^1.1.0",
     "@recogito/recogito-legacy-storage": "^0.3.0",
-    "@recogito/widget-better-tag": "^0.1.1",
     "leaflet": "^1.7.1",
     "nanoid": "^3.1.23",
     "openseadragon-wmts": "^0.3.2",
