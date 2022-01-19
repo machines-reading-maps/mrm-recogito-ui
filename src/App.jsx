@@ -28,6 +28,15 @@ const IS_WMTS = window.config.contentType === 'MAP_WMTS';
 
 const initAnnotorious = (viewer, map, gazetteers) => {
 
+  const localVocabulary = 
+    window.config.vocabulary?.length > 0 ?
+      window.config.vocabulary.map(({ value, uri }) => 
+        uri ? { label: value, uri } : value) 
+      : null;
+
+  // User either local vocab, if any, or the Entity API
+  const vocabulary = localVocabulary || EntityAPIConnector;
+
   // Initialize Annotorious
   const anno = new Annotorious(viewer, {    
     formatter: ClassifyFormatter,
@@ -40,7 +49,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       { widget: GazetteerTagWidget, gazetteers },
       TranscribeWidget,
       'COMMENT',
-      { widget: 'TAG', vocabulary: EntityAPIConnector }
+      { widget: 'TAG', vocabulary }
     ]
   });
 
