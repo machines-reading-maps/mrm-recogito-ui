@@ -23,9 +23,10 @@ export const ColorCodingFormatter = annotation => {
   }
 }
 
-const ColorCodingPanel = props => {
+const ColorCodingPanel = () => {
 
-  const [ selected, setSelected ] = useState();
+  const [ selected, setSelected ] = 
+    useState(localStorage.getItem('mrm.color-scheme') || 'color-by-category');
  
   useEffect(() => {
     // Set default color coding
@@ -34,19 +35,18 @@ const ColorCodingPanel = props => {
   }, []);
 
   useEffect(() => {
-    if (selected) {
-      const el = document.querySelector('.a9s-annotationlayer');
-      const classes = Array.from(getClassNames(el));
+    const el = document.querySelector('.a9s-annotationlayer');
+    const classes = Array.from(getClassNames(el));
 
-      classes.filter(c => c.startsWith('color-by')).forEach(clss =>
-        removeClass(el, clss));
+    classes.filter(c => c.startsWith('color-by')).forEach(clss =>
+      removeClass(el, clss));
 
-      addClass(el, selected);
-    }
+    addClass(el, selected);
   }, [selected]);
 
   const onChange = evt => {
     const { value } = evt.target;
+    localStorage.setItem('mrm.color-scheme', value);
     setSelected(value);
   }
 
