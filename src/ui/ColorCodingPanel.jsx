@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { VscColorMode } from 'react-icons/vsc';
 
-import { addClass, removeClass } from '../group/SVG';
+import { addClass, getClassNames, removeClass } from '../group/SVG';
 
 import './ColorCodingPanel.scss';
 
@@ -23,6 +24,8 @@ export const ColorCodingFormatter = annotation => {
 }
 
 const ColorCodingPanel = props => {
+
+  const [ selected, setSelected ] = useState();
  
   useEffect(() => {
     // Set default color coding
@@ -30,9 +33,31 @@ const ColorCodingPanel = props => {
     addClass(el, 'color-by-category');
   }, []);
 
+  useEffect(() => {
+    if (selected) {
+      const el = document.querySelector('.a9s-annotationlayer');
+      const classes = Array.from(getClassNames(el));
+
+      classes.filter(c => c.startsWith('color-by')).forEach(clss =>
+        removeClass(el, clss));
+
+      addClass(el, selected);
+    }
+  }, [selected]);
+
+  const onChange = evt => {
+    const { value } = evt.target;
+    setSelected(value);
+  }
+
   return (
     <div className="mrm-colorcoding-panel">
+      <VscColorMode />
 
+      <select onChange={onChange} value={selected}>
+        <option value="color-by-category">Color by Category</option>
+        <option value="color-by-progress">Color by Editing Progress</option>
+      </select>
     </div>
   )
 

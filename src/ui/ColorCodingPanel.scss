@@ -1,5 +1,35 @@
 .mrm-colorcoding-panel {
+  position:absolute;
+  bottom:30px;
+  right:30px;
+  z-index:999;
+  padding-right:8px;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 0 8px rgb(0,0,0,0.35);
+  transition:background-color 0.2s linear;
 
+  svg {
+    font-size: 24px;
+    vertical-align:text-bottom;
+    padding-left:8px;
+  }
+
+  select {
+    background:transparent;
+    border:none;
+    outline:none;
+    padding:8px 0 8px 8px;
+  }
+
+  select:focus {
+    outline:none;
+  }
+}
+
+.mrm-colorcoding-panel:hover {
+  background-color: rgba(255,255,255,1);
 }
 
 .a9s-annotationlayer.color-by-category {
@@ -30,7 +60,12 @@
 
   .a9s-annotation.incomplete .a9s-inner,
   .a9s-annotation.incomplete.selected .a9s-inner {
-    stroke: yellow !important;;
+    stroke: yellow !important;
+  }
+
+  .a9s-annotation.incomplete .a9s-outer,
+  .a9s-annotation.incomplete.selected .a9s-outer {
+    stroke:rgba(0, 0, 0, 0.35) !important;
   }
 
   .a9s-annotation.verified .a9s-inner,

@@ -1,6 +1,6 @@
 export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
-const getClassNames = el => {
+export const getClassNames = el => {
   const attr = el.getAttribute('class');
   return attr ? new Set(attr.split(' ')) : new Set();
 }
