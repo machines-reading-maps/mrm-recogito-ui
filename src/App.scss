@@ -56,6 +56,20 @@ body {
     min-width:10px;
     min-height:10px;
   }
+
+  .bottom-right-controls {
+    position:absolute;
+    bottom:30px;
+    right:30px;
+    z-index:999;
+  }
+
+  .bottom-right-controls > div {
+    display:inline-block;
+    vertical-align:top;
+    height:42px;
+    margin-left:10px;
+  }
   
 }
 

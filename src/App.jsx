@@ -130,15 +130,19 @@ const App = props => {
       { anno && 
         <ToolPanel anno={anno} /> }
 
-      { anno && 
-        <ColorCodingPanel /> }
-
-      { (viewer && IS_WMTS) &&
-        <MapKuratorControl 
-          config={window.config} 
-          viewer={viewer} 
-          map={map} 
-          onProcessingComplete={onMapKuratorComplete} /> }
+      { anno &&
+        <div className="bottom-right-controls">
+          { (viewer && IS_WMTS) &&
+            <MapKuratorControl 
+              config={window.config} 
+              viewer={viewer} 
+              map={map} 
+              onProcessingComplete={onMapKuratorComplete} /> 
+          }
+           
+          <ColorCodingPanel /> 
+        </div>
+      }
     </div>
   );
 
