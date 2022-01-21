@@ -1,0 +1,41 @@
+.mrm-colorcoding-panel {
+
+}
+
+.a9s-annotationlayer.color-by-category {
+
+  .a9s-annotation.ENTITY .a9s-inner,
+  .a9s-annotation.ENTITY.selected .a9s-inner {
+    stroke:#bf0707 !important;
+  }
+
+  .a9s-annotation.LABEL .a9s-inner,
+  .a9s-annotation.LABEL.selected .a9s-inner {
+    stroke: #3333b9 !important;;
+  }
+
+  .a9s-annotation.SYMBOL .a9s-inner,
+  .a9s-annotation.SYMBOL.selected .a9s-inner {
+    stroke:#137713 !important;
+  }
+
+}
+
+.a9s-annotationlayer.color-by-progress {
+
+  .a9s-annotation.unverified .a9s-inner,
+  .a9s-annotation.unverified.selected .a9s-inner {
+    stroke:grey !important;
+  }
+
+  .a9s-annotation.incomplete .a9s-inner,
+  .a9s-annotation.incomplete.selected .a9s-inner {
+    stroke: yellow !important;;
+  }
+
+  .a9s-annotation.verified .a9s-inner,
+  .a9s-annotation.verified.selected .a9s-inner {
+    stroke:green !important;
+  }
+
+}

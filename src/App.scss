@@ -168,21 +168,6 @@ body {
 
   }
 
-  .a9s-annotation.ENTITY .a9s-inner,
-  .a9s-annotation.ENTITY.selected .a9s-inner {
-    stroke:#bf0707 !important;
-  }
-
-  .a9s-annotation.LABEL .a9s-inner,
-  .a9s-annotation.LABEL.selected .a9s-inner {
-    stroke: #3333b9 !important;;
-  }
-
-  .a9s-annotation.SYMBOL .a9s-inner,
-  .a9s-annotation.SYMBOL.selected .a9s-inner {
-    stroke:#137713 !important;
-  }
-
 }
 
 #image-pane .openseadragon-canvas {

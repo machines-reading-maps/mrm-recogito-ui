@@ -20,6 +20,7 @@ import EntityAPIConnector from './widgets/EntityAPIConnector';
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
+import ColorCodingPanel, { ColorCodingFormatter } from './ui/ColorCodingPanel';
 import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
@@ -39,7 +40,6 @@ const initAnnotorious = (viewer, map, gazetteers) => {
 
   // Initialize Annotorious
   const anno = new Annotorious(viewer, {    
-    formatter: ClassifyFormatter,
     gigapixelMode: IS_WMTS,
     locale: 'auto',
     allowEmpty: true,
@@ -50,6 +50,10 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       TranscribeWidget,
       'COMMENT',
       { widget: 'TAG', vocabulary }
+    ],
+    formatters: [ 
+      ClassifyFormatter,
+      ColorCodingFormatter
     ]
   });
 
@@ -125,6 +129,9 @@ const App = props => {
 
       { anno && 
         <ToolPanel anno={anno} /> }
+
+      { anno && 
+        <ColorCodingPanel /> }
 
       { (viewer && IS_WMTS) &&
         <MapKuratorControl 
