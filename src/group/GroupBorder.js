@@ -9,10 +9,10 @@ const getGroupBounds = (shapes, svg) => {
   let maxY = 0;
   
   shapes.forEach(s => {
-    const outer = s.querySelector('.a9s-outer');
+    const inner = s.querySelector('.a9s-inner');
 
     // Note that we can't use getBBox() because it doesn't take transforms into account
-    const shapeBounds = outer.getBoundingClientRect();
+    const shapeBounds = inner.getBoundingClientRect();
 
     const x = shapeBounds.x - svgBounds.x;
     const y = shapeBounds.y - svgBounds.y;
