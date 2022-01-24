@@ -27,6 +27,16 @@
 
   }
 
+  .a9s-annotation .a9s-group-order {
+
+    rect {
+      fill:#fff;
+      stroke:#333;
+      stroke-width:2px;
+    }
+
+  }
+
   .a9s-annotation.a9s-group-selected.selected .a9s-inner:hover {
     fill:rgba(0, 0, 0, 0.2);
   }

@@ -71,7 +71,7 @@ export default class GroupBorder {
       if (!this.rect) {
         this.rect = document.createElementNS(SVG_NAMESPACE, 'rect');
         this.rect.setAttribute('class', 'a9s-group-border'); 
-        this.g.appendChild(this.rect);     
+        this.g.appendChild(this.rect);
       }
 
       this.rect.setAttribute('x', x);
@@ -93,7 +93,7 @@ export default class GroupBorder {
 
   set visible(visible) {
     if (visible && !this.visible) {
-      this.svg.appendChild(this.g, this.svg.firstChild);
+      this.svg.insertBefore(this.g, this.svg.firstChild);
     } else if (!visible && this.visible) {
       this.svg.removeChild(this.g);
     }

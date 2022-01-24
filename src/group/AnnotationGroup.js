@@ -9,10 +9,7 @@ export default class AnnotationGroup {
     this.id = getGroupId(selectedAnnotation);
     this.shapes = getShapesForGroup(this.id, svg);
 
-    this.shapes.forEach(s => {
-      addClass(s, 'a9s-group-selected');
-      new OrderingLabel(s);
-    });
+    this.shapes.forEach(s => addClass(s, 'a9s-group-selected'));
     
     // For new groups, this.shapes will be empty, because
     // the group info is not stored in the DOM elemnet yet!
@@ -21,6 +18,8 @@ export default class AnnotationGroup {
     }
 
     this.border = new GroupBorder(this.shapes, svg);
+
+    this.shapes.forEach((s, idx) => new OrderingLabel(s, idx));
 
     // Group ID before and after, by annotation ID
     this.changes = {

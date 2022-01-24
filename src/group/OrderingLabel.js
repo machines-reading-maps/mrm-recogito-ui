@@ -6,7 +6,7 @@ const createContainer = bounds => {
   const { x, y, width, height } = bounds;
 
   const svg = document.createElementNS(SVG_NAMESPACE, 'svg');
-  svg.setAttribute('class', 'a9s-formatter-el');
+  svg.setAttribute('class', 'a9s-formatter-el a9s-group-order');
   svg.setAttribute('width', width);
   svg.setAttribute('height', height);
 
@@ -20,26 +20,38 @@ const createContainer = bounds => {
     svg.setAttribute('y', y);
   }
 
+  const g = document.createElementNS(SVG_NAMESPACE, 'g');
+  svg.appendChild(g);
+
   return svg;
 }
 
 export default class OrderingLabel {
 
-  constructor(shape) {
+  constructor(shape, index) {
+    this.shape = shape;
+
     const inner = shape.querySelector('.a9s-inner');
-    
-    this.group = shape;
-    this.element = createContainer(inner.getBBox());
+    this.container = createContainer(inner.getBBox());
+
+    const box = document.createElementNS(SVG_NAMESPACE, 'rect');
+    box.setAttribute('x', -30);
+    box.setAttribute('width', 24);
+    box.setAttribute('height', 24);
+    box.setAttribute('rx', 3);
 
     const text = document.createElementNS(SVG_NAMESPACE, 'text');
-    text.innerHTML = '1';
+    text.innerHTML = index + 1;
+    text.setAttribute('text-anchor', 'middle');
 
-    this.element.appendChild(text);
-    
-    // this.group.appendChild(this.element);
+    // Append now, so we can measure text width and center accordingly
+    this.container.firstChild.appendChild(box);
+    this.container.firstChild.appendChild(text);
 
-    text.setAttribute('x', 0);
-    text.setAttribute('y', 0);
+    this.shape.appendChild(this.container);
+
+    text.setAttribute('x', -18);
+    text.setAttribute('y',  18);        
   }
 
 }
