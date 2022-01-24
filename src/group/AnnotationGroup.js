@@ -1,4 +1,5 @@
 import GroupBorder from './GroupBorder';
+import OrderingLabel from './OrderingLabel';
 import { addClass, removeClass } from './SVG';
 import { getGroupId, getShapesForGroup } from './Utils';
 
@@ -8,7 +9,10 @@ export default class AnnotationGroup {
     this.id = getGroupId(selectedAnnotation);
     this.shapes = getShapesForGroup(this.id, svg);
 
-    this.shapes.forEach(s => addClass(s, 'a9s-group-selected'));
+    this.shapes.forEach(s => {
+      addClass(s, 'a9s-group-selected');
+      new OrderingLabel(s);
+    });
     
     // For new groups, this.shapes will be empty, because
     // the group info is not stored in the DOM elemnet yet!
