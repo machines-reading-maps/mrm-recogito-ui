@@ -49,24 +49,38 @@
 
 .a9s-annotationlayer.color-by-progress {
 
+  .a9s-annotation .a9s-outer,
+  .a9s-annotation.selected .a9s-outer {
+    display:none;
+  }
+
   .a9s-annotation.unverified .a9s-inner,
   .a9s-annotation.unverified.selected .a9s-inner {
-    stroke:grey !important;
+    stroke: rgba(0,0,0,0.45) !important;
+    stroke-width:1px;
+    fill: rgba(0,0,0,0.15);
   }
 
   .a9s-annotation.incomplete .a9s-inner,
   .a9s-annotation.incomplete.selected .a9s-inner {
     stroke: yellow !important;
+    fill: #ffff0021;
+    stroke-width: 3px;
+    stroke-dasharray: 6 4;
   }
 
   .a9s-annotation.incomplete .a9s-outer,
   .a9s-annotation.incomplete.selected .a9s-outer {
-    stroke:rgba(0, 0, 0, 0.35) !important;
+    display:initial;
+    stroke-width: 3px;
+    stroke:rgba(0, 0, 0, 0.7) !important;
   }
 
   .a9s-annotation.verified .a9s-inner,
   .a9s-annotation.verified.selected .a9s-inner {
-    stroke:green !important;
+    stroke: green !important;
+    stroke-width:4px;
+    fill: rgba(0,100,0,0.5);
   }
 
 }
