@@ -79,7 +79,9 @@ export default class GroupPlugin extends Emitter {
       if (groupId) {
         this.group = new AnnotationGroup(annotation, this.svg);
 
-        this.emit('selectGroup', this.group.annotations);
+        console.log(this.group.isOrdered);
+
+        this.emit('selectGroup', this.group);
       }
 
       const removeHandlers = () => {
@@ -137,8 +139,9 @@ export default class GroupPlugin extends Emitter {
     if (shape.annotation.id !== selectedAnnotation.id) {
       const existingGroupId = getGroupId(selectedAnnotation);
       if (!existingGroupId) {
+        console.log('no existing group');
         // If the selection is not part of a group, create one
-        const updated = setGroupId(selectedAnnotation, nanoid());
+        const updated = setGroup(selectedAnnotation, nanoid(), null);
         this.anno.updateSelected(updated);
 
         this.group?.destroy();
@@ -146,13 +149,17 @@ export default class GroupPlugin extends Emitter {
       }
 
       this.group.toggle(shape);
-      this.emit('changeGroup', this.group.annotations);
+      this.emit('changeGroup', this.group);
+
+      console.log('group size is now ' + this.group.size);
 
       if (this.group.size === 1) {
-        const updated = clearGroupId(selectedAnnotation);
+        // Group was reduced to one element - remove ID from selected annotation
+        const updated = clearGroup(selectedAnnotation);
         this.anno.updateSelected(updated);
       } else if (getGroupId(selectedAnnotation) !== this.group.id) {
-        const updated = setGroupId(selectedAnnotation, this.group.id);
+        const seqNo = this.group.isOrdered ? this.group.size - 1 : null;
+        const updated = setGroup(selectedAnnotation, this.group.id, seqNo);
         this.anno.updateSelected(updated);
       }
     }

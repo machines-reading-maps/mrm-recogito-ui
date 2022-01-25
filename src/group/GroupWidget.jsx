@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { GrObjectUngroup } from 'react-icons/gr';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
-const GroupWidget = groupPlugin => props => {
+const GroupWidget = groupPlugin => () => {
 
   const [ groupSize, setGroupSize ] = useState();
 
-  const [ requireCtrlKey, setRequireCtrlKey ] = useState(true);
-
   const [ isOrdered, setIsOrdered ] = useState(false);
 
+  const [ requireCtrlKey, setRequireCtrlKey ] = useState(true);
+
   useEffect(() => {
+    setIsOrdered(groupPlugin.group?.isOrdered);
     setGroupSize(groupPlugin.group?.size || 0);
 
-    const onChangeGroup = annotations =>
-      setGroupSize(annotations.length);
+    const onChangeGroup = group => {
+      setIsOrdered(group.isOrdered);
+      setGroupSize(group.size);
+    }
 
     groupPlugin.on('selectGroup', onChangeGroup);
     groupPlugin.on('changeGroup', onChangeGroup);

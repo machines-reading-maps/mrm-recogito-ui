@@ -24,7 +24,7 @@ export const setGroup = (annotation, groupId, seqNo) => {
   const toAdd = [{ type: 'TextualBody', purpose: 'grouping', value: groupId }];
   
   // Add sequence number, if any
-  if (seqNo !== null)
+  if (seqNo != null)
     toAdd.push({ type: 'TextualBody', purpose: 'ordering', value: seqNo });
 
   return {

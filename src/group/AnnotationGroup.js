@@ -18,8 +18,9 @@ export default class AnnotationGroup {
     }
 
     // Group is ordered if ALL annotations have a sequence no.
-    this.isOrdered = this.shapes.every(s =>
-      getSequenceNumber(s.annotation) !== null);
+    this.isOrdered = this.shapes.every(s => getSequenceNumber(s.annotation));
+
+    console.log('New group. Ordered: ' + this.isOrdered);
 
     this.border = new GroupBorder(this.shapes, svg);
 
@@ -104,6 +105,8 @@ export default class AnnotationGroup {
   
   /** En- or disables ordering for this group **/
   setOrdered(ordered) {
+    console.log('setting ordered: ' + ordered);
+    
     this.isOrdered = ordered;
     
     const annotations = this.shapes.map(s => s.annotation);
