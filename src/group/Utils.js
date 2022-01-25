@@ -19,36 +19,29 @@ export const getShapesForGroup = (id, svg) =>
     .filter(shape => getGroupId(shape.annotation) === id);
 
 /** Immutably sets the groupId in the given annotation **/
-export const setGroupId = (annotation, groupId) => ({
-  ...annotation,
-  body: [
-    // Remove existing groupig bodies first, if any
-    ...toArray(annotation.body).filter(b => b.purpose != 'grouping'),
-    { type: 'TextualBody', purpose: 'grouping', value: groupId }
-  ]
-});
+export const setGroup = (annotation, groupId, seqNo) => {
+  // Always add group ID
+  const toAdd = [{ type: 'TextualBody', purpose: 'grouping', value: groupId }];
+  
+  // Add sequence number, if any
+  if (seqNo !== null)
+    toAdd.push({ type: 'TextualBody', purpose: 'ordering', value: seqNo });
+
+  return {
+    ...annotation,
+    body: [
+      // Remove existing group bodies first, if any
+      ...toArray(annotation.body).filter(b => b.purpose != 'grouping' && b.purpose != 'ordering'),
+      ...toAdd
+    ]
+  };
+}
 
 /** Immutably removes the groupId body (if any) **/
-export const clearGroupId = annotation => ({
+export const clearGroup = annotation => ({
   ...annotation,
   body: [
-    ...toArray(annotation.body).filter(b => b.purpose != 'grouping')
+    ...toArray(annotation.body).filter(b =>
+      b.purpose != 'grouping' && b.purpose != 'ordering')
   ]
 });
-
-/**
- * Immutably sets the sequence number, or removes it if
- * seqNo is null.
- */
-export const setSequenceNo = (annotation, seqNo) => seqNo === null ? {
-  ...annotation,
-  body: [
-    ...toArray(annotation.body).filter(b => b.purpose != 'ordering')
-  ]
-} : {
-  ...annotation,
-  body: [
-    ...toArray(annotation.body).filter(b => b.purpose != 'ordering'),
-    { type: 'TextualBody', purpose: 'ordering', value: seqNo }
-  ]
-}

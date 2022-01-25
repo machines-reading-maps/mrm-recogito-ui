@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import Emitter from 'tiny-emitter';
 
 import AnnotationGroup from './AnnotationGroup';
-import { clearGroupId, getGroupId, setGroupId } from './Utils';
+import { clearGroup, getGroupId, setGroup } from './Utils';
 import GroupWidget from './GroupWidget';
 
 import './GroupPlugin.scss';
@@ -164,14 +164,18 @@ export default class GroupPlugin extends Emitter {
    * the current selection (i.e. those that were CTRL+clicked)
    */
   handleOk() {
+    const hasChanged = (before, after) => 
+      before?.groupId !== after.groupId || before?.seqNo !== after.seqNo;
+
     if (this.group) {
       for (let id in this.group.changes) {
         const { before, after } = this.group.changes[id];
-        if (before != after) {
+        
+        if (hasChanged(before, after)) {
           const annotationBefore = this.anno.getAnnotationById(id);
 
           const annotationAfter = after ? 
-            setGroupId(annotationBefore, after) : clearGroupId(annotationBefore);
+            setGroup(annotationBefore, after.groupId, after.seqNo) : clearGroup(annotationBefore);
 
           this.anno.addAnnotation(annotationAfter);
           this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
