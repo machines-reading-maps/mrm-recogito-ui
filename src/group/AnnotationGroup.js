@@ -99,8 +99,10 @@ export default class AnnotationGroup {
     this.border.draw(this.shapes);
   }
 
-  clearGroup = () =>
+  clearGroup = () => {
+    this.hideLabels();
     [...this.shapes].forEach(s => this.removeFromGroup(s));
+  }
 
   redraw = () =>
     this.border?.redraw();
@@ -108,14 +110,9 @@ export default class AnnotationGroup {
   /** En- or disables ordering for this group **/
   setOrdered = ordered => {
     this.isOrdered = ordered;
-    
-    if (ordered)
-      this.showLabels();
-    else
-      this.hideLabels();
-    
+        
+    // TODO make smarter
     const annotations = this.shapes.map(s => s.annotation);
-
     annotations.forEach((a, idx) => {
       const change = this.changes[a.id];
       if (change) {
@@ -128,6 +125,11 @@ export default class AnnotationGroup {
         }
       }
     });
+
+    if (ordered)
+      this.showLabels();
+    else
+      this.hideLabels();
   }
 
   destroy = () => {
@@ -139,9 +141,6 @@ export default class AnnotationGroup {
     this.shapes.forEach(s => {
       const { annotation } = s;
       
-      // Seq no either from last change, or original annotation
-      const lastChange = this.changes[annotation.id];
-
       const seqNo = this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
 
       // TODO store, so we can destroy them later!
