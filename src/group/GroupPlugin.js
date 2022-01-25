@@ -16,6 +16,8 @@ export default class GroupPlugin extends Emitter {
     
     this.anno = anno;
 
+    this.viewer = viewer;
+
     this.svg = anno._element.querySelector('svg');
 
     this.isCtrlDown = false;
@@ -77,7 +79,7 @@ export default class GroupPlugin extends Emitter {
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
       if (groupId) {
-        this.group = new AnnotationGroup(annotation, this.svg);
+        this.group = new AnnotationGroup(annotation, this.svg, this.viewer);
         this.emit('selectGroup', this.group);
       }
 
@@ -136,13 +138,12 @@ export default class GroupPlugin extends Emitter {
     if (shape.annotation.id !== selectedAnnotation.id) {
       const existingGroupId = getGroupId(selectedAnnotation);
       if (!existingGroupId) {
-        console.log('no existing group');
         // If the selection is not part of a group, create one
         const updated = setGroup(selectedAnnotation, nanoid(), null);
         this.anno.updateSelected(updated);
 
         this.group?.destroy();
-        this.group = new AnnotationGroup(updated, this.svg);
+        this.group = new AnnotationGroup(updated, this.svg, this.viewer);
       }
 
       this.group.toggle(shape);

@@ -3,10 +3,19 @@ import OrderingLabel from './OrderingLabel';
 import { addClass, removeClass } from './SVG';
 import { getGroupId, getSequenceNumber, getShapesForGroup } from './Utils';
 
+const currentScale = viewer => {
+  const containerWidth = viewer.viewport.getContainerSize().x;
+  const zoom = viewer.viewport.getZoom(true);
+  return viewer.world.getContentFactor() / (zoom * containerWidth);
+}
+
 export default class AnnotationGroup {
 
-  constructor(selectedAnnotation, svg) {
+  constructor(selectedAnnotation, svg, viewer) {
     this.id = getGroupId(selectedAnnotation);
+
+    this.viewer = viewer;
+
     this.shapes = getShapesForGroup(this.id, svg);
 
     this.shapes.forEach(s => addClass(s, 'a9s-group-selected'));
@@ -144,7 +153,7 @@ export default class AnnotationGroup {
       const seqNo = this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
 
       // TODO store, so we can destroy them later!
-      this.labels[annotation.id] = new OrderingLabel(s, seqNo);
+      this.labels[annotation.id] = new OrderingLabel(s, seqNo, currentScale(this.viewer));
     });
   }
 

@@ -28,7 +28,7 @@ const createContainer = bounds => {
 
 export default class OrderingLabel {
 
-  constructor(shape, seqNo) {
+  constructor(shape, seqNo, initialScale) {
     this.shape = shape;
 
     const inner = shape.querySelector('.a9s-inner');
@@ -45,8 +45,13 @@ export default class OrderingLabel {
     text.setAttribute('text-anchor', 'middle');
 
     // Append now, so we can measure text width and center accordingly
-    this.container.firstChild.appendChild(box);
-    this.container.firstChild.appendChild(text);
+    const g = this.container.firstChild;
+
+    g.appendChild(box);
+    g.appendChild(text);
+
+    // Set initial scale
+    g.setAttribute('transform', `scale(${initialScale})`);
 
     this.shape.appendChild(this.container);
 
