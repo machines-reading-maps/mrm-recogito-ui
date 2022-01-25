@@ -1,7 +1,7 @@
 import GroupBorder from './GroupBorder';
 import OrderingLabel from './OrderingLabel';
 import { addClass, removeClass } from './SVG';
-import { getGroupId, getShapesForGroup } from './Utils';
+import { getGroupId, getSequenceNumber, getShapesForGroup } from './Utils';
 
 export default class AnnotationGroup {
 
@@ -17,13 +17,18 @@ export default class AnnotationGroup {
       this.shapes = [ svg.querySelector(`.a9s-annotation.selected`) ];
     }
 
-    this.border = new GroupBorder(this.shapes, svg);
+    // Group is ordered if ALL annotations have a sequence no.
+    this.isOrdered = this.shapes.every(s =>
+      getSequenceNumber(s.annotation) !== null);
 
-    this.shapes.forEach((s, idx) => new OrderingLabel(s, idx));
+    this.border = new GroupBorder(this.shapes, svg);
 
     // Group ID before and after, by annotation ID
     this.changes = {
-      // [annotationId]: { before: ..., after: }
+      // [annotationId]: { 
+      //  before: { groupId: ..., seqNo: ... }, 
+      //  after: { groupId: ..., seqNo: ... }
+      // }
     };
   }
 
@@ -55,6 +60,7 @@ export default class AnnotationGroup {
 
     addClass(shape, 'a9s-group-selected');
 
+    // TODO!
     this.changes[shape.annotation.id] = 
       { before: getGroupId(shape.annotation), after: this.id };
 
@@ -80,6 +86,11 @@ export default class AnnotationGroup {
 
   redraw() {
     this.border?.redraw();
+  }
+  
+  /** En- or disables ordering for this group **/
+  setOrdered(ordered) {
+    console.log('setting ordered: ' + ordered);
   }
 
   destroy() {

@@ -198,4 +198,10 @@ export default class GroupPlugin extends Emitter {
     this.anno.disableSelect = !require || this.isCtrlDown;
   }
 
+  /** En- or disables ordering for this group (if any) **/
+  setOrdered(ordered) {
+    if (this.group)
+      this.group.setOrdered(ordered);
+  }
+
 }
