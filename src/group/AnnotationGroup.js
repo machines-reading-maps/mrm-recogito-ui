@@ -60,9 +60,17 @@ export default class AnnotationGroup {
 
     addClass(shape, 'a9s-group-selected');
 
-    // TODO!
     this.changes[shape.annotation.id] = 
-      { before: getGroupId(shape.annotation), after: this.id };
+      { 
+        before: {
+          groupId: getGroupId(shape.annotation),
+          seqNo: getSequenceNumber(shape.annotation)
+        },
+        after: {
+          groupId: this.id,
+          seqNo: this.isOrdered ? this.shapes.length - 1 : null 
+        }
+      };
 
     this.border.draw(this.shapes);
   }
@@ -75,7 +83,13 @@ export default class AnnotationGroup {
     
     // Add to changes list
     this.changes[shape.annotation.id] = 
-      { before: getGroupId(shape.annotation), after: null };
+      { 
+        before: { 
+          groupId: getGroupId(shape.annotation), 
+          seqNo: getSequenceNumber(shape.annotation)
+        },
+        after: null 
+      };
 
     this.border.draw(this.shapes);
   }
@@ -90,7 +104,22 @@ export default class AnnotationGroup {
   
   /** En- or disables ordering for this group **/
   setOrdered(ordered) {
-    console.log('setting ordered: ' + ordered);
+    this.isOrdered = ordered;
+    
+    const annotations = this.shapes.map(s => s.annotation);
+
+    annotations.forEach((a, idx) => {
+      const change = this.changes[a.id];
+      if (change) {
+        // Mutate change.after.seqNo in place
+        change.after.seqNo = ordered ? (idx + 1) : null;
+      } else {
+        this.changes[a.id] = { 
+          before: { groupId: this.id, seqNo: getSequenceNumber(a) },
+          after: { groupId: this.id, seqNo: ordered ? (idx + 1) : null }
+        }
+      }
+    });
   }
 
   destroy() {
