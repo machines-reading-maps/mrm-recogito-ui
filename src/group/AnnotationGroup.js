@@ -17,13 +17,6 @@ export default class AnnotationGroup {
       this.shapes = [ svg.querySelector(`.a9s-annotation.selected`) ];
     }
 
-    // Group is ordered if ALL annotations have a sequence no.
-    this.isOrdered = this.shapes.every(s => getSequenceNumber(s.annotation));
-
-    console.log('New group. Ordered: ' + this.isOrdered);
-
-    this.border = new GroupBorder(this.shapes, svg);
-
     // Group ID before and after, by annotation ID
     this.changes = {
       // [annotationId]: { 
@@ -31,6 +24,17 @@ export default class AnnotationGroup {
       //  after: { groupId: ..., seqNo: ... }
       // }
     };
+
+    // Sequence no. labels, if any
+    this.labels = {};
+  
+    // Group is ordered if ALL annotations have a sequence no.
+    this.isOrdered = this.shapes.every(s => getSequenceNumber(s.annotation));
+
+    if (this.isOrdered)
+      this.showLabels();
+
+    this.border = new GroupBorder(this.shapes, svg);
   }
 
   get size() {
@@ -45,7 +49,7 @@ export default class AnnotationGroup {
    * Adds the given annotation to the group if it's not yet
    * part of it, removes otherwise.
    */
-  toggle(shape) {
+  toggle = shape => {
     const exists = this.shapes.indexOf(shape) > -1;
     if (exists) {
       // Annotation is part of the group -> remove
@@ -56,7 +60,7 @@ export default class AnnotationGroup {
     }
   }
 
-  addToGroup(shape) {
+  addToGroup = shape => {
     this.shapes = [ ...this.shapes, shape ];
 
     addClass(shape, 'a9s-group-selected');
@@ -76,7 +80,7 @@ export default class AnnotationGroup {
     this.border.draw(this.shapes);
   }
 
-  removeFromGroup(shape) {
+  removeFromGroup = shape => {
     this.shapes = this.shapes.filter(s => 
       s.annotation.id != shape.annotation.id);
 
@@ -95,19 +99,20 @@ export default class AnnotationGroup {
     this.border.draw(this.shapes);
   }
 
-  clearGroup() {
+  clearGroup = () =>
     [...this.shapes].forEach(s => this.removeFromGroup(s));
-  }
 
-  redraw() {
+  redraw = () =>
     this.border?.redraw();
-  }
   
   /** En- or disables ordering for this group **/
-  setOrdered(ordered) {
-    console.log('setting ordered: ' + ordered);
-    
+  setOrdered = ordered => {
     this.isOrdered = ordered;
+    
+    if (ordered)
+      this.showLabels();
+    else
+      this.hideLabels();
     
     const annotations = this.shapes.map(s => s.annotation);
 
@@ -125,9 +130,31 @@ export default class AnnotationGroup {
     });
   }
 
-  destroy() {
+  destroy = () => {
     this.shapes.forEach(s => removeClass(s, 'a9s-group-selected'));
     this.border?.destroy();
+  }
+
+  showLabels = () => {
+    this.shapes.forEach(s => {
+      const { annotation } = s;
+      
+      // Seq no either from last change, or original annotation
+      const lastChange = this.changes[annotation.id];
+
+      const seqNo = this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
+
+      // TODO store, so we can destroy them later!
+      this.labels[annotation.id] = new OrderingLabel(s, seqNo);
+    });
+  }
+
+  hideLabels = () => {
+    for (const id in this.labels) {
+      this.labels[id].destroy();
+    }
+
+    this.labels = {};
   }
 
 }

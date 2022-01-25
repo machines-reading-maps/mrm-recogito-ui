@@ -78,9 +78,6 @@ export default class GroupPlugin extends Emitter {
       const groupId = getGroupId(annotation);
       if (groupId) {
         this.group = new AnnotationGroup(annotation, this.svg);
-
-        console.log(this.group.isOrdered);
-
         this.emit('selectGroup', this.group);
       }
 

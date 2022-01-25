@@ -28,7 +28,7 @@ const createContainer = bounds => {
 
 export default class OrderingLabel {
 
-  constructor(shape, index) {
+  constructor(shape, seqNo) {
     this.shape = shape;
 
     const inner = shape.querySelector('.a9s-inner');
@@ -41,7 +41,7 @@ export default class OrderingLabel {
     box.setAttribute('rx', 3);
 
     const text = document.createElementNS(SVG_NAMESPACE, 'text');
-    text.innerHTML = index + 1;
+    text.innerHTML = seqNo;
     text.setAttribute('text-anchor', 'middle');
 
     // Append now, so we can measure text width and center accordingly
@@ -52,6 +52,10 @@ export default class OrderingLabel {
 
     text.setAttribute('x', -18);
     text.setAttribute('y',  18);        
+  }
+
+  destroy = () => {
+    this.container.parentNode.removeChild(this.container);
   }
 
 }
