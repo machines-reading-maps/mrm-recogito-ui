@@ -7,7 +7,7 @@ export const getGroupId = annotation =>
 
 /** Returns the sequence number stored in this annotation, if any **/
 export const getSequenceNumber = annotation =>
-  toArray.apply(annotation.body).find(b => b.purpose === 'ordering')?.value;
+  toArray(annotation.body).find(b => b.purpose === 'ordering')?.value;
 
 /** 
  * TODO we can optimize this later, by adding the groupID as 
