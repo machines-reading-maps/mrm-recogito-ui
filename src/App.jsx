@@ -115,6 +115,7 @@ const App = props => {
       .then(response => response.json())
       .then(data => {
         // API returns legacy format - crosswalk!
+        console.log('Got mapKurator annotations', data);
         const annotations = data.map(fromLegacyAnnotation);
         anno.setAnnotations(annotations);
       });

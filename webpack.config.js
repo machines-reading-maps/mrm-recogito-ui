@@ -60,10 +60,10 @@ module.exports = {
       publicPath: '/'
     },
     proxy: {
-      '/api': 'http://localhost:9000',
-      '/assets': 'http://localhost:9000',
+      '/api':      'http://localhost:9000',
+      '/assets':   'http://localhost:9000',
       '/document': 'http://localhost:9000',
-      '/webjars': 'http://localhost:9000'
+      '/webjars':  'http://localhost:9000'
     }
   },
   plugins: [
