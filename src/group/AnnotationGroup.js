@@ -142,6 +142,7 @@ export default class AnnotationGroup {
   }
 
   destroy = () => {
+    this.hideLabels();
     this.shapes.forEach(s => removeClass(s, 'a9s-group-selected'));
     this.border?.destroy();
   }

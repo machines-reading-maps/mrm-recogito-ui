@@ -19,7 +19,7 @@ const GroupWidget = groupPlugin => props => {
       setGroup(group);
       setGroupSize(group?.size || 0);
       setIsOrdered(group?.isOrdered);
-      setOrdering(group.getOrdering(props.annotation));
+      setOrdering(group?.getOrdering(props.annotation));
     }
 
     onChangeGroup(groupPlugin.group);

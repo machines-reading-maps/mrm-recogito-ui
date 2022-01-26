@@ -149,8 +149,6 @@ export default class GroupPlugin extends Emitter {
       this.group.toggle(shape);
       this.emit('changeGroup', this.group);
 
-      console.log('group size is now ' + this.group.size);
-
       if (this.group.size === 1) {
         // Group was reduced to one element - remove ID from selected annotation
         const updated = clearGroup(selectedAnnotation);
@@ -170,7 +168,7 @@ export default class GroupPlugin extends Emitter {
    */
   handleOk() {
     const hasChanged = (before, after) => 
-      before?.groupId !== after.groupId || before?.seqNo !== after.seqNo;
+      before?.groupId !== after?.groupId || before?.seqNo !== after?.seqNo;
 
     if (this.group) {
       for (let id in this.group.changes) {
