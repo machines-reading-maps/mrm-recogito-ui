@@ -48,6 +48,9 @@ const GroupWidget = groupPlugin => props => {
     if (group) {
       setIsOrdered(!group.isOrdered);
       groupPlugin.setOrdered(!group.isOrdered);
+
+      if (group.isOrdered) 
+        setOrdering(group.getOrdering(props.annotation));
     }
   }
 
