@@ -74,17 +74,24 @@ export default class AnnotationGroup {
 
     addClass(shape, 'a9s-group-selected');
 
-    this.changes[shape.annotation.id] = 
+    const { annotation } = shape;
+    const seqNo = this.isOrdered ? this.shapes.length : null;
+
+    this.changes[annotation.id] = 
       { 
         before: {
-          groupId: getGroupId(shape.annotation),
-          seqNo: getSequenceNumber(shape.annotation)
+          groupId: getGroupId(annotation),
+          seqNo: getSequenceNumber(annotation)
         },
         after: {
           groupId: this.id,
-          seqNo: this.isOrdered ? this.shapes.length - 1 : null 
+          seqNo 
         }
       };
+
+    // Add label for the new shape
+    if (this.isOrdered)
+      this.labels[annotation.id] = new OrderingLabel(shape, seqNo, currentScale(this.viewer));
 
     this.border.draw(this.shapes);
   }
@@ -95,7 +102,6 @@ export default class AnnotationGroup {
 
     removeClass(shape, 'a9s-group-selected');
     
-    // Add to changes list
     this.changes[shape.annotation.id] = 
       { 
         before: { 
@@ -105,6 +111,8 @@ export default class AnnotationGroup {
         after: null 
       };
 
+    // TODO remove label and re-arrange ordering!
+    
     this.border.draw(this.shapes);
   }
 
