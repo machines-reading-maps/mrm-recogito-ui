@@ -7,7 +7,7 @@ import { initViewer } from './TileSources';
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
 import BetterPolygon from '@recogito/annotorious-better-polygon';
-import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage';
+import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage/src';
 import MapAnnotation from '@recogito/annotorious-map-annotation';
 
 // Custom MRM extensions and plugins
@@ -115,8 +115,7 @@ const App = props => {
       .then(response => response.json())
       .then(data => {
         // API returns legacy format - crosswalk!
-        console.log('Got mapKurator annotations', data);
-        const annotations = data.map(fromLegacyAnnotation);
+        const annotations = data.map(a => fromLegacyAnnotation(a));
         anno.setAnnotations(annotations);
       });
   }

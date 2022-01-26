@@ -58,7 +58,6 @@ const MapKuratorControl = props => {
                 console.log(data);
                 setProcessing('failed');
               } else {
-                console.log(data);
                 poll();
               }
             })
