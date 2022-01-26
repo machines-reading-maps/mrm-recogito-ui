@@ -101,18 +101,24 @@ export default class AnnotationGroup {
       s.annotation.id != shape.annotation.id);
 
     removeClass(shape, 'a9s-group-selected');
+
+    const { annotation } = shape;
     
-    this.changes[shape.annotation.id] = 
+    this.changes[annotation.id] = 
       { 
         before: { 
-          groupId: getGroupId(shape.annotation), 
-          seqNo: getSequenceNumber(shape.annotation)
+          groupId: getGroupId(annotation), 
+          seqNo: getSequenceNumber(annotation)
         },
         after: null 
       };
 
     // TODO remove label and re-arrange ordering!
-    
+    if (this.isOrdered) {
+      this.labels[annotation.id].destroy();
+      delete this.labels[annotation.id];
+    }
+
     this.border.draw(this.shapes);
   }
 
