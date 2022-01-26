@@ -70,6 +70,12 @@
       color:#727272;
     }
 
+    label.order {
+      display:inline-block;
+      font-family:Arial;
+      font-size:14px;
+    }
+
     svg {
       margin-right:6px;
       vertical-align:middle;
@@ -81,16 +87,18 @@
     }
   }
 
-  .buttons {
+  .change-order,
+  .buttons button {
+    background:none;
+    border:none;
+    outline:none;
+    color:#4f92d7;
+    cursor:pointer;
+    text-decoration:underline;
+    font-size:14px;
+  }
 
-    button {
-      background:none;
-      border:none;
-      outline:none;
-      color:#4f92d7;
-      cursor:pointer;
-      text-decoration:underline;
-    }
+  .buttons {
 
     button.group-ordered {
 

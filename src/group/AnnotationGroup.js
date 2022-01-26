@@ -146,6 +146,9 @@ export default class AnnotationGroup {
     this.border?.destroy();
   }
 
+  getOrdering = annotation =>
+    this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
+
   showLabels = () => {
     this.shapes.forEach(s => {
       const { annotation } = s;

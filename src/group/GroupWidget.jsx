@@ -2,22 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { GrObjectUngroup } from 'react-icons/gr';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
-const GroupWidget = groupPlugin => () => {
+const GroupWidget = groupPlugin => props => {
 
-  const [ groupSize, setGroupSize ] = useState();
+  const [ group, setGroup ] = useState();
+
+  const [ groupSize, setGroupSize ] = useState(0);
 
   const [ isOrdered, setIsOrdered ] = useState(false);
+
+  const [ ordering, setOrdering ] = useState();
 
   const [ requireCtrlKey, setRequireCtrlKey ] = useState(true);
 
   useEffect(() => {
-    setIsOrdered(groupPlugin.group?.isOrdered);
-    setGroupSize(groupPlugin.group?.size || 0);
-
     const onChangeGroup = group => {
-      setIsOrdered(group.isOrdered);
-      setGroupSize(group.size);
+      setGroup(group);
+      setGroupSize(group?.size || 0);
+      setIsOrdered(group?.isOrdered);
+      setOrdering(group.getOrdering(props.annotation));
     }
+
+    onChangeGroup(groupPlugin.group);
 
     groupPlugin.on('selectGroup', onChangeGroup);
     groupPlugin.on('changeGroup', onChangeGroup);
@@ -35,12 +40,15 @@ const GroupWidget = groupPlugin => () => {
   }
 
   const onClearGroup = () => {
+    setGroupSize(0);
     groupPlugin.clearGroup();
   }
 
   const onToggleOrdered = () => {
-    groupPlugin.setOrdered(!isOrdered);
-    setIsOrdered(!isOrdered);
+    if (group) {
+      setIsOrdered(!group.isOrdered);
+      groupPlugin.setOrdered(!group.isOrdered);
+    }
   }
 
   return (
@@ -48,7 +56,16 @@ const GroupWidget = groupPlugin => () => {
       <div className="group-status">
         <GrObjectUngroup /> 
         {groupSize > 1 ? 
-          <label>{groupSize} grouped annotations</label> :
+          (isOrdered ? 
+            <>
+              <label className="order">{ordering}/{groupSize}</label>
+              <button 
+                className="change-order">
+                Change order
+              </button>
+            </> :
+            <label>{groupSize} grouped annotations</label> 
+          ) :
           <label className="not-grouped">Not grouped</label>
         }
       </div>
@@ -57,7 +74,7 @@ const GroupWidget = groupPlugin => () => {
         <button 
           className="group-ordered"
           onClick={onToggleOrdered}>
-          { isOrdered ? 
+          {isOrdered ? 
             <MdCheckBox /> : <MdCheckBoxOutlineBlank /> }
           Ordered
         </button>
@@ -66,7 +83,7 @@ const GroupWidget = groupPlugin => () => {
          {requireCtrlKey ? 'Add or remove' : 'Done' }
         </button>
         <button
-          disabled={groupSize === 0} 
+          disabled={!group} 
           onClick={onClearGroup}>Clear</button>
       </div>
     </div>
