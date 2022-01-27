@@ -96,14 +96,41 @@ export default class AnnotationGroup {
     this.border.draw(this.shapes);
   }
 
+  setOrdering = (annotation, seqNo) => {
+    if (seqNo === this.getOrdering(annotation))
+      return; // No change
+      
+    const change = this.changes[annotation.id];
+    if (change) {
+      // Just update the existing change
+      change.after.seqNo = seqNo
+    } else {
+      this.changes[annotation.id] = {
+        before: {
+          groupId: getGroupId(annotation),
+          seqNo: getSequenceNumber(annotation)
+        },
+        after: {
+          groupId: this.id,
+          seqNo
+        }
+      }
+    }
+  }
+
   removeFromGroup = shape => {
     this.shapes = this.shapes.filter(s => 
       s.annotation.id != shape.annotation.id);
 
     removeClass(shape, 'a9s-group-selected');
 
+    // Removed annotation
     const { annotation } = shape;
+
+    // Sequence number of removed annotation
+    const removedSeqNo = this.getOrdering(annotation);
     
+    // Update changes list with removal
     this.changes[annotation.id] = 
       { 
         before: { 
@@ -113,8 +140,16 @@ export default class AnnotationGroup {
         after: null 
       };
 
-    // TODO remove label and re-arrange ordering!
     if (this.isOrdered) {
+      // Re-arrange sequence
+      this.shapes.forEach(shape => {
+        const seqNo = this.getOrdering(shape.annotation);
+
+        if (seqNo > removedSeqNo)
+          this.setOrdering(seqNo - 1);
+      });
+
+      // Delete label
       this.labels[annotation.id].destroy();
       delete this.labels[annotation.id];
     }
