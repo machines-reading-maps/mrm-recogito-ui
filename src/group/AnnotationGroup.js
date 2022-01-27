@@ -99,7 +99,7 @@ export default class AnnotationGroup {
   setOrdering = (annotation, seqNo) => {
     if (seqNo === this.getOrdering(annotation))
       return; // No change
-      
+
     const change = this.changes[annotation.id];
     if (change) {
       // Just update the existing change
@@ -116,6 +116,9 @@ export default class AnnotationGroup {
         }
       }
     }
+
+    // Update label
+    this.labels[annotation.id].setValue(seqNo);
   }
 
   removeFromGroup = shape => {
@@ -144,9 +147,8 @@ export default class AnnotationGroup {
       // Re-arrange sequence
       this.shapes.forEach(shape => {
         const seqNo = this.getOrdering(shape.annotation);
-
         if (seqNo > removedSeqNo)
-          this.setOrdering(seqNo - 1);
+          this.setOrdering(shape.annotation, seqNo - 1);
       });
 
       // Delete label
