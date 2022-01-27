@@ -71,15 +71,15 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
 
+  // Add linking plugin
+  new GroupPlugin(anno, viewer, IS_WMTS);
+
   // Add MapAnnotation plugin
   if (IS_WMTS)
     new MapAnnotation(anno, map);
 
   // Add LegacyStorage plugin
   new LegacyStorage(anno, window.config);
-
-  // Add linking plugin
-  new GroupPlugin(anno, viewer, IS_WMTS);
 
   return anno;
 };

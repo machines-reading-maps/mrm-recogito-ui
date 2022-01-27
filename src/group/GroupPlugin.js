@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import Emitter from 'tiny-emitter';
 
 import AnnotationGroup from './AnnotationGroup';
-import { clearGroup, getGroupId, setGroup } from './Utils';
+import { clearGroup as _clearGroup, getGroupId, setGroup } from './Utils';
 import GroupWidget from './GroupWidget';
 
 import './GroupPlugin.scss';
@@ -11,14 +11,14 @@ let isRequireCtrlKey = true;
 
 export default class GroupPlugin extends Emitter {
 
-  constructor(anno, viewer, gigapixelMode) {
+  constructor(anno, viewer, IS_WMTS) {
     super();
     
     this.anno = anno;
 
     this.viewer = viewer;
 
-    this.gigapixelMode = gigapixelMode;
+    this.IS_WMTS = IS_WMTS;
 
     this.svg = anno._element.querySelector('svg');
 
@@ -81,7 +81,7 @@ export default class GroupPlugin extends Emitter {
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
       if (groupId) {
-        this.group = new AnnotationGroup(annotation, this.svg, this.viewer, this.gigapixelMode);
+        this.group = new AnnotationGroup(annotation, this.svg, this.viewer, this.IS_WMTS);
         this.emit('selectGroup', this.group);
       }
 
@@ -145,7 +145,7 @@ export default class GroupPlugin extends Emitter {
         this.anno.updateSelected(updated);
 
         this.group?.destroy();
-        this.group = new AnnotationGroup(updated, this.svg, this.viewer, this.gigapixelMode);
+        this.group = new AnnotationGroup(updated, this.svg, this.viewer, this.IS_WMTS);
       }
 
       this.group.toggle(shape);
@@ -153,7 +153,7 @@ export default class GroupPlugin extends Emitter {
 
       if (this.group.size === 1) {
         // Group was reduced to one element - remove ID from selected annotation
-        const updated = clearGroup(selectedAnnotation);
+        const updated = _clearGroup(selectedAnnotation);
         this.anno.updateSelected(updated);
       } else if (getGroupId(selectedAnnotation) !== this.group.id) {
         const seqNo = this.group.isOrdered ? this.group.size - 1 : null;
@@ -177,13 +177,32 @@ export default class GroupPlugin extends Emitter {
         const { before, after } = this.group.changes[id];
         
         if (hasChanged(before, after)) {
-          const annotationBefore = this.anno.getAnnotationById(id);
+          // There's a tricky problem in WMTS mode: getAnnotationById returns a crosswalked
+          // version of the annotation (geo-coordinates). If we emit this annotation
+          // in the 'updateAnnotation' event, it will be crosswalked again - resulting
+          // in mangled coordiantes. Therefore, we need to treat both cases
+          // differently
+          if (this.IS_WMTS) {
+            const annotationBeforeImg = this.anno.getAnnotationById(id, true);
+            const annotationBeforeGeo = this.anno.getAnnotationById(id);
 
-          const annotationAfter = after ? 
-            setGroup(annotationBefore, after.groupId, after.seqNo) : clearGroup(annotationBefore);
+            const annotationAfterImg = after ? 
+              setGroup(annotationBeforeImg, after.groupId, after.seqNo) : _clearGroup(annotationBeforeImg);
 
-          this.anno.addAnnotation(annotationAfter);
-          this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
+            const annotationAfterGeo = after ? 
+              setGroup(annotationBeforeGeo, after.groupId, after.seqNo) : _clearGroup(annotationBeforeGeo);
+
+            this.anno.addAnnotation(annotationAfterGeo);
+            this.anno._emitter.emit('updateAnnotation', annotationAfterImg, annotationBeforeImg);   
+          } else {
+            const annotationBefore = this.anno.getAnnotationById(id);
+
+            const annotationAfter = after ? 
+              setGroup(annotationBefore, after.groupId, after.seqNo) : _clearGroup(annotationBefore);
+
+            this.anno.addAnnotation(annotationAfter);
+            this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
+          }
           
           this.requireCtrlKey = true;
         }
@@ -195,7 +214,7 @@ export default class GroupPlugin extends Emitter {
     this.group.clearGroup();
 
     const selected = this.anno.getSelected();
-    this.anno.updateSelected(clearGroupId(selected));
+    this.anno.updateSelected(_clearGroup(selected));
   }
 
   get requireCtrlKey() {
