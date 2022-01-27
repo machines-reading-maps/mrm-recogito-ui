@@ -121,6 +121,38 @@ export default class AnnotationGroup {
     this.labels[annotation.id].setValue(seqNo);
   }
 
+  moveUp = annotation => {    
+    if (this.isOrdered) {
+      // The annotation's current seqNo. 
+      const seqNo = this.getOrdering(annotation);
+      
+      // Updated seqNo.
+      const updated = seqNo === this.size ?
+        1 : seqNo + 1;
+
+      // The annotation changes place with the one 'above' it
+      const toSwap = this.findAnnotationByOrdering(updated);
+      this.setOrdering(annotation, updated);
+      this.setOrdering(toSwap, seqNo);
+    }
+  }
+
+  moveDown = annotation => {
+    if (this.isOrdered) {
+      // The annotation's current seqNo. 
+      const seqNo = this.getOrdering(annotation);
+      
+      // Updated seqNo.
+      const updated = seqNo === 1 ?
+        this.size : seqNo - 1;
+
+      // The annotation changes place with the one 'above' it
+      const toSwap = this.findAnnotationByOrdering(updated);
+      this.setOrdering(annotation, updated);
+      this.setOrdering(toSwap, seqNo);
+    }
+  }
+
   removeFromGroup = shape => {
     this.shapes = this.shapes.filter(s => 
       s.annotation.id != shape.annotation.id);
@@ -200,6 +232,9 @@ export default class AnnotationGroup {
 
   getOrdering = annotation =>
     this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
+
+  findAnnotationByOrdering = ordering => 
+    this.shapes.find(s => this.getOrdering(s.annotation) === ordering)?.annotation;
 
   showLabels = () => {
     this.shapes.forEach(s => {

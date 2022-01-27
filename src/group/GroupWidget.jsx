@@ -59,11 +59,27 @@ const GroupWidget = groupPlugin => props => {
   }
 
   const onIncreaseOrdering = () => {
+    if (group) {
+      group.moveUp(props.annotation);
 
+      let updated = ordering + 1;
+      if (updated > group.size)
+        updated = 1;
+
+      setOrdering(updated);
+    }
   }
 
   const onDecreaseOrdering = () => {
+    if (group) {
+      group.moveDown(props.annotation);
 
+      let updated = ordering - 1;
+      if (updated === 0)
+        updated = group.size;
+
+      setOrdering(updated);
+    }
   }
 
   return (
