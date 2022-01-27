@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { GrObjectUngroup } from 'react-icons/gr';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
+import OrderingControl from './OrderingControl';
+
 const GroupWidget = groupPlugin => props => {
 
   const [ group, setGroup ] = useState();
@@ -11,6 +13,8 @@ const GroupWidget = groupPlugin => props => {
   const [ isOrdered, setIsOrdered ] = useState(false);
 
   const [ ordering, setOrdering ] = useState();
+
+  const [ editOrdering, setEditOrdering ] = useState(false);
 
   const [ requireCtrlKey, setRequireCtrlKey ] = useState(true);
 
@@ -54,6 +58,14 @@ const GroupWidget = groupPlugin => props => {
     }
   }
 
+  const onIncreaseOrdering = () => {
+
+  }
+
+  const onDecreaseOrdering = () => {
+
+  }
+
   return (
     <div className="r6o-widget group-plugin r6o-nodrag">
       <div className="group-status">
@@ -89,6 +101,14 @@ const GroupWidget = groupPlugin => props => {
           disabled={!group} 
           onClick={onClearGroup}>Clear</button>
       </div>
+
+      {isOrdered && editOrdering &&
+        <OrderingControl 
+          ordering={ordering}
+          groupSize={groupSize} 
+          onMoveUp={onIncreaseOrdering}
+          onMoveDown={onDecreaseOrdering} />
+      }
     </div>
   )
 
