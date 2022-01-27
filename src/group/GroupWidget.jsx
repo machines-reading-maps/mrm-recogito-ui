@@ -75,7 +75,8 @@ const GroupWidget = groupPlugin => props => {
             <>
               <label className="order">{ordering}/{groupSize}</label>
               <button 
-                className="change-order">
+                className="change-order"
+                onClick={() => setEditOrdering(!editOrdering)}>
                 Change order
               </button>
             </> :
@@ -107,7 +108,8 @@ const GroupWidget = groupPlugin => props => {
           ordering={ordering}
           groupSize={groupSize} 
           onMoveUp={onIncreaseOrdering}
-          onMoveDown={onDecreaseOrdering} />
+          onMoveDown={onDecreaseOrdering} 
+          onClose={() => setEditOrdering(false)} />
       }
     </div>
   )
