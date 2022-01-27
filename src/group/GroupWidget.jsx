@@ -91,7 +91,7 @@ const GroupWidget = groupPlugin => props => {
             <>
               <label className="order">{ordering}/{groupSize}</label>
               <button 
-                className="change-order"
+                className="change-order simple"
                 onClick={() => setEditOrdering(!editOrdering)}>
                 Change order
               </button>
@@ -104,17 +104,20 @@ const GroupWidget = groupPlugin => props => {
 
       <div className="buttons">
         <button 
-          className="group-ordered"
+          className="group-ordered simple"
           onClick={onToggleOrdered}>
           {isOrdered ? 
             <MdCheckBox /> : <MdCheckBoxOutlineBlank /> }
           Ordered
         </button>
 
-        <button onClick={onToggleAddToGroup}>
+        <button
+          className="simple" 
+          onClick={onToggleAddToGroup}>
          {requireCtrlKey ? 'Add or remove' : 'Done' }
         </button>
         <button
+          className="simple"
           disabled={!group} 
           onClick={onClearGroup}>Clear</button>
       </div>

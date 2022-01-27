@@ -73,7 +73,7 @@
 
     label.order {
       display:inline-block;
-      font-family:Arial;
+      font-family:Arial, Helvetica, sans-serif;
       font-size:14px;
     }
 
@@ -88,8 +88,7 @@
     }
   }
 
-  .change-order,
-  .buttons button {
+  button.simple {
     background:none;
     border:none;
     outline:none;
@@ -126,8 +125,24 @@
     .ordering {
       display:inline-block;
       padding-right:4px;
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:14px;
+    }
+
+    button {
+      padding:0 2px
     }
     
+    button.close-ordering-control {
+      background:none;
+      border:none;
+      outline:none;
+      font-size:24px;
+      vertical-align:text-top;
+      padding:0 0 0 4px;
+      color:#4f92d7;
+    }
+
   }
 
 }
