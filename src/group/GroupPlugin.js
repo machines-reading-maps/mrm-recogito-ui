@@ -11,12 +11,14 @@ let isRequireCtrlKey = true;
 
 export default class GroupPlugin extends Emitter {
 
-  constructor(anno, viewer) {
+  constructor(anno, viewer, gigapixelMode) {
     super();
     
     this.anno = anno;
 
     this.viewer = viewer;
+
+    this.gigapixelMode = gigapixelMode;
 
     this.svg = anno._element.querySelector('svg');
 
@@ -79,7 +81,7 @@ export default class GroupPlugin extends Emitter {
       // If the annotation is part of a group, show it.
       const groupId = getGroupId(annotation);
       if (groupId) {
-        this.group = new AnnotationGroup(annotation, this.svg, this.viewer);
+        this.group = new AnnotationGroup(annotation, this.svg, this.viewer, this.gigapixelMode);
         this.emit('selectGroup', this.group);
       }
 
@@ -143,7 +145,7 @@ export default class GroupPlugin extends Emitter {
         this.anno.updateSelected(updated);
 
         this.group?.destroy();
-        this.group = new AnnotationGroup(updated, this.svg, this.viewer);
+        this.group = new AnnotationGroup(updated, this.svg, this.viewer, this.gigapixelMode);
       }
 
       this.group.toggle(shape);

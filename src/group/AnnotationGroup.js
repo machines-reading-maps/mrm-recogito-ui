@@ -11,10 +11,12 @@ const currentScale = viewer => {
 
 export default class AnnotationGroup {
 
-  constructor(selectedAnnotation, svg, viewer) {
+  constructor(selectedAnnotation, svg, viewer, gigapixelMode) {
     this.id = getGroupId(selectedAnnotation);
 
     this.viewer = viewer;
+
+    this.gigapixelMode = gigapixelMode;
 
     this.shapes = getShapesForGroup(this.id, svg);
 
@@ -22,9 +24,8 @@ export default class AnnotationGroup {
     
     // For new groups, this.shapes will be empty, because
     // the group info is not stored in the DOM elemnet yet!
-    if (this.shapes.length == 0) {
+    if (this.shapes.length == 0)
       this.shapes = [ svg.querySelector(`.a9s-annotation.selected`) ];
-    }
 
     // Group ID before and after, by annotation ID
     this.changes = {
@@ -90,8 +91,12 @@ export default class AnnotationGroup {
       };
 
     // Add label for the new shape
-    if (this.isOrdered)
-      this.labels[annotation.id] = new OrderingLabel(shape, seqNo, currentScale(this.viewer));
+    if (this.isOrdered) {
+      // Bit of an unfortunate consequence of hijacking the
+      // formatter element mechanism to implement ordering labels
+      const initialScale = this.gigapixelMode ? 1 : currentScale(this.viewer);
+      this.labels[annotation.id] = new OrderingLabel(shape, seqNo, initialScale);
+    }
 
     this.border.draw(this.shapes);
   }
@@ -242,8 +247,8 @@ export default class AnnotationGroup {
       
       const seqNo = this.changes[annotation.id]?.after?.seqNo || getSequenceNumber(annotation);
 
-      // TODO store, so we can destroy them later!
-      this.labels[annotation.id] = new OrderingLabel(s, seqNo, currentScale(this.viewer));
+      const initialScale = this.gigapixelMode ? 1 : currentScale(this.viewer);
+      this.labels[annotation.id] = new OrderingLabel(s, seqNo, initialScale);
     });
   }
 

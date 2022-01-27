@@ -79,7 +79,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   new LegacyStorage(anno, window.config);
 
   // Add linking plugin
-  new GroupPlugin(anno, viewer);
+  new GroupPlugin(anno, viewer, IS_WMTS);
 
   return anno;
 };
