@@ -186,22 +186,25 @@ export default class GroupPlugin extends Emitter {
             const annotationBeforeImg = this.anno.getAnnotationById(id, true);
             const annotationBeforeGeo = this.anno.getAnnotationById(id);
 
-            const annotationAfterImg = after ? 
-              setGroup(annotationBeforeImg, after.groupId, after.seqNo) : _clearGroup(annotationBeforeImg);
+            if (annotationBeforeImg) {
+              const annotationAfterImg = after ? 
+                setGroup(annotationBeforeImg, after.groupId, after.seqNo) : _clearGroup(annotationBeforeImg);
 
-            const annotationAfterGeo = after ? 
-              setGroup(annotationBeforeGeo, after.groupId, after.seqNo) : _clearGroup(annotationBeforeGeo);
+              const annotationAfterGeo = after ? 
+                setGroup(annotationBeforeGeo, after.groupId, after.seqNo) : _clearGroup(annotationBeforeGeo);
 
-            this.anno.addAnnotation(annotationAfterGeo);
-            this.anno._emitter.emit('updateAnnotation', annotationAfterImg, annotationBeforeImg);   
+              this.anno.addAnnotation(annotationAfterGeo);
+              this.anno._emitter.emit('updateAnnotation', annotationAfterImg, annotationBeforeImg);   
+            }
           } else {
             const annotationBefore = this.anno.getAnnotationById(id);
+            if (annotationBefore) {
+              const annotationAfter = after ? 
+                setGroup(annotationBefore, after.groupId, after.seqNo) : _clearGroup(annotationBefore);
 
-            const annotationAfter = after ? 
-              setGroup(annotationBefore, after.groupId, after.seqNo) : _clearGroup(annotationBefore);
-
-            this.anno.addAnnotation(annotationAfter);
-            this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
+              this.anno.addAnnotation(annotationAfter);
+              this.anno._emitter.emit('updateAnnotation', annotationAfter, annotationBefore);   
+            }
           }
           
           this.requireCtrlKey = true;
