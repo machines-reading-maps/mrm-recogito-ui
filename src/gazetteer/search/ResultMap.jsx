@@ -134,7 +134,7 @@ const ResultMapView = props => {
   useEffect(() => {
     if (result) {
       const bounds = getBounds(locatedItems);
-      map.fitBounds(bounds, { maxZoom: 12 });
+      // map.fitBounds(bounds, { maxZoom: 12 });
     }
   }, [ locatedItems ]);
 
@@ -157,8 +157,8 @@ const ResultMap = props => {
         className="r6o-g8r-search-map" 
         zoomControl={false}
         attributionControl={false}
-        center={[0 , 0]}
-        zoom={2}>
+        center={[55.9533, -3.189167]}
+        zoom={12}>
         <ResultMapView {...props} />
       </MapContainer>
     </div>
