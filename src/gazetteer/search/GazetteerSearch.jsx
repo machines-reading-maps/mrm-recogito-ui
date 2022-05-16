@@ -22,8 +22,15 @@ const GazetteerSearch = props => {
   useEffect(() => {
     setResult();
 
+    const useGazetteers = !window.config.authorities?.gazetteers?.use_all &&
+      window.config.authorities?.gazetteers?.includes;
+
+    const url = useGazetteers ? 
+      `/api/place/search?q=${query}&offset=0&size=20&authorities=${encodeURIComponent(useGazetteers.join(','))}` : 
+      `/api/place/search?q=${query}&offset=0&size=20`;
+    
     if (query) {
-      fetch(`/api/place/search?q=${query}&offset=0&size=20`)
+      fetch(url)
         .then(response => response.json())
         .then(setResult);    }
   }, [ query ]);
