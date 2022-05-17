@@ -4,6 +4,8 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { FaList } from 'react-icons/fa';
 import i18n from '@recogito/annotorious-openseadragon/src/util/I18N';
 
+import { getQueryURL } from '.';
+
 import ResultCard from './ResultCard';
 import ResultMap from './ResultMap';
 
@@ -22,15 +24,8 @@ const GazetteerSearch = props => {
   useEffect(() => {
     setResult();
 
-    const useGazetteers = !window.config.authorities?.gazetteers?.use_all &&
-      window.config.authorities?.gazetteers?.includes;
-
-    const url = useGazetteers ? 
-      `/api/place/search?q=${query}&offset=0&size=20&authorities=${encodeURIComponent(useGazetteers.join(','))}` : 
-      `/api/place/search?q=${query}&offset=0&size=20`;
-    
     if (query) {
-      fetch(url)
+      fetch(getQueryURL(query))
         .then(response => response.json())
         .then(setResult);    }
   }, [ query ]);

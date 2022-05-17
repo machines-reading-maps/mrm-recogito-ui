@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { getQueryURL } from './search';
+
 import Blank from './states/Blank';
 import ResolvedPlace from './states/ResolvedPlace';
 
@@ -24,7 +26,7 @@ const PlaceCard = props => {
         })
     } else if (props.transcription) {
       // Fetch suggestion
-      fetch(`/api/place/search?q=${encodeURIComponent(props.transcription)}&size=1`)
+      fetch(getQueryURL(props.transcription, 1))
         .then(res => res.json())
         .then(data => {
           if (data?.total > 0) {
