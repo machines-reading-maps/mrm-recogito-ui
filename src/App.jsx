@@ -79,8 +79,12 @@ const initAnnotorious = (viewer, map, gazetteers) => {
     new MapAnnotation(anno, map);
 
   // Add LegacyStorage plugin
-  new LegacyStorage(anno, window.config);
-
+  const storage = new LegacyStorage(anno, window.config);
+  storage.onError(error => {
+    if (window.confirm('You were logged out due to inactivity. Click OK to log in again.')) {
+      window.location = '/login';
+    }
+  });
   return anno;
 };
 
