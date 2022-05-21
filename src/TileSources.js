@@ -18,7 +18,10 @@ const fetchUploadSource = config =>
           width: width,
           height: height,
           tilesUrl: `/document/${config.documentId}/part/${config.partSequenceNo}/tiles/`
-        }]
+        }],
+        gestureSettingsMouse: {
+          clickToZoom: false
+        }
       });
 
       return { viewer };
@@ -32,7 +35,10 @@ const fetchIIIFSource = config =>
       const viewer = OpenSeadragon({
         id:'image-pane',
         prefixUrl: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/',
-        tileSources: [ manifest ]
+        tileSources: [ manifest ],
+        gestureSettingsMouse: {
+          clickToZoom: false
+        }
       });
       
       return { viewer };
@@ -41,7 +47,10 @@ const fetchIIIFSource = config =>
 const fetchWMTSSource = config => {
   const viewer = OpenSeadragon({
     id: 'image-pane',
-    prefixUrl: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/'
+    prefixUrl: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/',
+    gestureSettingsMouse: {
+      clickToZoom: false
+    }
   });
   
   return OpenSeadragonWMTS(viewer, {
