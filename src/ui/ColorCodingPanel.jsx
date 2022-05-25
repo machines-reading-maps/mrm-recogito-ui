@@ -5,7 +5,7 @@ import { addClass, getClassNames, removeClass } from '../group/SVG';
 
 import './ColorCodingPanel.scss';
 
-export const ColorCodingFormatter = annotation => {
+export const ByProgressFormatter = annotation => {
   // Change style if there's at least one human contribution
   const hasManualContribution = !!annotation.bodies.find(b =>
     b.creator);
@@ -20,6 +20,22 @@ export const ColorCodingFormatter = annotation => {
     return 'incomplete';
   } else {
     return 'unverified';
+  }
+}
+
+export const ByCheckOrNoCheckFormatter = annotation => {
+  const hasCheckTag = !!annotation.bodies.find(b => b.purpose === 'tagging' && b.value === 'check');
+  return hasCheckTag && 'needs-check';
+}
+
+export const ByGroupedFormatter = annotation => {
+  const isGrouped = !!annotation.bodies.find(b => b.purpose === 'grouping');
+  const isOrdered = !!annotation.bodies.find(b => b.purpose === 'ordering');
+
+  if (isGrouped && isOrdered) {
+    return 'grouped ordered';
+  } else if (isGrouped) {
+    return 'grouped';
   }
 }
 
@@ -55,6 +71,8 @@ const ColorCodingPanel = () => {
       <VscColorMode />
 
       <select onChange={onChange} value={selected}>
+        <option value="color-by-check">Color by Checked or Unchecked</option>
+        <option value="color-by-grouped">Color by Grouped or not</option>
         <option value="color-by-category">Color by Category</option>
         <option value="color-by-progress">Color by Editing Progress</option>
       </select>

@@ -84,3 +84,34 @@
   }
 
 }
+
+.a9s-annotationlayer.color-by-grouped {
+
+  .a9s-annotation.grouped .a9s-inner,
+  .a9s-annotation.grouped.selected .a9s-inner {
+    stroke:#be7d05 !important;
+    fill:#be7d0557 !important;
+  }
+
+  .a9s-annotation.grouped.ordered .a9s-inner,
+  .a9s-annotation.grouped.ordered.selected .a9s-inner {
+    stroke: #008106 !important;
+    fill: #00810657 !important;
+  }
+
+}
+
+.a9s-annotationlayer.color-by-check {
+
+  .a9s-annotation .a9s-inner,
+  .a9s-annotation.selected .a9s-inner {
+    stroke: #424242 !important;
+  }
+
+  .a9s-annotation.needs-check .a9s-inner,
+  .a9s-annotation.needs-check.selected .a9s-inner {
+    stroke:#f00e0e !important;
+    fill:#f0057e0e !important;
+  }
+
+}
