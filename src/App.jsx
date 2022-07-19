@@ -90,7 +90,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   return anno;
 };
 
-const App = props => {
+const App = () => {
 
   const [ viewer, setViewer ] = useState();
 
