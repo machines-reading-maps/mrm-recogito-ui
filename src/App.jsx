@@ -138,13 +138,14 @@ const App = () => {
 
       { anno &&
         <div className="bottom-right-controls">
-          {/* (viewer && IS_WMTS) &&
+          {(viewer && IS_WMTS) &&
             <MapKuratorControl 
+              hidden
               config={window.config} 
               viewer={viewer} 
               map={map} 
               onProcessingComplete={onMapKuratorComplete} /> 
-        */}
+          }
            
           <ColorCodingPanel /> 
         </div>

@@ -23,13 +23,16 @@ const MapKuratorControl = props => {
         // Escape
         if (processing === 'pick-region')
           resetSelection();
+      } else if (evt.key === 'm' && evt.ctrlKey) {
+        // Keyboard shortcut to trigger mapKurator box selection
+        onClick();
       }
     }
 
     document.body.addEventListener('keydown', onKeyDown);
 
     return () => document.body.removeEventListener('keydown', onKeyDown);
-  })
+  }, []);
 
   useEffect(() => {
     let timer; 
@@ -154,6 +157,7 @@ const MapKuratorControl = props => {
 
   return (
     <div 
+      style={props.hidden ? { display: 'none' } : null}
       className={processing ? `mrm-mapkurator-control ${processing}` : 'mrm-mapkurator-control'}>
       <button onClick={onClick}>
         {button}
