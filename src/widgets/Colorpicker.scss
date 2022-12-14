@@ -1,0 +1,36 @@
+.r6o-widget.mrm-colorpicker-widget {
+  padding: 10px;
+  display: flex;
+
+  .mrm-colorpicker-toggle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .mrm-colorpicker-wrapper {
+    position: absolute;
+    bottom: 10px;
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    z-index: 1;
+    box-shadow: 1px 3px 28px rgba(0, 0, 0, 0.25);
+
+    
+    input {
+      width: 200px;
+      border: 1px solid rgb(199, 198, 198);
+      box-sizing: border-box;
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: #ecf0f1;
+    }
+
+  }
+
+}
