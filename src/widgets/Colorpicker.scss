@@ -1,18 +1,41 @@
 .r6o-widget.mrm-colorpicker-widget {
   padding: 10px;
   display: flex;
+  justify-content: space-between;
+
+  button {
+    background: none;
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #4f92d7;
+    text-decoration: underline;
+    font-size: 14px;
+  }
 
   .mrm-colorpicker-toggle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+
+    .mrm-color-current {
+      width: 18px;
+      height: 18px;
+      border-radius: 2px;
+      outline: none;
+      background-color: var(--col);
+      border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    span {
+      padding-left: 10px;
+    }
   }
 
   .mrm-colorpicker-wrapper {
     position: absolute;
-    bottom: 10px;
+    bottom: -10px;
+    left: -10px;
     background-color: #fff;
     z-index: 1;
     box-shadow: 1px 3px 28px rgba(0, 0, 0, 0.25);
@@ -45,12 +68,7 @@
       text-align: right;
 
       button {
-        outline: none;
-        border: none;
-        text-decoration: underline;
-        background: none;
-        color: #4483c4;
-        font-size: 14px;
+        margin-left: 8px;
       }
 
       button:disabled {

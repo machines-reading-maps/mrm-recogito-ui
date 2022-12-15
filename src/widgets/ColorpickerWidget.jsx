@@ -7,6 +7,7 @@ export const ColorpickerFormatter = annotation => {
   const color = annotation?.bodies.find(b => b.purpose === 'coloring')?.value;
 
   return color ? {
+    className: 'has-custom',
     style: `--col: ${color}` 
   } : null;
 }
@@ -26,6 +27,12 @@ export const ColorpickerWidget = props => {
       purpose: 'coloring' 
     });
   }
+  
+  const clearColor = () => {
+    const current = props.annotation?.bodies.find(b => b.purpose === 'coloring');
+    if (current)
+      props.onRemoveBody(current);
+  }
 
   const onCancel = () => {
     if (initialColor)
@@ -37,8 +44,21 @@ export const ColorpickerWidget = props => {
   return (
     <div className="r6o-widget mrm-colorpicker-widget">
       <button 
+        style={color ? { '--col': color } : null}
         className="mrm-colorpicker-toggle" 
-        onClick={() => setShowPicker(true)} />
+        onClick={() => setShowPicker(true)}>
+
+        <div className="mrm-color-current"></div>
+        { color ? <span>{color}</span> : <span>Set custom color</span> }
+      </button>
+
+      {color && (
+        <button 
+          className="mrm-color-remove"
+          onClick={clearColor}>
+          Clear color
+        </button>
+      )}
 
       {showPicker && (
         <div className="mrm-colorpicker-wrapper">
