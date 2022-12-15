@@ -13,22 +13,49 @@
   .mrm-colorpicker-wrapper {
     position: absolute;
     bottom: 10px;
-    padding: 5px;
     background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
     z-index: 1;
     box-shadow: 1px 3px 28px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    overflow: hidden;
 
-    
+    .react-colorful__saturation {
+      border-radius: 0;
+    }
+
+    .react-colorful__hue.react-colorful__last-control {
+      border-radius: 0;
+    }
+
+    section {
+      border-bottom: 1px solid #e5e5e5;
+    }
+
     input {
       width: 200px;
-      border: 1px solid rgb(199, 198, 198);
       box-sizing: border-box;
-      margin-top: 5px;
-      padding: 5px;
-      border-radius: 5px;
-      background-color: #ecf0f1;
+      padding: 8px;
+      color: #474747;
+      font-size: 15px;
+      background-color: #f5f7f7;
+    }
+
+    footer {
+      padding: 8px;
+      text-align: right;
+
+      button {
+        outline: none;
+        border: none;
+        text-decoration: underline;
+        background: none;
+        color: #4483c4;
+        font-size: 14px;
+      }
+
+      button:disabled {
+        color: #a9bbcf;
+      }
     }
 
   }
