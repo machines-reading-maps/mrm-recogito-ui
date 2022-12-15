@@ -3,7 +3,15 @@ import { HexColorInput, HexColorPicker } from 'react-colorful';
 
 import './Colorpicker.scss';
 
-const ColorpickerWidget = props => {
+export const ColorpickerFormatter = annotation => {
+  const color = annotation?.bodies.find(b => b.purpose === 'coloring')?.value;
+
+  return color ? {
+    style: `--col: ${color}` 
+  } : null;
+}
+
+export const ColorpickerWidget = props => {
 
   const [showPicker, setShowPicker] = useState(false);
 
@@ -56,5 +64,3 @@ const ColorpickerWidget = props => {
   )
 
 }
-
-export default ColorpickerWidget;

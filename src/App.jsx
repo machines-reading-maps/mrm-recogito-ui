@@ -12,7 +12,7 @@ import MapAnnotation from '@recogito/annotorious-map-annotation';
 
 // Custom MRM extensions and plugins
 import ClassifyWidget, { ClassifyFormatter } from './widgets/ClassifyWidget';
-import ColorpickerWidget from './widgets/ColorpickerWidget';
+import { ColorpickerWidget, ColorpickerFormatter } from './widgets/ColorpickerWidget';
 import TranscribeWidget from './widgets/TranscribeWidget';
 import GroupPlugin from './group/GroupPlugin';
 import GazetteerTagWidget from './gazetteer/GazetteerTagWidget';
@@ -57,7 +57,8 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       ClassifyFormatter,
       ByProgressFormatter,
       ByCheckOrNoCheckFormatter,
-      ByGroupedFormatter
+      ByGroupedFormatter,
+      ColorpickerFormatter
     ]
   });
 

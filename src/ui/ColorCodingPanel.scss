@@ -115,3 +115,13 @@
   }
 
 }
+
+.a9s-annotationlayer.color-by-custom {
+
+  .a9s-annotation:not(.selected) .a9s-inner {
+    fill: var(--col) !important;
+    stroke: var(--col) !important;
+    fill-opacity: 0.5;
+  }
+
+}

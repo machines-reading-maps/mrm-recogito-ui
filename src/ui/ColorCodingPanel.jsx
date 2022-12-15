@@ -75,6 +75,7 @@ const ColorCodingPanel = () => {
         <option value="color-by-grouped">Color by Grouped or not</option>
         <option value="color-by-category">Color by Category</option>
         <option value="color-by-progress">Color by Editing Progress</option>
+        <option value="color-by-custom">User-selected color</option>
       </select>
     </div>
   )
