@@ -139,7 +139,7 @@ const App = () => {
 
   const onSelectSearchResult = annotation => {
     anno.selectAnnotation(annotation);
-    // anno.fitBounds(annotation.id);
+    anno.fitBounds(annotation.id);
   }
 
   return (
