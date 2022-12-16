@@ -23,10 +23,11 @@ export class SearchIndex {
       }
     });
 
+    anno.on('createAnnotation', this.add);
+    anno.on('updateAnnotation', this.update);
+    anno.on('deleteAnnotation', this.delete);
 
-    // TODO track anno lifecycle events
-
-    initialAnnotations.forEach(this.add);
+    [...initialAnnotations].forEach(this.add);
   }
 
   add = annotation => {
@@ -40,8 +41,13 @@ export class SearchIndex {
     this.index.add(document);
   }
 
-  delete = annotation => {
+  update = (annotation, previous) => {
+    this.delete(previous);
+    this.add(annotation);
+  }
 
+  delete = annotation => {
+    this.index.remove(doc => doc.annotation.id === annotation.id);
   }
   
   search = query => {
