@@ -6,6 +6,7 @@ export class SearchIndex {
   constructor(anno, initialAnnotations) {
     this.index = new Fuse([], {
       ignoreLocation: true,
+      includeMatches: true,
       threshold: 0.25,
       keys: [
         'transcription',
@@ -51,6 +52,6 @@ export class SearchIndex {
   }
   
   search = query =>
-    this.index.search(diacritics.remove(query)).map(result => result.item.annotation);
+    this.index.search(diacritics.remove(query));
 
 }

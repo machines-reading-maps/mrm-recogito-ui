@@ -6,24 +6,20 @@ import './Search.scss';
 
 export const Search = props => {
 
-  const [ showSearch, setShowSearch ] = useState(false);
-
-  const onClick = () => {
-    console.log('props', props);
-    props.index.search('reply');
-  }
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <div className="mrm-annotation-search">
       <button 
         className="mrm-search-toggle"
-        onClick={() => setShowSearch(true)}>
+        onClick={() => setShowSearch(!showSearch)}>
         <AiOutlineSearch />
       </button>
 
-      {showSearch && (
-        <SearchWidget index={props.index} />
-      )}
+      <SearchWidget 
+        index={props.index} 
+        open={showSearch} 
+        onSelectResult={props.onSelectResult} />
     </div>
   )
 

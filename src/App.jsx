@@ -137,6 +137,11 @@ const App = () => {
       });
   }
 
+  const onSelectSearchResult = annotation => {
+    anno.selectAnnotation(annotation);
+    // anno.fitBounds(annotation.id);
+  }
+
   return (
     <div>
       { viewer && 
@@ -145,7 +150,8 @@ const App = () => {
           map={map} /> }
 
       <Search 
-        index={searchIndex} />
+        index={searchIndex} 
+        onSelectResult={onSelectSearchResult} />
 
       { anno && 
         <ToolPanel anno={anno} /> }
