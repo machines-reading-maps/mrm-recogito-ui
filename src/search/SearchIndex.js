@@ -50,9 +50,7 @@ export class SearchIndex {
     this.index.remove(doc => doc.annotation.id === annotation.id);
   }
   
-  search = query => {
-    const result = this.index.search(diacritics.remove(query));
-    console.log(result);
-  }
+  search = query =>
+    this.index.search(diacritics.remove(query)).map(result => result.item.annotation);
 
 }
