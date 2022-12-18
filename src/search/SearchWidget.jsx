@@ -59,7 +59,16 @@ export const SearchWidget = props => {
       console.log('up');
     } else if (key === 'Enter' && active !== null) {
       props.onSelectResult(results[active].item.annotation);
+    } else if (key === 'Escape') {
+      evt.stopPropagation();
+      props.onClose();
     }
+  }
+
+  const onSelect = annotation => {
+    const selectedResult = results.find(r => r.item.annotation.id === annotation.id);
+    setActive(results.indexOf(selectedResult));
+    props.onSelectResult(annotation);
   }
 
   return (
@@ -78,7 +87,7 @@ export const SearchWidget = props => {
               active={idx === active}
               annotation={result.item.annotation} 
               matches={result.matches} 
-              onSelect={props.onSelectResult} />
+              onSelect={onSelect} />
           ))}
         </ul>
       )}

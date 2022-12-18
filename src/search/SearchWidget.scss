@@ -1,4 +1,7 @@
 .mrm-search-widget-wrapper {
+  --blueish-white: #ecf0f1;
+  --lightgrey-border: #e5e5e5;
+
   position: absolute;
   top: 0;
   right: 57px;
@@ -20,7 +23,7 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    background-color: rgb(255, 255, 255, 0.5);
+    background-color: var(--blueish-white);
     max-height: 320px;
     overflow-y: auto;
   }

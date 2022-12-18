@@ -19,6 +19,7 @@ export const Search = props => {
       <SearchWidget 
         index={props.index} 
         open={showSearch} 
+        onClose={() => setShowSearch(false)}
         onSelectResult={props.onSelectResult} />
     </div>
   )
