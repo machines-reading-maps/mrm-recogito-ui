@@ -10,7 +10,8 @@ export class SearchIndex {
       threshold: 0.25,
       keys: [
         'transcription',
-        'comments'
+        'comments',
+        'tags'
       ],
 
       getFn: (obj, path) => {
@@ -37,8 +38,9 @@ export class SearchIndex {
     // Pull out searchable fields for easier access
     const transcription = body.find(b => b.purpose === 'transcribing')?.value;
     const comments = body.filter(b => b.purpose === 'commenting' || !b.purpose).map(b => b.value);
+    const tags = body.filter(b => b.purpose === 'tagging').map(b => b.value);
 
-    const document = { transcription, comments, annotation };
+    const document = { transcription, comments, tags, annotation };
     this.index.add(document);
   }
 

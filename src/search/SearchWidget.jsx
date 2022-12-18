@@ -3,8 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './SearchWidget.scss';
 
 const SearchResult = props => {
-
-  const { active, annotation, matches, onSelect } = props;
+  const { active, transcription, comments, tags, annotation, matches, onSelect } = props;
   
   const snippets = matches.map(match => match.value);
 
@@ -12,7 +11,13 @@ const SearchResult = props => {
     <li 
       className={active ? 'active' : null}
       onClick={() => onSelect(annotation)}>
-      {snippets.join(' ... ')}
+      {transcription && (
+        <h3>{transcription}</h3> 
+      )}
+      <p className="comments">{comments.join(' ... ')}</p>
+      <p className="tags">
+        {tags.join(' · ')}
+      </p>
     </li>
   )
 
@@ -56,7 +61,6 @@ export const SearchWidget = props => {
       setActive(active === null ? 0 : Math.min(active + 1, results.length - 1));
     } else if (key === 'ArrowUp' && active !== null) {
       setActive(Math.max(0, active - 1));
-      console.log('up');
     } else if (key === 'Enter' && active !== null) {
       props.onSelectResult(results[active].item.annotation);
     } else if (key === 'Escape') {
@@ -85,6 +89,9 @@ export const SearchWidget = props => {
             <SearchResult 
               key={result.item.annotation.id}
               active={idx === active}
+              transcription={result.item.transcription}
+              comments={result.item.comments}
+              tags={result.item.tags}
               annotation={result.item.annotation} 
               matches={result.matches} 
               onSelect={onSelect} />

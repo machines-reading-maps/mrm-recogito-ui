@@ -30,16 +30,42 @@
 
   li {
     padding: 12px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--lightgrey-border);
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
+
+    h3 {
+      margin: 0;
+      padding: 0;
+      font-weight: 500;
+      font-size: 17px;
+    }
+
+    p {
+      margin: 0;
+      padding: 2px 0;
+      font-size: 17px;
+    }
+
+    p.comments {
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      display: -webkit-box;
+      overflow: hidden;
+      white-space: normal;
+    }
+
+    p.tags {
+      font-size: 14px;
+    }
   }
 
   li:hover,
   li.active {
     background-color: #fff;
   }
+
 }
 
 .mrm-search-widget-wrapper.open {
