@@ -14,10 +14,14 @@ const SearchResult = props => {
       {transcription && (
         <h3>{transcription}</h3> 
       )}
-      <p className="comments">{comments.join(' ... ')}</p>
-      <p className="tags">
-        {tags.join(' · ')}
-      </p>
+      {comments?.length > 0 && (
+        <p className="comments">{comments.join(' ... ')}</p> 
+      )}
+      {tags?.length > 0 && (
+        <p className="tags">
+          {tags.join(' · ')}
+        </p>
+      )}
     </li>
   )
 
