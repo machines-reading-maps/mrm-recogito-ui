@@ -3,7 +3,7 @@ import diacritics from 'diacritics';
 
 export class SearchIndex {
 
-  constructor(anno, initialAnnotations) {
+  constructor(anno, storage, initialAnnotations) {
     this.index = new Fuse([], {
       ignoreLocation: true,
       includeMatches: true,
@@ -24,10 +24,17 @@ export class SearchIndex {
         }
       }
     });
-
-    anno.on('createAnnotation', this.add);
+    
+    // Listen to anno changes...
     anno.on('updateAnnotation', this.update);
+
+    // ...and anno deletes.
     anno.on('deleteAnnotation', this.delete);
+
+    // But grab create events from the storage plugin, 
+    // because this will return the annotation with the
+    // server-side ID already inserted!
+    storage.afterCreate(this.add);
 
     [...initialAnnotations].forEach(this.add);
   }

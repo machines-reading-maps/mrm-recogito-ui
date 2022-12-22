@@ -117,7 +117,7 @@ const App = () => {
           const { anno, storage } = initAnnotorious(viewer, map, gazetteers);
 
           storage.init().then(annotations =>
-            setSearchIndex(new SearchIndex(anno, annotations)));
+            setSearchIndex(new SearchIndex(anno, storage, annotations)));
 
           setMap(map); // Only in case of WMTS
           setViewer(viewer);
