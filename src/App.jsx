@@ -111,6 +111,8 @@ const App = () => {
         initViewer(window.config).then(({ viewer, map }) => {
           const { anno, storage } = initAnnotorious(viewer, map, gazetteers);
 
+          storage.init();
+
           setMap(map); // Only in case of WMTS
           setViewer(viewer);
           setAnno(anno);
