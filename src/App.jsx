@@ -45,6 +45,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
     gigapixelMode: IS_WMTS,
     locale: 'auto',
     allowEmpty: true,
+    crosshair: true,
     drawOnSingleClick: true,
     widgets: [
       ClassifyWidget,
