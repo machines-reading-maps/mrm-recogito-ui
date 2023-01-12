@@ -44,6 +44,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
     locale: 'auto',
     allowEmpty: true,
     drawOnSingleClick: true,
+    crosshair: true,
     widgets: [
       ClassifyWidget,
       { widget: GazetteerTagWidget, gazetteers },
