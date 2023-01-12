@@ -83,12 +83,14 @@ const initAnnotorious = (viewer, map, gazetteers) => {
 
   // Add LegacyStorage plugin
   const storage = new LegacyStorage(anno, window.config);
+
   storage.onError(error => {
     if (window.confirm('You were logged out due to inactivity. Click OK to log in again.')) {
       window.location = '/login';
     }
   });
-  return anno;
+
+  return { anno, storage };
 };
 
 const App = () => {
@@ -107,7 +109,7 @@ const App = () => {
       .then(gazetteers => { 
         // Viewer initialization differs based on content type
         initViewer(window.config).then(({ viewer, map }) => {
-          const anno = initAnnotorious(viewer, map, gazetteers);
+          const { anno, storage } = initAnnotorious(viewer, map, gazetteers);
 
           setMap(map); // Only in case of WMTS
           setViewer(viewer);
