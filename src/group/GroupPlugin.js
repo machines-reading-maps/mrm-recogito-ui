@@ -20,7 +20,7 @@ export default class GroupPlugin extends Emitter {
 
     this.IS_WMTS = IS_WMTS;
 
-    this.svg = anno._element.querySelector('svg');
+    this.svg = anno._element.querySelector('svg.a9s-annotationlayer');
 
     this.isCtrlDown = false;
 
