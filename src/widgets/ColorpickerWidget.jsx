@@ -3,6 +3,15 @@ import { HexColorInput, HexColorPicker } from 'react-colorful';
 
 import './Colorpicker.scss';
 
+const PRESET_COLORS = [
+  '#ff0000', 
+  '#0000ff', 
+  '#008000',
+  '#ffff00', 
+  '#00ffff', 
+  '#ffa500'
+];
+
 export const ColorpickerFormatter = annotation => {
   const color = annotation?.bodies.find(b => b.purpose === 'coloring')?.value;
 
@@ -64,6 +73,14 @@ export const ColorpickerWidget = props => {
         <div className="mrm-colorpicker-wrapper">
           <section>
             <HexColorPicker color={color} onChange={setColor} />
+          </section>
+          <section className="presets">
+            {PRESET_COLORS.map(col => (
+              <button 
+                key={col} 
+                style={{ backgroundColor: col }}
+                onClick={() => setColor(col)} />
+            ))}
           </section>
           <section>
             <HexColorInput color={color} onChange={setColor} />
