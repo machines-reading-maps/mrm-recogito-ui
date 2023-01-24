@@ -33,13 +33,13 @@
     "webpack-dev-server": "^4.3.1"
   },
   "dependencies": {
-    "@recogito/annotorious-better-polygon": "^0.1.5",
     "@recogito/annotorious-map-annotation": "^0.3.2",
-    "@recogito/annotorious-openseadragon": "^2.7.7",
+    "@recogito/annotorious-openseadragon": "^2.7.10",
+    "@recogito/annotorious-osd-snap-polygon": "^0.1.0",
     "@recogito/annotorious-selector-pack": "^0.4.3",
     "@recogito/annotorious-tilted-box": "^0.3.0",
     "@recogito/annotorious-toolbar": "^1.1.0",
-    "@recogito/recogito-legacy-storage": "^0.6.0",
+    "@recogito/recogito-legacy-storage": "^0.7.4",
     "leaflet": "^1.7.1",
     "nanoid": "^3.1.23",
     "openseadragon-wmts": "^0.7.0",

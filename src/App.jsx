@@ -6,7 +6,7 @@ import { initViewer } from './TileSources';
 // Off-the-shelf(-ish) Annotorious plugins
 import SelectorPack from '@recogito/annotorious-selector-pack';
 import TiltedBox from '@recogito/annotorious-tilted-box';
-import BetterPolygon from '@recogito/annotorious-better-polygon';
+import SnapPolygon from '@recogito/annotorious-osd-snap-polygon/src';
 import LegacyStorage, { fromLegacyAnnotation } from '@recogito/recogito-legacy-storage/src';
 import MapAnnotation from '@recogito/annotorious-map-annotation';
 
@@ -70,7 +70,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   const selectorPackConfig = IS_WMTS ? 
     { tools: [ 'point', 'ellipse', 'freehand' ]} : null;
 
-  new BetterPolygon(anno);
+  new SnapPolygon(anno);
   new SelectorPack(anno, selectorPackConfig);
   new TiltedBox(anno);
 
