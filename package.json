@@ -35,7 +35,7 @@
   "dependencies": {
     "@recogito/annotorious-map-annotation": "^0.3.2",
     "@recogito/annotorious-openseadragon": "^2.7.10",
-    "@recogito/annotorious-osd-snap-polygon": "^0.1.3",
+    "@recogito/annotorious-osd-snap-polygon": "^0.1.5",
     "@recogito/annotorious-selector-pack": "^0.4.3",
     "@recogito/annotorious-tilted-box": "^0.3.0",
     "@recogito/annotorious-toolbar": "^1.1.0",
