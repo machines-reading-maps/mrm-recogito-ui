@@ -69,7 +69,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   // Add extra drawing tools
   // In case of WMTS, don't add circle!
   const selectorPackConfig = IS_WMTS ? 
-    { tools: [ 'point', 'ellipse', 'freehand' ]} : null;
+    { tools: [ 'point', 'ellipse' ] } : { tools: [ 'point', 'ellipse', 'circle' ] };
 
   new SnapPolygon(anno);
   new SelectorPack(anno, selectorPackConfig);
