@@ -39,6 +39,28 @@ export const ByGroupedFormatter = annotation => {
   }
 }
 
+const PALETTE = [ "#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0" ];
+
+const TAG_LOOKUP_TABLE = {};
+
+export const ByTagFormatter = annotation => {
+  const firstTag = annotation.bodies.find(b => b.purpose === 'tagging');
+  if (!firstTag)
+    return;
+
+  let color = TAG_LOOKUP_TABLE[firstTag.value];
+  if (!color) {
+    const next = Object.keys(TAG_LOOKUP_TABLE).length % PALETTE.length;
+    
+    color = PALETTE[next];
+    TAG_LOOKUP_TABLE[firstTag.value] = color;
+  }
+
+  return {
+    style: `--stroke: ${color}; --fill: ${color}55;`
+  }
+}
+
 const ColorCodingPanel = () => {
 
   const [ selected, setSelected ] = 
@@ -74,6 +96,7 @@ const ColorCodingPanel = () => {
         <option value="color-by-check">Color by Checked or Unchecked</option>
         <option value="color-by-grouped">Color by Grouped or not</option>
         <option value="color-by-category">Color by Category</option>
+        <option value="color-by-tag">Color by First Tag</option>
         <option value="color-by-progress">Color by Editing Progress</option>
       </select>
     </div>

@@ -115,3 +115,12 @@
   }
 
 }
+
+.a9s-annotationlayer.color-by-tag {
+
+  .a9s-annotation:not(.editable) .a9s-inner {
+    fill: var(--fill);
+    stroke: var(--stroke);
+  }
+
+}

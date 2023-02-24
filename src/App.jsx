@@ -20,7 +20,7 @@ import EntityAPIConnector from './widgets/EntityAPIConnector';
 // GUI elements
 import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
-import ColorCodingPanel, { ByProgressFormatter, ByCheckOrNoCheckFormatter, ByGroupedFormatter} from './ui/ColorCodingPanel';
+import ColorCodingPanel, { ByProgressFormatter, ByCheckOrNoCheckFormatter, ByTagFormatter, ByGroupedFormatter} from './ui/ColorCodingPanel';
 import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
@@ -56,6 +56,7 @@ const initAnnotorious = (viewer, map, gazetteers) => {
       ClassifyFormatter,
       ByProgressFormatter,
       ByCheckOrNoCheckFormatter,
+      ByTagFormatter,
       ByGroupedFormatter
     ]
   });
