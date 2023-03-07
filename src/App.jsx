@@ -21,6 +21,7 @@ import EntityAPIConnector from './widgets/EntityAPIConnector';
 import CoordinatePanel from './ui/CoordinatePanel';
 import ToolPanel from './ui/ToolPanel';
 import ColorCodingPanel, { ByProgressFormatter, ByCheckOrNoCheckFormatter, ByTagFormatter, ByGroupedFormatter} from './ui/ColorCodingPanel';
+import VisibilityPanel from './ui/VisibilityPanel';
 import MapKuratorControl from './mapkurator/MapKuratorControl';
 
 import './App.scss';
@@ -140,7 +141,11 @@ const App = () => {
           map={map} /> }
 
       { anno && 
-        <ToolPanel anno={anno} /> }
+        <>
+          <ToolPanel anno={anno} /> 
+          <VisibilityPanel /> 
+        </>
+      }
 
       { anno &&
         <div className="bottom-right-controls">
