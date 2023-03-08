@@ -52,6 +52,19 @@ export default class GroupPlugin extends Emitter {
         this.isCtrlDown = true;
         this.anno.disableSelect = true;
       }
+
+      if (evt.key === 'm') {
+        if (this.isCtrlDown && this.group?.shapes.length > 1) {
+          const annotations = this.group.shapes.map(s => s.annotation);
+
+          this.group.destroy();
+          this.group = null;
+    
+          this.requireCtrlKey = true;
+
+          this.emit('merge', annotations);
+        }
+      }
     });
   
     document.addEventListener('keyup', evt => {

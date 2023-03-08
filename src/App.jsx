@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Annotorious from '@recogito/annotorious-openseadragon/src';
 
 import { initViewer } from './TileSources';
+import { merge } from './merge';
 
 // Off-the-shelf(-ish) Annotorious plugins
 import SelectorPack from '@recogito/annotorious-selector-pack';
@@ -77,7 +78,8 @@ const initAnnotorious = (viewer, map, gazetteers) => {
   new TiltedBox(anno);
 
   // Add linking plugin
-  new GroupPlugin(anno, viewer, IS_WMTS);
+  const groups = new GroupPlugin(anno, viewer, IS_WMTS);
+  groups.on('merge', shapes => merge(shapes, anno));
 
   // Add MapAnnotation plugin
   if (IS_WMTS)
