@@ -22,7 +22,7 @@ export const merge = (annotations, anno) => {
     }, []);
 
     const merged = concaveman(points);
-    
+
     const svg = `<svg><polygon points="${merged.map(t => `${t[0]},${t[1]}`).join(' ')}" /></svg>`;
 
     const original = annotations[0].underlying;
@@ -37,9 +37,17 @@ export const merge = (annotations, anno) => {
         }
       }
     }
-    
-    annotations.forEach(a => anno.removeAnnotation(a));
 
+    const [ first, ...rest ] = annotations;
+    
+    // Delete all except first
+    rest.forEach(a => {
+      anno.removeAnnotation(a);
+      anno._emitter.emit('deleteAnnotation', a);   
+    });
+
+    // Update first
     anno.addAnnotation(updated);  
+    anno._emitter.emit('updateAnnotation', updated, original);
   }
 }
