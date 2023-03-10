@@ -153,7 +153,7 @@ const App = () => {
         <div className="bottom-right-controls">
           {(viewer && IS_WMTS) &&
             <MapKuratorControl 
-              hidden
+              hidden={false}
               config={window.config} 
               viewer={viewer} 
               map={map} 
