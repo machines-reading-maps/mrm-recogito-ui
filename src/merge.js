@@ -6,19 +6,37 @@ export const merge = (annotations, anno) => {
   // Deselect all
   anno.selectAnnotation();
 
-  const onlyPolygons = annotations.every(annotation => {
+  const isPolygon = annotation => {
     const selector = annotation.selector('SvgSelector');
     if (selector)
       return selector.value?.match(/^<svg.*<polygon/g);
-  });
+  }
 
-  console.log('merging. only polygons?', onlyPolygons);
+  const isPolyLine = annotation => {
+    const selector = annotation.selector('SvgSelector');
+    if (selector)
+      return selector.value?.match(/^<svg.*<path/g);
+  }
 
-  if (onlyPolygons && annotations.length > 1) {
-    const points = annotations.reduce((points, annotation) => {
-      const [a, b, str] = annotation.selector('SvgSelector').value.match(/(<polygon points=['"])([^('|")]*)/) || [];
+  const isValid = annotations.every(annotation => isPolygon(annotation) || isPolyLine(annotation));
 
-      return [...points, ...str.split(' ').map((p) => p.split(',').map(parseFloat)) ];
+  if (isValid && annotations.length > 1) {
+    
+    const points = annotations.reduce((all, annotation) => {
+      if (isPolygon(annotation)) {
+        const [a, b, str] = annotation.selector('SvgSelector').value.match(/(<polygon points=['"])([^('|")]*)/) || [];
+        return [...all, ...str.split(' ').map((p) => p.split(',').map(parseFloat)) ];
+      } else {
+        const [a, b, str] = annotation.selector('SvgSelector').value.match(/(<path d=['"])([^('|")]*)/) || [];
+
+        const points = str.split(/[ML]/)
+          .map(str => str.trim())
+          .filter(str => str)
+          .map(str => str.split(' ').map(parseFloat));
+
+        return [...all, ...points];
+      }
+
     }, []);
 
     const merged = concaveman(points);
